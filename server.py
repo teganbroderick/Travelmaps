@@ -46,9 +46,13 @@ def login_process():
     else:
         #get user object
         user = User.query.filter_by(email=email, password=password).first()
-
         #add user to session
         session['user_id'] = user.user_id
+        print("SESSION INFO HERE!")
+        print(session)
+        print("")
+        print("")
+        print("")
         flash("Logged in!")
         return render_template("profile.html", fname=user.fname, lname=user.lname)
 
@@ -70,18 +74,15 @@ def signup_process():
         user_info = User(fname=fname, lname=lname, email=email, password=password)
         db.session.add(user_info)
         db.session.commit()
-
         #get user object from database
         user = User.query.filter_by(email=email, password=password).first()
-        
         #add user to session
         session['user_id'] = user.user_id 
-        print("HEREEEEEE")
-        print("SESSION INFO:", session['user_id'])
+        print("SESSION INFO HERE!")
+        print(session)
         print("")
         print("")
         print("")
-        flash("Logged in!")
 
         return render_template("profile.html", fname=user.fname, lname=user.lname)
     
@@ -94,8 +95,12 @@ def logout():
     """delete user_id info from session and log user out"""
     
     del session["user_id"]
+    print("SESSION INFO HERE!")
+    print(session)
     flash("Logged out!")
-    
+    print("")
+    print("")
+    print("")
     return redirect('/')
 
 if __name__ == "__main__":

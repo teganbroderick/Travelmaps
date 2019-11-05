@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="static/styles.css"/>
 </head>
 <body>
+    
+      {% for message in get_flashed_messages() %}
+      <p id="flash_message">{{ message }}</p>
+      {% endfor %}
+    
     <a href="/"><h1 class="Masterheading">Travel Maps</h1></a>
 
 
