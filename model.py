@@ -16,10 +16,6 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(25), nullable=False)
 
-    #**********
-    maps = db.relationship("Map", backref="users")
-    places = db.relationship("Place", secondary="userplaces", backref="users")
-    #**********
 
     def __repr__(self):
         """Return a human-readable representation of a user"""
@@ -39,8 +35,8 @@ class Map(db.Model):
     map_name = db.Column(db.String(50), nullable=False)
 
     #***********
-    user = db.relationship("User")
-    places = db.relationship("Place") 
+    user = db.relationship("User", backref="maps")
+    place = db.relationship("Place", backref="maps")
     #***********
 
     def __repr__(self):
@@ -60,11 +56,7 @@ class Place(db.Model):
     map_id = db.Column(db.Integer, 
                         db.ForeignKey('maps.map_id'))
     google_place_id = db.Column(db.String(50), nullable=False)
-
-    #****************
-    maps = db.relationship("Map")
-    users = db.relationship("User", secondary="userplaces", backref="places")
-    #****************
+    #google_place_name = db.Column(db.String(50), nullable=False) ADD WHEN I NEXT DROPDB AND CREATE NEW DB
 
 
     def __repr__(self):
@@ -87,7 +79,8 @@ class UserPlace(db.Model):
     place_notes = db.Column(db.String(200), nullable=True)
 
     #***********
-    #Define table relationships? 4/11 Ashley says no as long as i have defined relationships above with backref
+    user = db.relationship("User", backref="userplaces")
+    place = db.relationship("Place", backref="userplaces")
     #***********
 
 
