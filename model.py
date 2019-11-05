@@ -16,6 +16,10 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(25), nullable=False)
 
+    #***********
+
+
+    #***********
 
     def __repr__(self):
         """Return a human-readable representation of a user"""
@@ -33,6 +37,7 @@ class Map(db.Model):
     user_id = db.Column(db.Integer, 
                         db.ForeignKey('users.user_id'))
     map_name = db.Column(db.String(50), nullable=False)
+    map_description = db.Column(db.String(100), nullable=True)
 
     #***********
     user = db.relationship("User", backref="maps")
@@ -56,7 +61,7 @@ class Place(db.Model):
     map_id = db.Column(db.Integer, 
                         db.ForeignKey('maps.map_id'))
     google_place_id = db.Column(db.String(50), nullable=False)
-    #google_place_name = db.Column(db.String(50), nullable=False) ADD WHEN I NEXT DROPDB AND CREATE NEW DB
+    google_place_name = db.Column(db.String(50), nullable=False)
 
 
     def __repr__(self):
