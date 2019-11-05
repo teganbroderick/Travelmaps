@@ -44,9 +44,13 @@ def login_process():
         flash("Wrong email or password. Try again!")
         return redirect('/login')
     else:
+        #get user object
+        user = User.query.filter_by(email=email, password=password).first()
+
+        #add user to session
         session['user_id'] = user.user_id
         flash("Logged in!")
-        return render_template("profile.html")
+        return render_template("profile.html", fname=user.fname, lname=user.lname)
 
 
 @app.route("/signup_process", methods=["POST"])
@@ -58,10 +62,10 @@ def signup_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    #check to see if email address is in the user database
+    #check to see if email address is in the user table
     user_email = User.query.filter_by(email=email).first()
 
-    if user_email == None:
+    if user_email == None: #if user email is not in the user table
         #add user to database
         user_info = User(fname=fname, lname=lname, email=email, password=password)
         db.session.add(user_info)
@@ -70,8 +74,13 @@ def signup_process():
         #get user object from database
         user = User.query.filter_by(email=email, password=password).first()
         
-        #Add user to session
+        #add user to session
         session['user_id'] = user.user_id 
+        print("HEREEEEEE")
+        print("SESSION INFO:", session['user_id'])
+        print("")
+        print("")
+        print("")
         flash("Logged in!")
 
         return render_template("profile.html", fname=user.fname, lname=user.lname)
@@ -82,7 +91,7 @@ def signup_process():
 
 @app.route("/logout")
 def logout():
-    """delete user_id info from session and therefore log user out"""
+    """delete user_id info from session and log user out"""
     
     del session["user_id"]
     flash("Logged out!")
