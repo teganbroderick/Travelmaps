@@ -15,6 +15,7 @@ app.secret_key = "ABC"
 # error.
 app.jinja_env.undefined = StrictUndefined
 
+
 @app.route('/')
 def index():
     """Homepage"""
@@ -22,14 +23,71 @@ def index():
     return render_template("homepage.html")
 
 
-
 @app.route("/login")
 def login():
     """redirect to login.html"""
 
-    return render_template("loginin.html")
+    return render_template("login.html")
 
 
+@app.route("/login_process", methods=["POST"])
+def login_process():
+    """Verify email and password credentials, log user in if they are correct"""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    #check to see if email address and password match a user in the users table
+    user = User.query.filter_by(email=email, password=password).first()
+
+    if user == None:
+        flash("Wrong email or password. Try again!")
+        return redirect('/login')
+    else:
+        session['user_id'] = user.user_id
+        flash("Logged in!")
+        return render_template("profile.html")
+
+
+@app.route("/signup_process", methods=["POST"])
+def signup_process():
+    """Check to see if user exists, if not, add them to user table"""
+
+    fname = request.form.get("fname")
+    lname = request.form.get("lname")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    #check to see if email address is in the user database
+    user_email = User.query.filter_by(email=email).first()
+
+    if user_email == None:
+        #add user to database
+        user_info = User(fname=fname, lname=lname, email=email, password=password)
+        db.session.add(user_info)
+        db.session.commit()
+
+        #get user object from database
+        user = User.query.filter_by(email=email, password=password).first()
+        
+        #Add user to session
+        session['user_id'] = user.user_id 
+        flash("Logged in!")
+
+        return render_template("profile.html", fname=user.fname, lname=user.lname)
+    
+    else: 
+        flash("User with that email address already exists.")
+        return redirect("/login")
+
+@app.route("/logout")
+def logout():
+    """delete user_id info from session and therefore log user out"""
+    
+    del session["user_id"]
+    flash("Logged out!")
+    
+    return redirect('/')
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
