@@ -2,6 +2,15 @@
 
 {% block body %}
 
-<h2>Map</h2>
+<h2>Map Page</h2>
+<p>Add things to map on this page</p><br>
+<h3>Map Name: {{ newmap.map_name }} </h3>
+<h3>Map Description: {{ newmap.map_description }} </h3>
+
+<br><br><br>
+<form action="/logout">
+    <input type="submit" value="Log Out">
+</form>
+
 
 {% endblock %}
