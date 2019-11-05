@@ -19,8 +19,11 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage"""
-
-    return render_template("homepage.html")
+    if 'user_id' in session: #if session exists
+        user = User.query.filter_by(user_id=session['user_id']).first()
+        return render_template("profile.html", user=user)
+    else:
+        return render_template("homepage.html")
 
 
 @app.route("/login")
@@ -44,17 +47,18 @@ def login_process():
         flash("Wrong email or password. Try again!")
         return redirect('/login')
     else:
-        #get user object
-        user = User.query.filter_by(email=email, password=password).first()
         #add user to session
         session['user_id'] = user.user_id
+        #get user object
+        user = User.query.filter_by(user_id=session['user_id']).first()
+        #user = User.query.filter_by(email=email, password=password).first() CHECKING ABOVE CODE
         print("SESSION INFO HERE!")
         print(session)
         print("")
         print("")
         print("")
         flash("Logged in!")
-        return render_template("profile.html", fname=user.fname, lname=user.lname)
+        return render_template("profile.html", user=user)
 
 
 @app.route("/signup_process", methods=["POST"])
@@ -74,17 +78,18 @@ def signup_process():
         user_info = User(fname=fname, lname=lname, email=email, password=password)
         db.session.add(user_info)
         db.session.commit()
-        #get user object from database
-        user = User.query.filter_by(email=email, password=password).first()
         #add user to session
-        session['user_id'] = user.user_id 
+        session['user_id'] = user.user_id        
+        #get user object from database
+        user = User.query.filter_by(user_id=session['user_id']).first()
+        #user = User.query.filter_by(email=email, password=password).first() CHECKING ABOVE CODE
         print("SESSION INFO HERE!")
         print(session)
         print("")
         print("")
         print("")
 
-        return render_template("profile.html", fname=user.fname, lname=user.lname)
+        return render_template("profile.html", user=user)
     
     else: 
         flash("A user with that email address already exists.")
