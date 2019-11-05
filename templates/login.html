@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>Login</h2>
+<form action="/login">
+    Email: <input type="test" name="email"><br>
+    Password: <input type="password" name="password"><br>
+    <input type="submit" value="Login"><br>
+</form>
+
+<h2>Sign Up</h2>
+<form action="/signup">
+    First Name: <input type="text" name="first_name"><br>
+    Last Name: <input type="text" name="last_name"><br>
+    Email: <input type="text" name="email"><br>
+    Password: <input type="password" name="password"><br>
+    <input type="submit" value="Sign up">
+</form>
+
+
+
+{% endblock %}
