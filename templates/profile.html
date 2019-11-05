@@ -8,11 +8,11 @@
 
 <div id=maplist>
     <h2>Your Maps</h2>
-    <p>Mapname</p>
-    <p>Mapname</p>
-    <p>Mapname</p>
-    <p>Mapname</p>
-    <p>Mapname</p>
+    
+    {% for map in maps %}
+        <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
+    {% endfor %}
+    <br>
     <form action="/make_map">
         <input type="submit" value="Make New Map">
     </form>

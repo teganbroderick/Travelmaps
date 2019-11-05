@@ -21,19 +21,25 @@ def index():
     """Homepage"""
     if 'user_id' in session: #if session exists
         user = User.query.filter_by(user_id=session['user_id']).first()
-        return render_template("profile.html", user=user)
+        maps = Map.query.filter_by(user_id=session['user_id']).all()
+        return render_template("profile.html", user=user, maps=maps)
     else:
         return render_template("homepage.html")
 
+@app.route('/about')
+def about():
+    """about page"""
+    return render_template("about.html")
 
-@app.route("/login")
+
+@app.route('/login')
 def login():
     """redirect to login.html"""
 
     return render_template("login.html")
 
 
-@app.route("/login_process", methods=["POST"])
+@app.route('/login_process', methods=["POST"])
 def login_process():
     """Verify email and password credentials, log user in if they are correct"""
 
@@ -51,13 +57,15 @@ def login_process():
         session['user_id'] = user.user_id
         #get user object
         user = User.query.filter_by(user_id=session['user_id']).first()
+        #get user's maps
+        maps = Map.query.filter_by(user_id=session['user_id']).all()
         flash("Logged in!")
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, maps=maps)
 
 
-@app.route("/signup_process", methods=["POST"])
+@app.route('/signup_process', methods=["POST"])
 def signup_process():
-    """Check to see if user exists, if not, add them to user table"""
+    """Check to see if user exists, if not, add user to user table"""
 
     fname = request.form.get("fname")
     lname = request.form.get("lname")
@@ -83,7 +91,7 @@ def signup_process():
         flash("A user with that email address already exists.")
         return redirect("/login")
 
-@app.route("/logout")
+@app.route('/logout')
 def logout():
     """delete user_id info from session and log user out"""
     
@@ -92,15 +100,16 @@ def logout():
     return redirect('/')
 
 
-@app.route("/make_map")
+@app.route('/make_map')
 def makemap():
     """redirect to new_map.html"""
 
     return render_template("newmap.html")
 
 
-@app.route("/make_map_process")
+@app.route('/make_map_process')
 def makemap_process():
+    """Check to see if map exists, if not, add map to maps table"""
 
     map_name = request.args.get("map_name")
     map_description = request.args.get("map_description")
@@ -115,10 +124,19 @@ def makemap_process():
         db.session.commit()
         #get map object
         newmap = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
-        return render_template("map.html", newmap=newmap)
+        return render_template("map.html", map=newmap)
     else:
         flash("A map with that name and description already exists.")
         return redirect("/make_map")
+
+
+@app.route('/map/<int:map_id>')
+def render_map(map_id):
+    """Render map.html for map_id passed into route"""
+
+    user_map = Map.query.filter(Map.map_id == map_id).one()
+
+    return render_template("map.html", map=user_map)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

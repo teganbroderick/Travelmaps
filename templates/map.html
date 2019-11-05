@@ -3,9 +3,16 @@
 {% block body %}
 
 <h2>Map Page</h2>
+
+<h3>Map Name: {{ map.map_name }} </h3>
+<h3>Map Description: {{ map.map_description }} </h3><br>
+
 <p>Add things to map on this page</p><br>
-<h3>Map Name: {{ newmap.map_name }} </h3>
-<h3>Map Description: {{ newmap.map_description }} </h3>
+<form>
+    Place Name: <input type="text" name="name"><br>
+    Place address: <input type="text" name="address"><br>
+    <p>etc</p>
+</form>
 
 <br><br><br>
 <form action="/logout">
