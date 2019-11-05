@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-# Instantiate a SQLAlchemy object. We need this to create our db.Model classes.
+# Instantiate a SQLAlchemy object
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -15,11 +15,6 @@ class User(db.Model):
     lname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(25), nullable=False)
-
-    #***********
-
-
-    #***********
 
     def __repr__(self):
         """Return a human-readable representation of a user"""
