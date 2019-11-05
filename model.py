@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Instantiate a SQLAlchemy object. We need this to create our db.Model classes.
 db = SQLAlchemy()
 
-class User(db.model):
+class User(db.Model):
     """Data model for a user."""
 
     __tablename__ = "users"
@@ -14,7 +14,7 @@ class User(db.model):
     fname = db.Column(db.String(25), nullable=False)
     lname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.string(25), nullable=False)
+    password = db.Column(db.String(25), nullable=False)
 
     #**********
     maps = db.relationship("Map", backref="users")
@@ -26,7 +26,7 @@ class User(db.model):
 
         return f"<User user_id={self.user_id} fname={self.fname} lname={self.lname} email={self.email}>"
 
-class Map(db.model):
+class Map(db.Model):
     """Data model for a map."""
 
     __tablename__ = "maps"
@@ -49,16 +49,16 @@ class Map(db.model):
         return f"<Map map_id={self.user_id} user_id={self.user_id} map_name={self.map_name}>"
 
 
-class Place(db.model):
+class Place(db.Model):
     """Data model for a place."""
 
     __tablename__ = "places"
 
-    place_id = db.Column(Integer, 
+    place_id = db.Column(db.Integer, 
                         primary_key=True, 
                         autoincrement=True)
     map_id = db.Column(db.Integer, 
-                        db.ForeignKey('map.map_id'))
+                        db.ForeignKey('maps.map_id'))
     google_place_id = db.Column(db.String(50), nullable=False)
 
     #****************
@@ -72,12 +72,12 @@ class Place(db.model):
 
         return f"<Place place_id={self.place_id} map_id={self.map_id} google_place_id={self.google_place_id}>"
 
-class UserPlace(db.model):
+class UserPlace(db.Model):
     """Data model for a userplace."""
 
     __tablename__ = "userplaces"
 
-    userplaces_id = db.Column(Integer, 
+    userplaces_id = db.Column(db.Integer, 
                         primary_key=True, 
                         autoincrement=True)
     user_id = db.Column(db.Integer, 
@@ -101,7 +101,7 @@ def connect_to_db(app):
     """Connect the database to the Flask app"""
 
     # Configure to use the database.
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres:///project"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres:///travelmaps"
     app.config["SQLALCHEMY_ECHO"] = False
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
