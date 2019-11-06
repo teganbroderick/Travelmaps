@@ -29,7 +29,7 @@ def index():
 @app.route('/about')
 def about():
     """about page"""
-    
+
     return render_template("about.html")
 
 
@@ -137,6 +137,7 @@ def render_map(map_id):
 
     user_map = Map.query.filter(Map.map_id == map_id).one()
 
+    #return render_template("test_map_searchbox.html", map=user_map)
     return render_template("map.html", map=user_map)
 
 if __name__ == "__main__":

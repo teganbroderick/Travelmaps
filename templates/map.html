@@ -3,9 +3,8 @@
 {% block head %}
   <link rel="stylesheet" href="/static/css/maps.css"/>
   <script src="/static/js/maps.js"></script>
-   <script
-    async defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOURAPIKEY&callback=initMap">
+  <!-- load places library first -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"> 
   </script>
 {% endblock %}
 
@@ -17,8 +16,17 @@
     <h3>Map Name: {{ map.map_name }} </h3>
     <h3>Map Description: {{ map.map_description }} </h3><br>
     
+    <!-- Google maps code start -->
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
-    
+
+    <!-- initialize map after initializing places library -->
+    <script
+        async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete">
+    </script>
+<!-- Google maps code end -->
+
     <p>Add things to map on this page</p><br>
     <form>
         Place Name: <input type="text" name="name"><br>
@@ -30,7 +38,4 @@
     <form action="/logout">
         <input type="submit" value="Log Out">
     </form>
-
- 
-
 {% endblock %}
