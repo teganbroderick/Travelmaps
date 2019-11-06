@@ -3,39 +3,40 @@
 {% block head %}
   <link rel="stylesheet" href="/static/css/maps.css"/>
   <script src="/static/js/maps.js"></script>
-  <!-- load places library first -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+    <!-- load places library first -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"> 
   </script>
-{% endblock %}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
 
+{% endblock %}
 
 {% block body %}
 
-    <h2>Map Page</h2>
+  <h2>Map Page</h2>
+  <h3>Map Name: {{ map.map_name }} </h3>
+  <h3>Map Description: {{ map.map_description }} </h3><br>
+<!-- Google maps code -->
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  <div id="map"></div>
 
-    <h3>Map Name: {{ map.map_name }} </h3>
-    <h3>Map Description: {{ map.map_description }} </h3><br>
-    
-    <!-- Google maps code start -->
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
-
-    <!-- initialize map after initializing places library -->
-    <script
-        async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete">
-    </script>
+  <!-- call initAutocomplete function to initialize map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete"
+      async defer></script>
 <!-- Google maps code end -->
 
-    <p>Add things to map on this page</p><br>
-    <form>
-        Place Name: <input type="text" name="name"><br>
-        Place address: <input type="text" name="address"><br>
-        <p>etc</p>
-    </form>
 
-    <br><br><br>
-    <form action="/logout">
-        <input type="submit" value="Log Out">
-    </form>
+  <p>Add things to map on this page</p><br>
+  <form>
+      Place Name: <input type="text" name="name"><br>
+      Place address: <input type="text" name="address"><br>
+      <p>etc</p>
+  </form>
+
+  <br><br><br>
+  <form action="/logout">
+      <input type="submit" value="Log Out">
+  </form>
 {% endblock %}
