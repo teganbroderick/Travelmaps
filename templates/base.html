@@ -2,7 +2,10 @@
 <html>
 <head>
     <title>Travel Maps</title>
-    <link rel="stylesheet" href="static/styles.css"/>
+    <link rel="stylesheet" href="static/css/styles.css"/>
+    {% block head %}
+
+    {% endblock %}
 </head>
 <body>
     
@@ -12,11 +15,10 @@
     
     <a href="/"><h1 class="Masterheading">Travel Maps</h1></a>
 
-
-
     {% block body %}
 
     {% endblock %}
+   
     <br><br><br>
     <a href="/about">About</a>
     <p>Contact</p>

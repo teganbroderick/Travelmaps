@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 
+{% block head %}
+  <link rel="stylesheet" href="/static/css/maps.css"/>
+  <script src="/static/js/maps.js"></script>
+   <script
+    async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOURAPIKEY&callback=initMap">
+  </script>
+{% endblock %}
+
+
 {% block body %}
 
-<h2>Map Page</h2>
+    <h2>Map Page</h2>
 
-<h3>Map Name: {{ map.map_name }} </h3>
-<h3>Map Description: {{ map.map_description }} </h3><br>
+    <h3>Map Name: {{ map.map_name }} </h3>
+    <h3>Map Description: {{ map.map_description }} </h3><br>
+    
+    <div id="map"></div>
+    
+    <p>Add things to map on this page</p><br>
+    <form>
+        Place Name: <input type="text" name="name"><br>
+        Place address: <input type="text" name="address"><br>
+        <p>etc</p>
+    </form>
 
-<p>Add things to map on this page</p><br>
-<form>
-    Place Name: <input type="text" name="name"><br>
-    Place address: <input type="text" name="address"><br>
-    <p>etc</p>
-</form>
+    <br><br><br>
+    <form action="/logout">
+        <input type="submit" value="Log Out">
+    </form>
 
-<br><br><br>
-<form action="/logout">
-    <input type="submit" value="Log Out">
-</form>
-
+ 
 
 {% endblock %}
