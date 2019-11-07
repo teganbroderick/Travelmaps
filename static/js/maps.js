@@ -35,10 +35,12 @@ function initAutocomplete() {
       return;
     }
 
-    // Clear out the old markers.
-    markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
+    // // Clear out the old markers. NB MIGHT WANT TO TURN THIS OFF
+    // markers.forEach(function(marker) {
+    //   marker.setMap(null);
+    // });
+
+    //Make array to save markers
     markers = [];
 
     // For each place, get the icon, name and location.
@@ -48,6 +50,8 @@ function initAutocomplete() {
         console.log("Returned place contains no geometry");
         return;
       }
+
+      // Icon changes depending on the type of place (eg. bar gets a martini glass, hospital gets a cross)
       var icon = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
@@ -61,6 +65,7 @@ function initAutocomplete() {
         map: map,
         icon: icon,
         title: place.name,
+        place_id: place.place_id, //added code to get the place_id to store later
         position: place.geometry.location
       }));
 
@@ -72,5 +77,27 @@ function initAutocomplete() {
       }
     });
     map.fitBounds(bounds);
+
+    for (const marker of markers) {
+        const markerInfo = (`
+          <h3>${marker.title}</h3>
+          <p>
+            Google Places ID: ${marker.place_id}
+            Located at: <code>${marker.position.lat()}</code>,
+            <code>${marker.position.lng()}</code>
+          </p>
+        `);
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: markerInfo,
+          height: 100,
+          width: 200
+        });
+
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+    }
+
   });
 }
