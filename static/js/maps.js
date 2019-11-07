@@ -10,7 +10,7 @@
 
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
+    center: {lat: 37.601773, lng: -122.202870},
     zoom: 13,
     mapTypeId: 'roadmap'
   });
@@ -53,11 +53,11 @@ function initAutocomplete() {
 
       // Icon changes depending on the type of place (eg. bar gets a martini glass, hospital gets a cross)
       var icon = {
-        url: place.icon,
+        url: '/static/img/map_icon.svg',
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
+        scaledSize: new google.maps.Size(30, 30)
       };
 
       // Create a marker for each place.
@@ -82,10 +82,13 @@ function initAutocomplete() {
         const markerInfo = (`
           <h3>${marker.title}</h3>
           <p>
-            Google Places ID: ${marker.place_id}
+            Google Places ID: ${marker.place_id}<br>
             Located at: <code>${marker.position.lat()}</code>,
             <code>${marker.position.lng()}</code>
           </p>
+          <form action="/add_marker">
+            <input type="submit" value="Add location to map">
+          </form> 
         `);
 
         const infoWindow = new google.maps.InfoWindow({
@@ -95,7 +98,13 @@ function initAutocomplete() {
         });
 
         marker.addListener('click', () => {
+          //open marker window
           infoWindow.open(map, marker);
+        });
+
+        marker.addListener('dblclick', () => {
+          //Delete marker from map
+          alert("Test for deleting");
         });
     }
 
