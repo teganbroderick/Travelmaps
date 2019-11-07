@@ -56,12 +56,8 @@ def login_process():
     else:
         #add user to session
         session['user_id'] = user.user_id
-        #get user object
-        user = User.query.filter_by(user_id=session['user_id']).first()
-        #get user's maps
-        maps = Map.query.filter_by(user_id=session['user_id']).all()
         flash("Logged in!")
-        return render_template("profile.html", user=user, maps=maps)
+        return render_template("profile.html", user=user, maps=user.maps)
 
 
 @app.route('/signup_process', methods=["POST"])
@@ -116,7 +112,9 @@ def makemap_process():
     map_description = request.args.get("map_description")
 
     #check to see if map_name and map_description are already in the maps table for logged in user
-    map_to_verify = Map.query.filter_by(user_id=session['user_id'], map_name=map_name, map_description=map_description).first()
+    map_to_verify = Map.query.filter_by(user_id=session['user_id'], 
+                                        map_name=map_name, 
+                                        map_description=map_description).first()
     
     if map_to_verify == None: #if new map is not in the maps table
         #Add new map to maps table in db
@@ -127,7 +125,7 @@ def makemap_process():
         newmap = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
         return render_template("map.html", map=newmap)
     else:
-        flash("A map with that name and description already exists.")
+        flash("A map with that name and description already exists.") #make more specific to user, use name
         return redirect("/make_map")
 
 
@@ -136,6 +134,8 @@ def render_map(map_id):
     """Render map.html for map_id passed into route"""
 
     user_map = Map.query.filter(Map.map_id == map_id).one()
+
+    #try and error for map ids that dont exist - handle error
 
     #return render_template("test_map_searchbox2.html", map=user_map)
     return render_template("map.html", map=user_map)
