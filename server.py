@@ -157,12 +157,25 @@ def save_location(map_id):
     print(latitude, longitude, title)
     print("")
 
-    new_place = Place(map_id=map_id, latitude=latitude, longitude=longitude, google_place_name=title)
-    db.session.add(new_place)
-    db.session.commit()
+    place_to_verify = Place.query.filter_by(map_id=map_id, 
+                                            latitude=latitude, 
+                                            longitude=longitude, 
+                                            google_place_name=title).first()
 
-    return None
-    # render_template("map.html", map1, places)
+    if place_to_verify == None: #if place isn't in database for that particular map
+        #add place to places table in db
+        new_place = Place(map_id=map_id, 
+                            latitude=latitude, 
+                            longitude=longitude, 
+                            google_place_name=title)
+        db.session.add(new_place)
+        db.session.commit()
+        print(new_place)
+        print(user_map.places)
+        return render_template("map.html", map=user_map, places=user_map.places)
+    else:
+        flash("You already saved that location to your map")
+        return render_template("map.html", map=user_map, places=user_map.places)
 
 
 if __name__ == "__main__":
