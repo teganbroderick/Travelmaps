@@ -10,7 +10,7 @@
 
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.601773, lng: -122.202870},
+    center: {lat: 37.7749295, lng: -122.41941550000001},
     zoom: 13,
     mapTypeId: 'roadmap'
   });
@@ -35,10 +35,10 @@ function initAutocomplete() {
       return;
     }
 
-    // // Clear out the old markers. NB MIGHT WANT TO TURN THIS OFF
-    // markers.forEach(function(marker) {
-    //   marker.setMap(null);
-    // });
+    // Clear out the old markers. NB MIGHT WANT TO TURN THIS OFF
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
 
     //Make array to save markers
     markers = [];
@@ -51,21 +51,23 @@ function initAutocomplete() {
         return;
       }
 
-      // Icon changes depending on the type of place (eg. bar gets a martini glass, hospital gets a cross)
+     //changed icon to a red marker, rather than a different icon depending on the type of place
       var icon = {
-        url: '/static/img/map_icon.svg',
+        url: '/static/img/map_icon.svg', 
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(30, 30)
       };
 
-      // Create a marker for each place.
+      // Create a marker for each place
       markers.push(new google.maps.Marker({
         map: map,
         icon: icon,
         title: place.name,
-        place_id: place.place_id, //added code to get the place_id to store later
+        place_id: place.place_id, //added code to get the place_id, address, and types to store in db later
+        address: place.formatted_address,
+        types: place.types,
         position: place.geometry.location
       }));
 
@@ -78,16 +80,25 @@ function initAutocomplete() {
     });
     map.fitBounds(bounds);
 
+    var userMarkers = []; //array for saved user markers
+
+    //added code to make markers with infowindows,
+    // and added more object attributes to info window display
     for (const marker of markers) {
         const markerInfo = (`
-          <h3>${marker.title}</h3>
+          <h4>${marker.title}</h4>
           <p>
             Google Places ID: ${marker.place_id}<br>
+            Address: ${marker.address}<br>
+            Types: ${marker.types}<br>
             Located at: <code>${marker.position.lat()}</code>,
             <code>${marker.position.lng()}</code>
           </p>
-          <form action="/add_marker">
+          <form action="/map/${map_id}/save">
             <input type="submit" value="Add location to map">
+            <input type="hidden" name="latitude" value="${marker.position.lat()}">
+            <input type="hidden" name="longitude" value="${marker.position.lng()}">
+            <input type="hidden" name="title" value="${marker.title}">
           </form> 
         `);
 
@@ -96,15 +107,10 @@ function initAutocomplete() {
           height: 100,
           width: 200
         });
-
+        
+        //event listener - click on marker, open infowindow
         marker.addListener('click', () => {
-          //open marker window
           infoWindow.open(map, marker);
-        });
-
-        marker.addListener('dblclick', () => {
-          //Delete marker from map
-          alert("Test for deleting");
         });
     }
 

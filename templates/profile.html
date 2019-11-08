@@ -2,25 +2,32 @@
 
 {% block body %}
 
-<h2>Profile</h2>
+    <h2>Profile</h2>
 
-<p>Hello, {{user.fname}} {{user.lname}} !</p>
+    <p>Hello, {{user.fname}} {{user.lname}} !</p>
 
-<div id=maplist>
-    <h2>Your Maps</h2>
-    
-    {% for map in maps %}
-        <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
-    {% endfor %}
-    <br>
-    <form action="/make_map">
-        <input type="submit" value="Make New Map">
-    </form>
-</div>
+    <div id=maplist>
+        <h2>Your Maps</h2>
+        
+        
+        {% for map in maps %}
+            <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
+        {% endfor %}
+        <br>
+    </div>
 
-<br><br><br>
-<form action="/logout">
-    <input type="submit" value="Log Out">
-</form>
+    <div id="make_new_map">
+        <form action="/make_map">
+            <input type="submit" value="Make New Map">
+        </form>
+    </div>
+
+    <br><br><br>
+
+  <div id="logout">
+  <form action="/logout">
+      <input type="submit" value="Log Out">
+  </form>
+  </div>
 
 {% endblock %}

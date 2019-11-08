@@ -2,25 +2,53 @@
 <html>
 <head>
     <title>Travel Maps</title>
+    <!-- Load Bootstrap 4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Load Font Awesome -->
+    <script src="https://kit.fontawesome.com/f48e621acf.js" crossorigin="anonymous"></script>
+    <!-- Load JQuery -->
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+    <!-- Link to css file -->
     <link rel="stylesheet" href="static/css/styles.css"/>
     {% block head %}
 
     {% endblock %}
 </head>
 <body>
-    
-      {% for message in get_flashed_messages() %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">TravelMaps</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <p id="flash_message">{{ message }}</p>
-      {% endfor %}
-    
-    <a href="/"><h1 class="Masterheading">Travel Maps</h1></a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  {% endfor %}
 
-    {% block body %}
+  {% block body %}
 
-    {% endblock %}
-   
-    <br><br><br>
-    <a href="/about">About</a>
-    <p>Contact</p>
+  {% endblock %}
+  
 </body>
 </html>

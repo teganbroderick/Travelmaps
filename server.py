@@ -77,12 +77,12 @@ def signup_process():
         user_info = User(fname=fname, lname=lname, email=email, password=password)
         db.session.add(user_info)
         db.session.commit()
+        #get user object from database
+        user = User.query.filter_by(email=email).first()       
         #add user to session
         session['user_id'] = user.user_id        
-        #get user object from database
-        user = User.query.filter_by(user_id=session['user_id']).first()
         flash("Logged in!")
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, maps=user.maps)
     
     else: 
         flash("A user with that email address already exists.")
@@ -118,12 +118,15 @@ def makemap_process():
     
     if map_to_verify == None: #if new map is not in the maps table
         #Add new map to maps table in db
-        map_info = Map(user_id=session['user_id'], map_name=map_name, map_description=map_description)
+        map_info = Map(user_id=session['user_id'], 
+                        map_name=map_name, 
+                        map_description=map_description)
         db.session.add(map_info)
         db.session.commit()
         #get map object
-        newmap = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
-        return render_template("map.html", map=newmap)
+        new_map = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
+        redirect_route = "/map/" + str(new_map.map_id)
+        return redirect(redirect_route)
     else:
         flash("A map with that name and description already exists.") #make more specific to user, use name
         return redirect("/make_map")
@@ -139,6 +142,28 @@ def render_map(map_id):
 
     #return render_template("test_map_searchbox2.html", map=user_map)
     return render_template("map.html", map=user_map)
+
+@app.route('/map/<int:map_id>/save') 
+def save_location(map_id):
+    """Save location for marker on current map"""
+    
+    user_map = Map.query.filter(Map.map_id == map_id).one()
+
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    title = request.args.get('title')
+    
+    print("HERE")
+    print(latitude, longitude, title)
+    print("")
+
+    new_place = Place(map_id=map_id, latitude=latitude, longitude=longitude, google_place_name=title)
+    db.session.add(new_place)
+    db.session.commit()
+
+    return None
+    # render_template("map.html", map1, places)
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

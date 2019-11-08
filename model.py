@@ -55,8 +55,9 @@ class Place(db.Model):
                         autoincrement=True)
     map_id = db.Column(db.Integer, 
                         db.ForeignKey('maps.map_id'))
-    google_place_id = db.Column(db.String(50), nullable=False)
-    google_place_name = db.Column(db.String(50), nullable=False)
+    latitude = db.Column(db.String(50), nullable=False)
+    longitude = db.Column(db.String(50), nullable=False)
+    google_place_name = db.Column(db.String(100), nullable=False)
 
 
     def __repr__(self):
