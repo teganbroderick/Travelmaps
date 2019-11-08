@@ -137,11 +137,11 @@ def render_map(map_id):
     """Render map.html for map_id passed into route"""
 
     user_map = Map.query.filter(Map.map_id == map_id).one()
-
+    places_on_map = Place.query.filter(Place.map_id == map_id).all()
     #try and error for map ids that dont exist - handle error
 
     #return render_template("test_map_searchbox2.html", map=user_map)
-    return render_template("map.html", map=user_map)
+    return render_template("map.html", map=user_map, places=places_on_map)
 
 @app.route('/map/<int:map_id>/save') 
 def save_location(map_id):
@@ -170,13 +170,14 @@ def save_location(map_id):
                             google_place_name=title)
         db.session.add(new_place)
         db.session.commit()
-        print(new_place)
-        print(user_map.places)
-        return render_template("map.html", map=user_map, places=user_map.places)
+        
+        places_on_map = Place.query.filter(Place.map_id == map_id).all()
+        print("HERE IS PLACES ON MAP")
+        print(places_on_map)
+        return render_template("map.html", map=user_map, places=places_on_map)
     else:
         flash("You already saved that location to your map")
-        return render_template("map.html", map=user_map, places=user_map.places)
-
+        return render_template("map.html", map=user_map, places=places_on_map)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
