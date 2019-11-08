@@ -15,6 +15,15 @@
     <h3>Map Name: {{ map.map_name }} </h3>
     <h3>Map Description: {{ map.map_description }} </h3>
     <h3>Map ID: {{ map.map_id }} </h3>
+    <h3>Places in this map:</h3>
+      {%for place in places %}
+      <ul>
+        <li>Place Name:{{ place.google_place_name }}</li>
+        <li>Latitude:{{ place.latitude }}</li>
+        <li>Longitude:{{ place.longitude }}</li>
+      </ul>
+      {% endfor %}
+
   </div>
 
     <!-- Google maps code -->
