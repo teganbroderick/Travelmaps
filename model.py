@@ -63,7 +63,7 @@ class Place(db.Model):
     def __repr__(self):
         """Return a human-readable representation of a place"""
 
-        return f"<Place place_id={self.place_id} map_id={self.map_id} google_place_id={self.google_place_id}>"
+        return f"<Place place_id={self.place_id} map_id={self.map_id} latitude={self.latitude} longitude={self.longitude} google_place_name={self.google_place_name}>"
 
 class UserPlace(db.Model):
     """Data model for a userplace."""
