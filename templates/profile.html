@@ -9,7 +9,6 @@
     <div id=maplist>
         <h2>Your Maps</h2>
         
-        
         {% for map in maps %}
             <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
         {% endfor %}

@@ -11,12 +11,15 @@
 
 {% block body %}
   <div class="container-fluid">
+  <div class="row" style="height: 20px">
+  </div>
   <div class="row">
     <div class="col-4">
       <div id="map_details">
         <h2>Map Page</h2>
         <h3>Map Name: {{ map.map_name }} </h3>
         <h3>Map Description: {{ map.map_description }} </h3><br>
+        <!-- if there are places in the map, print them -->
         <h3>Places on this map:</h3>
         {%for place in places %}
           <ul>
@@ -25,6 +28,7 @@
             <li>Longitude: {{ place.longitude }}</li>
           </ul>
         {% endfor %}
+        <!-- if there are no places in the map, print a message to get started... -->
       </div>
     </div>
     
@@ -35,13 +39,15 @@
       <!-- end google maps code -->
     </div>
   </div>
-</div>
-
-
-  <div id="logout">
-  <form action="/logout">
-      <input type="submit" value="Log Out">
-  </form>
+  <div class="row" style="height: 30px">
+    <div class="col-2">
+      <div id="logout">
+        <form action="/logout">
+            <input type="submit" value="Log Out">
+        </form>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock %}
 

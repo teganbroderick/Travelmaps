@@ -1,4 +1,12 @@
 
+ul {
+  font-size: 12px;
+}
+
+h3 {
+  font-size: 18px;
+  font-style: bold;
+}
 
 #map {
   height: 400px;
