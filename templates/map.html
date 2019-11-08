@@ -10,26 +10,33 @@
 {% endblock %}
 
 {% block body %}
-  <div id="map_details">
-    <h2>Map Page</h2>
-    <h3>Map Name: {{ map.map_name }} </h3>
-    <h3>Map Description: {{ map.map_description }} </h3>
-    <h3>Map ID: {{ map.map_id }} </h3>
-    <h3>Places in this map:</h3>
-      {%for place in places %}
-      <ul>
-        <li>Place Name:{{ place.google_place_name }}</li>
-        <li>Latitude:{{ place.latitude }}</li>
-        <li>Longitude:{{ place.longitude }}</li>
-      </ul>
-      {% endfor %}
-
+  <div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <div id="map_details">
+        <h2>Map Page</h2>
+        <h3>Map Name: {{ map.map_name }} </h3>
+        <h3>Map Description: {{ map.map_description }} </h3><br>
+        <h3>Places on this map:</h3>
+        {%for place in places %}
+          <ul>
+            <li>Place Name: {{ place.google_place_name }}</li>
+            <li>Latitude: {{ place.latitude }}</li>
+            <li>Longitude: {{ place.longitude }}</li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="col-8">
+      <!-- Google maps code -->
+      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+      <div id="map"></div>
+      <!-- end google maps code -->
+    </div>
   </div>
+</div>
 
-    <!-- Google maps code -->
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
-    <!-- end google maps code -->
 
   <div id="logout">
   <form action="/logout">
