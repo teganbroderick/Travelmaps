@@ -23,25 +23,27 @@ function initAutocomplete() {
     mapTypeId: 'roadmap'
   });
 
-  //Array to save markers
+  //Array to save usermarkers
+  var userMarkers = [];
+
+ //Array to save markers created from autocomplete searches
   var markers = [];
 
-
   //ajax call to get place information from server.py/db
-  $.get('/get_places/', (places_list) => {
+  $.get('/get_places/${map_id}', (places_list) => {
     for (const place of places_list) {
-      markers.push(new google.maps.Marker({
+      userMarkers.push(new google.maps.Marker({
         position: {
           lat: place.latitude,
           lng: place.longitude
         },
         title: place.title,
         icon: {
-        url: '/static/img/map_icon_green.png', 
+        url: '/static/img/map_icon_black.png', 
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(30, 30)
+        scaledSize: new google.maps.Size(20, 20)
       },
       map: map,
       }));
