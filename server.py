@@ -88,6 +88,7 @@ def signup_process():
         flash("A user with that email address already exists.")
         return redirect("/login")
 
+
 @app.route('/logout')
 def logout():
     """delete user_id info from session and log user out"""
@@ -143,6 +144,7 @@ def render_map(map_id):
     #return render_template("test_map_searchbox2.html", map=user_map)
     return render_template("map.html", map=user_map, places=places_on_map)
 
+
 @app.route('/map/<int:map_id>/save', methods=["POST"]) 
 def save_location(map_id):
     """Save marker to databse places table, uring current map_id"""
@@ -177,20 +179,19 @@ def save_location(map_id):
         print("HERE is last place added!")
         print(last_place_added)
 
-
-
         return render_template("map.html", map=user_map, places=places_on_map)
     else:
         flash("You already saved that location to your map")
         return render_template("map.html", map=user_map, places=places_on_map)
 
+
 @app.route('/get_places/')
 def get_places():
     """JSON information about places saved to map"""
     
-    #run through places in places_on_map object list, put attributes into a dictionary, 
-    #append dict to list, return jsonified list
-    places_on_map = Place.query.filter(Place.map_id == 1).all()
+    map_id = request.args.get("map_id")
+    
+    places_on_map = Place.query.filter(Place.map_id == map_id).all()
     places_list = []
     for place in places_on_map:
         temp_dict = {}
@@ -201,12 +202,8 @@ def get_places():
         temp_dict['title'] = place.google_place_name
         places_list.append(temp_dict)
 
-    #debugging
-        
-    print('HERE IS PLACE LIST')
-    print(places_list)
-
     return jsonify(places_list)
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

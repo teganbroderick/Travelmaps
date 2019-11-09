@@ -30,8 +30,10 @@ function initAutocomplete() {
   var markers = [];
 
   //ajax call to get place information from server.py/db
-  $.get('/get_places/${map_id}', (places_list) => {
-    for (const place of places_list) {
+  $.get('/get_places/', {map_id : map_id}, makeMarkers);
+
+  function makeMarkers(response) {
+    for (const place of response) {
       userMarkers.push(new google.maps.Marker({
         position: {
           lat: place.latitude,
@@ -48,7 +50,7 @@ function initAutocomplete() {
       map: map,
       }));
     }
-  });
+  }
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
