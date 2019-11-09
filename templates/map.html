@@ -4,9 +4,11 @@
   <link rel="stylesheet" href="/static/css/maps.css"/>
   <script src="/static/js/maps.js"></script>
     <!-- load google places library before initializing map -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete"> 
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete">
   </script>
   <script> window.map_id = {{ map.map_id }} </script>
+  <script type="text/javascript"></script>
+
 {% endblock %}
 
 {% block body %}

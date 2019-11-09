@@ -1,6 +1,6 @@
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Map, Place, UserPlace, connect_to_db, db
@@ -125,8 +125,8 @@ def makemap_process():
         db.session.commit()
         #get map object
         new_map = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
-        redirect_route = "/map/" + str(new_map.map_id)
-        return redirect(redirect_route)
+        # redirect_route = "/map/" + str(new_map.map_id)
+        return redirect(f'/map/{new_map.map_id}')
     else:
         flash("A map with that name and description already exists.") #make more specific to user, use name
         return redirect("/make_map")
@@ -143,19 +143,15 @@ def render_map(map_id):
     #return render_template("test_map_searchbox2.html", map=user_map)
     return render_template("map.html", map=user_map, places=places_on_map)
 
-@app.route('/map/<int:map_id>/save') 
+@app.route('/map/<int:map_id>/save', methods=["POST"]) 
 def save_location(map_id):
-    """Save location for marker on current map"""
+    """Save marker to databse places table, uring current map_id"""
     
     user_map = Map.query.filter(Map.map_id == map_id).one()
 
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    title = request.args.get('title')
-    
-    print("HERE")
-    print(latitude, longitude, title)
-    print("")
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+    title = request.form.get('title')
 
     place_to_verify = Place.query.filter_by(map_id=map_id, 
                                             latitude=latitude, 
@@ -172,12 +168,45 @@ def save_location(map_id):
         db.session.commit()
         
         places_on_map = Place.query.filter(Place.map_id == map_id).all()
-        print("HERE IS PLACES ON MAP")
+        
+        last_place_added = places_on_map[-1]
+        print("HERE is the map!")
+        print(user_map)
+        print("HERE ARE PLACES ON MAP")
         print(places_on_map)
+        print("HERE is last place added!")
+        print(last_place_added)
+
+
+
         return render_template("map.html", map=user_map, places=places_on_map)
     else:
         flash("You already saved that location to your map")
         return render_template("map.html", map=user_map, places=places_on_map)
+
+@app.route('/get_places/')
+def get_places():
+    """JSON information about places saved to map"""
+    
+    #run through places in places_on_map object list, put attributes into a dictionary, 
+    #append dict to list, return jsonified list
+    places_on_map = Place.query.filter(Place.map_id == 1).all()
+    places_list = []
+    for place in places_on_map:
+        temp_dict = {}
+        temp_dict['place_id'] = place.place_id
+        temp_dict['map_id'] = place.map_id
+        temp_dict['latitude'] = float(place.latitude)
+        temp_dict['longitude'] = float(place.longitude)
+        temp_dict['title'] = place.google_place_name
+        places_list.append(temp_dict)
+
+    #debugging
+        
+    print('HERE IS PLACE LIST')
+    print(places_list)
+
+    return jsonify(places_list)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
@@ -189,6 +218,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    #DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run(port=5000, host='0.0.0.0')
