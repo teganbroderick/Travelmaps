@@ -147,7 +147,7 @@ def render_map(map_id):
 
 @app.route('/map/<int:map_id>/save', methods=["POST"]) 
 def save_location(map_id):
-    """Save marker to databse places table, uring current map_id"""
+    """Save marker to database places table, using current map_id"""
     
     user_map = Map.query.filter(Map.map_id == map_id).one()
 
@@ -183,6 +183,43 @@ def save_location(map_id):
     else:
         flash("You already saved that location to your map")
         return render_template("map.html", map=user_map, places=places_on_map)
+
+@app.route('/save_location.json')
+def save_location_json():
+    """Save marker to database places table from AJAX request using current map_id,
+    return jsonified place"""
+
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    title = request.args.get('title')
+    map_id = request.args.get('map_id')
+
+    #add place to places table in db
+    new_place = Place(map_id=map_id, 
+                        latitude=latitude, 
+                        longitude=longitude, 
+                        google_place_name=title)
+    db.session.add(new_place)
+    db.session.commit()
+    print("Added place!")
+    print(new_place)
+
+    #get new place as an object
+    new_place_object = Place.query.filter(Place.map_id == map_id, 
+                                Place.latitude == latitude, 
+                                Place.longitude == longitude).first()
+    
+    #make places list with nested dict
+    place_list = []
+    temp_dict = {}
+    temp_dict['place_id'] = new_place_object.place_id
+    temp_dict['map_id'] = new_place_object.map_id
+    temp_dict['latitude'] = float(new_place_object.latitude)
+    temp_dict['longitude'] = float(new_place_object.longitude)
+    temp_dict['title'] = new_place_object.google_place_name
+    places_list.append(temp_dict)
+
+    return jsonify(place_list)
 
 
 @app.route('/get_places/')

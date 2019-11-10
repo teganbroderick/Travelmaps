@@ -29,7 +29,7 @@ function initAutocomplete() {
  //Array to save markers created from autocomplete searches
   var markers = [];
 
-  //ajax call to get place information from server.py/db
+  //ajax call to get place information from server.py db, add saved markers to map
   $.get('/get_places/', {map_id : map_id}, makeMarkers);
 
   function makeMarkers(response) {
@@ -50,6 +50,8 @@ function initAutocomplete() {
       map: map,
       }));
     }
+    //make info windows for markers
+    //nb. need to add more columns to the db for address, types, etc. 
     for (const marker of userMarkers) {
       const markerInfo = (`
         <h4>${marker.title}</h4>
@@ -60,12 +62,6 @@ function initAutocomplete() {
           Located at: <code>${marker.position.lat()}</code>,
           <code>${marker.position.lng()}</code>
         </p>
-        <form action="/map/${map_id}/save" method="POST">
-          <input type="submit" value="Add location to map">
-          <input type="hidden" name="latitude" value="${marker.position.lat()}">
-          <input type="hidden" name="longitude" value="${marker.position.lng()}">
-          <input type="hidden" name="title" value="${marker.title}">
-        </form> 
       `);
 
       const infoWindow = new google.maps.InfoWindow({
@@ -90,7 +86,6 @@ function initAutocomplete() {
   map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
   });
-
 
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
@@ -144,8 +139,6 @@ function initAutocomplete() {
     });
     map.fitBounds(bounds);
 
-
-
     //added code to make markers with infowindows,
     // and added more object attributes to info window display
     for (const marker of markers) {
@@ -159,10 +152,11 @@ function initAutocomplete() {
             <code>${marker.position.lng()}</code>
           </p>
           <form action="/map/${map_id}/save" method="POST">
-            <input type="submit" value="Add location to map">
-            <input type="hidden" name="latitude" value="${marker.position.lat()}">
-            <input type="hidden" name="longitude" value="${marker.position.lng()}">
-            <input type="hidden" name="title" value="${marker.title}">
+            <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
+            <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
+            <input id="title-field" type="hidden" name="title" value="${marker.title}">
+            <input id="map-id-field" type="hidden" name="title" value="${map_id}">
+            <input id="submit-button "type="button" value="Add location to map">
           </form> 
         `);
 
@@ -177,6 +171,23 @@ function initAutocomplete() {
           infoWindow.open(map, marker);
         });
     }
-
   });
+
+    //ajax call to save places to the database without reloading the window
+    //NOT WORKING
+    function handleSavePlaceRequest(evt) {
+      evt.preventDefault();
+      
+      const formData = {
+        latitiude: $('#latitude-field').val(),
+        longitude: $('#longitude-field').val(),
+        title: $('#title-field').val(),
+        map_id: $('#map-id-field').val()
+      };
+
+      $.get('/save_location.json', formData, makeMarkers);
+    }
+
+    $('#submit-button').on('click', handleSavePlaceRequest);
+
 }
