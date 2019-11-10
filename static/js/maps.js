@@ -50,6 +50,35 @@ function initAutocomplete() {
       map: map,
       }));
     }
+    for (const marker of userMarkers) {
+      const markerInfo = (`
+        <h4>${marker.title}</h4>
+        <p>
+          Google Places ID: ${marker.place_id}<br>
+          Address: ${marker.address}<br>
+          Types: ${marker.types}<br>
+          Located at: <code>${marker.position.lat()}</code>,
+          <code>${marker.position.lng()}</code>
+        </p>
+        <form action="/map/${map_id}/save" method="POST">
+          <input type="submit" value="Add location to map">
+          <input type="hidden" name="latitude" value="${marker.position.lat()}">
+          <input type="hidden" name="longitude" value="${marker.position.lng()}">
+          <input type="hidden" name="title" value="${marker.title}">
+        </form> 
+      `);
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: markerInfo,
+        height: 100,
+        width: 200
+      });
+      
+      //event listener - click on marker, open infowindow
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+      });
+    }
   }
 
   // Create the search box and link it to the UI element.
