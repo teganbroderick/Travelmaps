@@ -9,19 +9,37 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 function initAutocomplete() {
-  //find coords of last added place, center reloaded map on those coords
-  //if no places added yet, center map on SF
-  // if (var places == []) {
-  //   center_coords = {lat: 37.7749295, lng: -122.41941550000001};
-  // } else {
-  //   center_coords = {lat:${coords_lat}, lng:${coords_lon}};
-  // }
 
+  // //find coords of last place added, center map on those coords
+  
+
+  function centerMap(response) {
+    if (response == []) { //if there are no places added to the map yet
+        const center_coords = {lat: 37.7749295, lng: -122.41941550000001};
+        console.log(center_coords);
+    } 
+
+    else {
+      const center_coords = {lat: response.latitude, lng: response.longitude};
+      console.log(center_coords);
+    } 
+    return center_coords;
+  }
+
+  function getCenterCoords() {
+    $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
+  }
+
+  const my_center_coords = getCenterCoords();
+
+  //instantiate map
+  // const center_coords = {lat: 41.3783713, lng: 2.192468500000018};
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.7749295, lng: -122.41941550000001},
+    center: my_center_coords,
     zoom: 13,
     mapTypeId: 'roadmap'
   });
+  
 
   //Array to save usermarkers
   var userMarkers = [];
@@ -50,6 +68,7 @@ function initAutocomplete() {
       map: map,
       }));
     }
+
     //make info windows for markers
     //nb. need to add more columns to the db for address, types, etc. 
     for (const marker of userMarkers) {

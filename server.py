@@ -210,16 +210,14 @@ def save_location_json():
                                 Place.longitude == longitude).first()
     
     #make places list with nested dict
-    place_list = []
-    temp_dict = {}
-    temp_dict['place_id'] = new_place_object.place_id
-    temp_dict['map_id'] = new_place_object.map_id
-    temp_dict['latitude'] = float(new_place_object.latitude)
-    temp_dict['longitude'] = float(new_place_object.longitude)
-    temp_dict['title'] = new_place_object.google_place_name
-    places_list.append(temp_dict)
+    place_object_attributes = [{}]
+    temp_dict[0]['place_id'] = new_place_object.place_id
+    temp_dict[0]['map_id'] = new_place_object.map_id
+    temp_dict[0]['latitude'] = float(new_place_object.latitude)
+    temp_dict[0]['longitude'] = float(new_place_object.longitude)
+    temp_dict[0]['title'] = new_place_object.google_place_name
 
-    return jsonify(place_list)
+    return jsonify(place_object_attributes)
 
 
 @app.route('/get_places/')
@@ -240,6 +238,31 @@ def get_places():
         places_list.append(temp_dict)
 
     return jsonify(places_list)
+
+@app.route('/get_last_place_added/')
+def get_last_place_added():
+    """JSON information about last place saved to map"""
+    
+    map_id = request.args.get("map_id")
+    
+    all_places_on_map = Place.query.filter(Place.map_id == map_id).all()
+    if all_places_on_map != []:
+        last_place_added = all_places_on_map[-1]
+
+        print("HERE ARE PLACES ON MAP")
+        print(all_places_on_map)
+        print("HERE is last place added!")
+        print(last_place_added)
+
+        last_place_added_dict = {}
+        last_place_added_dict['latitude'] = float(last_place_added.latitude)
+        last_place_added_dict['longitude'] = float(last_place_added.longitude)
+        print(last_place_added_dict)
+        print("last_place_added_dict")
+    else:
+        last_place_added_dict = []
+
+    return jsonify(last_place_added_dict)
 
 
 if __name__ == "__main__":
