@@ -170,7 +170,6 @@ def save_location(map_id):
         db.session.commit()
         
         places_on_map = Place.query.filter(Place.map_id == map_id).all()
-        
         last_place_added = places_on_map[-1]
         print("HERE is the map!")
         print(user_map)

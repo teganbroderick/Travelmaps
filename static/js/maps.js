@@ -10,20 +10,17 @@
 
 function initAutocomplete() {
 
-  // //find coords of last place added, center map on those coords
-  
-
+  //find coords of last place added, center map on those coords
+  //WORK IN PROGRESS
   function centerMap(response) {
     if (response == []) { //if there are no places added to the map yet
-        const center_coords = {lat: 37.7749295, lng: -122.41941550000001};
-        console.log(center_coords);
+        var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
+        console.log("center coords", center_coords);
+    } else {
+      var center_coords = {lat: response.latitude, lng: response.longitude};
+      console.log("center coords", center_coords);
     } 
-
-    else {
-      const center_coords = {lat: response.latitude, lng: response.longitude};
-      console.log(center_coords);
-    } 
-    return center_coords;
+    return center_coords; //doesnt work
   }
 
   function getCenterCoords() {
@@ -31,11 +28,13 @@ function initAutocomplete() {
   }
 
   const my_center_coords = getCenterCoords();
+  console.log("my center coords:", my_center_coords) //returns undefined because AJAX is asynchronous
+  
 
   //instantiate map
-  // const center_coords = {lat: 41.3783713, lng: 2.192468500000018};
+  const center_coords = {lat: 41.3783713, lng: 2.192468500000018};
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: my_center_coords,
+    center: center_coords,
     zoom: 13,
     mapTypeId: 'roadmap'
   });
@@ -175,7 +174,7 @@ function initAutocomplete() {
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
             <input id="map-id-field" type="hidden" name="title" value="${map_id}">
-            <input id="submit-button "type="button" value="Add location to map">
+            <input id="submit-button "type="submit" value="Add location to map">
           </form> 
         `);
 
@@ -192,21 +191,21 @@ function initAutocomplete() {
     }
   });
 
-    //ajax call to save places to the database without reloading the window
-    //NOT WORKING
-    function handleSavePlaceRequest(evt) {
-      evt.preventDefault();
+    // //ajax call to save places to the database without reloading the window
+    // //NOT WORKING
+    // function handleSavePlaceRequest(evt) {
+    //   evt.preventDefault();
       
-      const formData = {
-        latitiude: $('#latitude-field').val(),
-        longitude: $('#longitude-field').val(),
-        title: $('#title-field').val(),
-        map_id: $('#map-id-field').val()
-      };
+    //   const formData = {
+    //     latitiude: $('#latitude-field').val(),
+    //     longitude: $('#longitude-field').val(),
+    //     title: $('#title-field').val(),
+    //     map_id: $('#map-id-field').val()
+    //   };
 
-      $.get('/save_location.json', formData, makeMarkers);
-    }
+    //   $.get('/save_location.json', formData, makeMarkers);
+    // }
 
-    $('#submit-button').on('click', handleSavePlaceRequest);
+    // $('#submit-button').on('submit', handleSavePlaceRequest);
 
 }
