@@ -10,41 +10,38 @@
 
 function initAutocomplete() {
 
-  //find coords of last place added, center map on those coords
-  //WORK IN PROGRESS
-  function centerMap(response) {
-    if (response == []) { //if there are no places added to the map yet
-        var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
-        console.log("center coords", center_coords);
-    } else {
-      var center_coords = {lat: response.latitude, lng: response.longitude};
-      console.log("center coords", center_coords);
-    } 
-    return center_coords; //doesnt work
-  }
+  // // find coords of last place added, center map on those coords
+  // // WORK IN PROGRESS
+  // function centerMap(response) {
+  //   if (response == []) { //if there are no places added to the map yet
+  //       var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
+  //       console.log("center coords", center_coords);
+  //   } else {
+  //     var center_coords = {lat: response.latitude, lng: response.longitude};
+  //     console.log("center coords", center_coords);
+  //   } 
+  //   return center_coords; //doesnt work
+  // }
 
-  function getCenterCoords() {
-    $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
-  }
+  // function getCenterCoords() {
+  //   $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
+  // }
 
-  const my_center_coords = getCenterCoords();
-  console.log("my center coords:", my_center_coords) //returns undefined because AJAX is asynchronous
+  // const my_center_coords = getCenterCoords();
+  // console.log("my center coords:", my_center_coords) //returns undefined because AJAX is asynchronous
   
 
   //instantiate map
-  const center_coords = {lat: 41.3783713, lng: 2.192468500000018};
+  const center_coords = {lat: 37.7749295, lng: -122.41941550000001};
   var map = new google.maps.Map(document.getElementById('map'), {
     center: center_coords,
     zoom: 13,
     mapTypeId: 'roadmap'
   });
   
-
+  //LOAD SAVED MARKERS
   //Array to save usermarkers
   var userMarkers = [];
-
- //Array to save markers created from autocomplete searches
-  var markers = [];
 
   //ajax call to get place information from server.py db, add saved markers to map
   $.get('/get_places/', {map_id : map_id}, makeMarkers);
@@ -68,8 +65,8 @@ function initAutocomplete() {
       }));
     }
 
-    //make info windows for markers
-    //nb. need to add more columns to the db for address, types, etc. 
+    //make info windows for saved markers
+    //nb. need to add more columns to the db for address, types, website, opening hours, etc. 
     for (const marker of userMarkers) {
       const markerInfo = (`
         <h4>${marker.title}</h4>
@@ -78,7 +75,7 @@ function initAutocomplete() {
           Address: ${marker.address}<br>
           Types: ${marker.types}<br>
           Located at: <code>${marker.position.lat()}</code>,
-          <code>${marker.position.lng()}</code>
+          <code>${marker.position.lng()}</code><br>
         </p>
       `);
 
@@ -94,6 +91,10 @@ function initAutocomplete() {
       });
     }
   }
+
+  //START NEW PLACES SEARCH
+ //Array to save markers created from search box searches
+  var markers = [];
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
@@ -119,7 +120,6 @@ function initAutocomplete() {
       marker.setMap(null);
     });
 
-
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
     places.forEach(function(place) {
@@ -128,7 +128,7 @@ function initAutocomplete() {
         return;
       }
 
-     //changed icon to a red marker, rather than a different icon depending on the type of place
+     //define icon
       var icon = {
         url: '/static/img/map_icon.svg', 
         size: new google.maps.Size(71, 71),
@@ -142,6 +142,8 @@ function initAutocomplete() {
         map: map,
         icon: icon,
         title: place.name,
+        website: place.website,
+        opening_hours: place.opening_hours,
         place_id: place.place_id, //added code to get the place_id, address, and types to store in db later
         address: place.formatted_address,
         types: place.types,
@@ -155,39 +157,59 @@ function initAutocomplete() {
         bounds.extend(place.geometry.location);
       }
     });
-    map.fitBounds(bounds);
+    map.fitBounds(bounds);  
 
-    //added code to make markers with infowindows,
-    // and added more object attributes to info window display
+    //ADD INFO WINDOWS FOR RENDERED SEARCH MARKERS
     for (const marker of markers) {
-        const markerInfo = (`
-          <h4>${marker.title}</h4>
+      if (marker.website == undefined) {
+        var markerWebsite = 'website not available'
+      } else {
+        var markerWebsite = marker.website
+      }
+
+      if (marker.opening_hours == undefined) {
+        var markerOpeningHours = 'opening hours not available'
+      } else {
+        var markerOpeningHours = marker.opening_hours.weekday_text
+      }
+
+      const markerInfo = (`
+        <div id="infowindow-content">
+          <p id="marker_heading" class="title">${marker.title}</p>
           <p>
-            Google Places ID: ${marker.place_id}<br>
             Address: ${marker.address}<br>
+            Website: ${markerWebsite} <br>
+            Opening Hours: ${markerOpeningHours} <br><br>
             Types: ${marker.types}<br>
-            Located at: <code>${marker.position.lat()}</code>,
-            <code>${marker.position.lng()}</code>
+            Google Places ID: ${marker.place_id}<br>
+            Latitude: ${marker.position.lat()} <br>
+            Longitude: ${marker.position.lng()}
           </p>
           <form action="/map/${map_id}/save" method="POST">
             <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
             <input id="map-id-field" type="hidden" name="title" value="${map_id}">
+            <input id="website_field" type="hidden" name="website" value="${marker.website}">
+            Notes: <textarea id="marker-notes" name="marker_notes" cols="50" rows="4"></textarea><br>
             <input id="submit-button "type="submit" value="Add location to map">
           </form> 
-        `);
 
-        const infoWindow = new google.maps.InfoWindow({
-          content: markerInfo,
-          height: 100,
-          width: 200
-        });
-        
-        //event listener - click on marker, open infowindow
-        marker.addListener('click', () => {
-          infoWindow.open(map, marker);
-        });
+        </div>
+      `);
+
+      console.log(marker.opening_hours)
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: markerInfo,
+        height: 100,
+        width: 200
+      });
+      
+      //event listener - click on marker, open infowindow
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+      });
     }
   });
 
@@ -196,11 +218,12 @@ function initAutocomplete() {
     // function handleSavePlaceRequest(evt) {
     //   evt.preventDefault();
       
-    //   const formData = {
-    //     latitiude: $('#latitude-field').val(),
-    //     longitude: $('#longitude-field').val(),
-    //     title: $('#title-field').val(),
-    //     map_id: $('#map-id-field').val()
+      // const formData = {
+      //   latitiude: $('#latitude-field').val(),
+      //   longitude: $('#longitude-field').val(),
+      //   title: $('#title-field').val(),
+      //   map_id: $('#map-id-field').val()
+      //   website: $('#website-id-field').val()
     //   };
 
     //   $.get('/save_location.json', formData, makeMarkers);

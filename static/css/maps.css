@@ -8,6 +8,14 @@ h3 {
   font-style: bold;
 }
 
+#marker_heading {
+  font-size: 16px;
+}
+#marker_attribute {
+  font-size: 14px
+  font-style: bold;
+}
+
 #map {
   height: 400px;
   width: 75%;
