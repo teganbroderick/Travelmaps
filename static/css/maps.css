@@ -8,6 +8,11 @@ h3 {
   font-style: bold;
 }
 
+#place-name-header {
+  font-size: 14px;
+  font-style: bold;
+}
+
 #marker_heading {
   font-size: 16px;
 }

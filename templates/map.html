@@ -25,9 +25,10 @@
         <h3>Places on this map:</h3>
         {%for place in places %}
           <ul>
-            <li>Place Name: {{ place.google_place_name }}</li>
-            <li>Latitude: {{ place.latitude }}</li>
-            <li>Longitude: {{ place.longitude }}</li>
+            <h3 id="place-name-header">{{ place.google_place_name }}</h3>
+            <li>Address: {{ place.address }}</li>
+            <li>Website: {{ place.website }}</li>
+            <li>User Notes: {{ place.user_notes }}</li>
           </ul>
         {% endfor %}
         <!-- if there are no places in the map, print a message to get started... -->

@@ -160,7 +160,7 @@ def save_location(map_id):
     longitude = request.form.get('longitude')
     user_notes = request.form.get('user_notes')
 
-    print(title, address, website, opening_hours, place_types, 
+    print(title, address, website, place_types, 
         google_places_id, latitude, longitude, user_notes)
     
     place_to_verify = Place.query.filter_by(map_id=map_id, 
@@ -234,11 +234,15 @@ def get_places():
     places_list = []
     for place in places_on_map:
         temp_dict = {}
-        temp_dict['place_id'] = place.place_id
+        temp_dict['place_id'] = place.google_places_id
         temp_dict['map_id'] = place.map_id
         temp_dict['latitude'] = float(place.latitude)
         temp_dict['longitude'] = float(place.longitude)
         temp_dict['title'] = place.google_place_name
+        temp_dict['address'] = place.address
+        temp_dict['website'] = place.website
+        temp_dict['place_types'] = place.place_types
+        temp_dict['user_notes']=  place.user_notes
         places_list.append(temp_dict)
 
     return jsonify(places_list)

@@ -48,12 +48,18 @@ function initAutocomplete() {
 
   function makeMarkers(response) {
     for (const place of response) {
+      console.log(response)
       userMarkers.push(new google.maps.Marker({
         position: {
           lat: place.latitude,
           lng: place.longitude
         },
         title: place.title,
+        address: place.address,
+        website: place.website,
+        place_types: place.place_types,
+        place_id: place.google_places_id,
+        user_notes: place.user_notes,
         icon: {
         url: '/static/img/map_icon_black.png', 
         size: new google.maps.Size(71, 71),
@@ -69,14 +75,16 @@ function initAutocomplete() {
     //nb. need to add more columns to the db for address, types, website, opening hours, etc. 
     for (const marker of userMarkers) {
       const markerInfo = (`
-        <h4>${marker.title}</h4>
-        <p>
-          Google Places ID: ${marker.place_id}<br>
-          Address: ${marker.address}<br>
-          Types: ${marker.types}<br>
-          Located at: <code>${marker.position.lat()}</code>,
-          <code>${marker.position.lng()}</code><br>
-        </p>
+          <p id="marker_heading" class="title">${marker.title}</p>
+          <p>
+            Address: ${marker.address}<br>
+            Website: ${marker.website} <br>
+            Types: ${marker.place_types}<br>
+            Google Places ID: ${marker.place_id}<br>
+            Latitude: ${marker.position.lat()} <br>
+            Longitude: ${marker.position.lng()}<br>
+            User Notes: ${marker.user_notes}
+          </p>
       `);
 
       const infoWindow = new google.maps.InfoWindow({
@@ -179,7 +187,6 @@ function initAutocomplete() {
           <p>
             Address: ${marker.address}<br>
             Website: ${markerWebsite} <br>
-            Opening Hours: ${markerOpeningHours} <br><br>
             Types: ${marker.types}<br>
             Google Places ID: ${marker.place_id}<br>
             Latitude: ${marker.position.lat()} <br>
@@ -189,7 +196,6 @@ function initAutocomplete() {
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
             <input id="address-field" type="hidden" name="address" value="${marker.address}">
             <input id="website_field" type="hidden" name="website" value="${markerWebsite}">
-            <input id="opening-hours" type="hidden" name="opening-hours" value="${markerOpeningHours}">
             <input id="types" type="hidden" name="types" value="${marker.types}">
             <input id="google-places-id" type="hidden" name="google_places_id" value="${marker.place_id}">
             <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
