@@ -3,7 +3,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Map, Place, UserPlace, connect_to_db, db
+from model import User, Map, Place, connect_to_db, db
 
 app = Flask(__name__)
 
@@ -154,7 +154,6 @@ def save_location(map_id):
     title = request.form.get('title')
     address = request.form.get('address')
     website = request.form.get('website')
-    opening_hours = request.form.get('opening_hours')
     place_types = request.form.get('types')
     google_places_id = request.form.get('google_places_id')
     latitude = request.form.get('latitude')
@@ -172,21 +171,18 @@ def save_location(map_id):
     if place_to_verify == None: #if place isn't in database for that particular map
         #add place to places table in db
         new_place = Place(map_id=map_id, 
+                            google_place_name=title,
+                            address=address,
+                            website=website,
+                            place_types=place_types,
+                            google_places_id=google_places_id,
                             latitude=latitude, 
                             longitude=longitude, 
-                            google_place_name=title)
+                            user_notes=user_notes
+                            )
         db.session.add(new_place)
         db.session.commit()
-        
         places_on_map = Place.query.filter(Place.map_id == map_id).all()
-        last_place_added = places_on_map[-1]
-        print("HERE is the map!")
-        print(user_map)
-        print("HERE ARE PLACES ON MAP")
-        print(places_on_map)
-        print("HERE is last place added!")
-        print(last_place_added)
-
         return render_template("map.html", map=user_map, places=places_on_map)
     else:
         flash("You already saved that location to your map")

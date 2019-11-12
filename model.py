@@ -59,7 +59,7 @@ class Place(db.Model):
     address = db.Column(db.String(100), nullable=False)
     website = db.Column(db.String(100), nullable=False)
     place_types = db.Column(db.String(100), nullable=False)
-    google_place_id = db.Column(db.String(100), nullable=False)
+    google_places_id = db.Column(db.String(100), nullable=False)
     latitude = db.Column(db.String(50), nullable=False)
     longitude = db.Column(db.String(50), nullable=False)
     user_notes = db.Column(db.String(300), nullable=False)
