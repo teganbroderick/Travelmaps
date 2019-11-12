@@ -55,40 +55,20 @@ class Place(db.Model):
                         autoincrement=True)
     map_id = db.Column(db.Integer, 
                         db.ForeignKey('maps.map_id'))
+    google_place_name = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(100), nullable=False)
+    website = db.Column(db.String(100), nullable=False)
+    place_types = db.Column(db.String(100), nullable=False)
+    google_place_id = db.Column(db.String(100), nullable=False)
     latitude = db.Column(db.String(50), nullable=False)
     longitude = db.Column(db.String(50), nullable=False)
-    google_place_name = db.Column(db.String(100), nullable=False)
-
+    user_notes = db.Column(db.String(300), nullable=False)
+    
 
     def __repr__(self):
         """Return a human-readable representation of a place"""
 
-        return f"<Place place_id={self.place_id} map_id={self.map_id} latitude={self.latitude} longitude={self.longitude} google_place_name={self.google_place_name}>"
-
-class UserPlace(db.Model):
-    """Data model for a userplace."""
-
-    __tablename__ = "userplaces"
-
-    userplaces_id = db.Column(db.Integer, 
-                        primary_key=True, 
-                        autoincrement=True)
-    user_id = db.Column(db.Integer, 
-                            db.ForeignKey('users.user_id'))
-    place_id =  db.Column(db.Integer, 
-                            db.ForeignKey('places.place_id'))
-    place_notes = db.Column(db.String(200), nullable=True)
-
-    #***********
-    user = db.relationship("User", backref="userplaces")
-    place = db.relationship("Place", backref="userplaces")
-    #***********
-
-
-    def __repr__(self):
-        """Return a human-readable representation of a userplace"""
-
-        return f"<UserPlace userplace_id={self.userplace_id} user_id={self.user_id} place_id={self.place_id} place_notes={self.place_notes}>"
+        return f"<Place place_id={self.place_id} map_id={self.map_id} google_place_name={self.google_place_name} address={self.address} website={self.website} place_types={self.place_types} google_place_id={self.google_place_id} latitude={self.latitude} longitude={self.longitude} user_notes={self.user_notes}>"
 
 
 def connect_to_db(app):
