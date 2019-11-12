@@ -151,10 +151,19 @@ def save_location(map_id):
     
     user_map = Map.query.filter(Map.map_id == map_id).one()
 
+    title = request.form.get('title')
+    address = request.form.get('address')
+    website = request.form.get('website')
+    opening_hours = request.form.get('opening_hours')
+    place_types = request.form.get('types')
+    google_places_id = request.form.get('google_places_id')
     latitude = request.form.get('latitude')
     longitude = request.form.get('longitude')
-    title = request.form.get('title')
+    user_notes = request.form.get('user_notes')
 
+    print(title, address, website, opening_hours, place_types, 
+        google_places_id, latitude, longitude, user_notes)
+    
     place_to_verify = Place.query.filter_by(map_id=map_id, 
                                             latitude=latitude, 
                                             longitude=longitude, 

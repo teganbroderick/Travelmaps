@@ -186,19 +186,22 @@ function initAutocomplete() {
             Longitude: ${marker.position.lng()}
           </p>
           <form action="/map/${map_id}/save" method="POST">
-            <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
-            <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
-            <input id="map-id-field" type="hidden" name="title" value="${map_id}">
+            <input id="address-field" type="hidden" name="address" value="${marker.address}">
             <input id="website_field" type="hidden" name="website" value="${markerWebsite}">
             <input id="opening-hours" type="hidden" name="opening-hours" value="${markerOpeningHours}">
+            <input id="types" type="hidden" name="types" value="${marker.types}">
+            <input id="google-places-id" type="hidden" name="google_places_id" value="${marker.place_id}">
+            <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
+            <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
+            <input id="map-id-field" type="hidden" name="map_id" value="${map_id}">
             Notes: <textarea id="user-notes" name="user_notes" cols="50" rows="4"></textarea> <br>
             <input id="submit-button "type="submit" value="Add location to map">
           </form> 
         </div>
       `);
 
-      console.log(marker.opening_hours)
+      console.log(markerOpeningHours)
 
       const infoWindow = new google.maps.InfoWindow({
         content: markerInfo,
