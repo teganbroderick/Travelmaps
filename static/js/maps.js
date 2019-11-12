@@ -190,11 +190,11 @@ function initAutocomplete() {
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
             <input id="map-id-field" type="hidden" name="title" value="${map_id}">
-            <input id="website_field" type="hidden" name="website" value="${marker.website}">
-            Notes: <textarea id="marker-notes" name="marker_notes" cols="50" rows="4"></textarea><br>
+            <input id="website_field" type="hidden" name="website" value="${markerWebsite}">
+            <input id="opening-hours" type="hidden" name="opening-hours" value="${markerOpeningHours}">
+            Notes: <textarea id="user-notes" name="user_notes" cols="50" rows="4"></textarea> <br>
             <input id="submit-button "type="submit" value="Add location to map">
           </form> 
-
         </div>
       `);
 
@@ -224,6 +224,8 @@ function initAutocomplete() {
       //   title: $('#title-field').val(),
       //   map_id: $('#map-id-field').val()
       //   website: $('#website-id-field').val()
+      //   opening_hours: $('#opening-hours').val()
+      //   user_notes: $('#user-notes').val()
     //   };
 
     //   $.get('/save_location.json', formData, makeMarkers);
