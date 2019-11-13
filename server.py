@@ -140,8 +140,17 @@ def render_map(map_id):
     user_map = Map.query.filter(Map.map_id == map_id).one()
     places_on_map = Place.query.filter(Place.map_id == map_id).all()
     #To do: handle error if user types a wrong number into the address bar
-
-    return render_template("map.html", map=user_map, places=places_on_map)
+    
+    user_id_for_map = user_map.user_id
+    print("SESSION ID", session["user_id"])
+    print("USER ID FOR MAP", user_id_for_map)
+    
+    #If someone tries to access a map that isn't theirs, redirect to index page/profile
+    if session["user_id"] != user_id_for_map:
+        flash("You don't have permission to view that page!")
+        return redirect("/")
+    else:
+        return render_template("map.html", map=user_map, places=places_on_map)
 
 
 @app.route('/map/<int:map_id>/save', methods=["POST"]) 
