@@ -223,12 +223,18 @@ def save_location_json():
                                 Place.longitude == longitude).first()
     
     #make places list with nested dict
-    place_object_attributes = [{}]
-    temp_dict[0]['place_id'] = new_place_object.place_id
-    temp_dict[0]['map_id'] = new_place_object.map_id
-    temp_dict[0]['latitude'] = float(new_place_object.latitude)
-    temp_dict[0]['longitude'] = float(new_place_object.longitude)
-    temp_dict[0]['title'] = new_place_object.google_place_name
+    place_object_attributes = []
+    temp_dict = {}
+    temp_dict['google_places_id'] = place.google_places_id
+    temp_dict['map_id'] = place.map_id
+    temp_dict['latitude'] = float(place.latitude)
+    temp_dict['longitude'] = float(place.longitude)
+    temp_dict['title'] = place.google_place_name
+    temp_dict['address'] = place.address
+    temp_dict['website'] = place.website
+    temp_dict['place_types'] = place.place_types
+    temp_dict['user_notes']=  place.user_notes
+    place_object_attributes.append(temp_dict)
 
     return jsonify(place_object_attributes)
 
