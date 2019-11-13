@@ -184,7 +184,7 @@ def delete_location(map_id):
 
     place_to_delete_id = request.form.get('google_places_id')
 
-    place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).one()
+    place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).first()
     #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
     place_to_delete.place_active = False
     db.session.commit() 

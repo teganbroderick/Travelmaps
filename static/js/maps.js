@@ -195,7 +195,7 @@ function initAutocomplete() {
             <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="map-id-field" type="hidden" name="map_id" value="${map_id}">
-            Notes: <textarea id="user-notes" name="user_notes" cols="50" rows="4"></textarea> <br>
+            Notes: <textarea id="user-notes" name="user_notes" cols="50" rows="4" maxlength="300"></textarea> <br>
             <input id="submit-button "type="submit" value="Add location to map">
           </form> 
         </div>
