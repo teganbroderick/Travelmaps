@@ -19,15 +19,11 @@ function initAutocomplete() {
 
   // CENTER MAP
   //find coordinates of last active place added, center map on those coordinates
+  //If there are no places added yet, center map on SF
   function centerMap(response) {
-    if (response == []) { //if there are no places added to the map yet, center on SF
-        var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
-        map.setCenter(center_coords)
-    } else { //otherwise, center on last place added to the places table
+    console.log(response)
       var center_coords = {lat: response.latitude, lng: response.longitude};
       map.setCenter(center_coords)
-      console.log("center coords", center_coords);
-    } 
   }
  
   $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
