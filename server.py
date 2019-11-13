@@ -157,25 +157,34 @@ def save_location(map_id):
     longitude = request.form.get('longitude')
     user_notes = request.form.get('user_notes')
 
-    print(title, address, website, place_types, 
-        google_places_id, latitude, longitude, user_notes)
-    
-    new_place = Place(map_id=map_id, 
-                        google_place_name=title,
-                        address=address,
-                        website=website,
-                        place_types=place_types,
-                        google_places_id=google_places_id,
-                        latitude=latitude, 
-                        longitude=longitude, 
-                        user_notes=user_notes)
-    db.session.add(new_place)
-    db.session.commit()
-    #get map and active places on map
     user_map = Map.query.filter(Map.map_id == map_id).one()
-    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    
+    place_to_verify = Place.query.filter_by(map_id=map_id, 
+                                            latitude=latitude, 
+                                            longitude=longitude, 
+                                            google_place_name=title, 
+                                            place_active=True).first()
 
-    return render_template("map.html", map=user_map, places=places_on_map)
+    if place_to_verify == None: #if place isn't in database for that particular map
+        #add place to places table in db
+        new_place = Place(map_id=map_id, 
+                            google_place_name=title,
+                            address=address,
+                            website=website,
+                            place_types=place_types,
+                            google_places_id=google_places_id,
+                            latitude=latitude, 
+                            longitude=longitude, 
+                            user_notes=user_notes)
+        db.session.add(new_place)
+        db.session.commit()
+        places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+        return render_template("map.html", map=user_map, places=places_on_map)  
+
+    else:
+        flash("You already saved that location to your map")
+        places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+        return render_template("map.html", map=user_map, places=places_on_map)
 
 
 @app.route('/map/<int:map_id>/delete', methods=["POST"]) 
