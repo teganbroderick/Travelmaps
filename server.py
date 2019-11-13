@@ -135,13 +135,12 @@ def makemap_process():
 
 @app.route('/map/<int:map_id>')
 def render_map(map_id):
-    """Render map.html for map_id passed into route"""
+    """Render map.html for a map_id passed into the route"""
 
     user_map = Map.query.filter(Map.map_id == map_id).one()
     places_on_map = Place.query.filter(Place.map_id == map_id).all()
-    #try and error for map ids that dont exist - handle error
+    #To do: handle error if user types a wrong number into the address bar
 
-    #return render_template("test_map_searchbox2.html", map=user_map)
     return render_template("map.html", map=user_map, places=places_on_map)
 
 
@@ -172,7 +171,7 @@ def save_location(map_id):
                         user_notes=user_notes)
     db.session.add(new_place)
     db.session.commit()
-
+    #get map and active places on map
     user_map = Map.query.filter(Map.map_id == map_id).one()
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
 
@@ -186,11 +185,10 @@ def delete_location(map_id):
     place_to_delete_id = request.form.get('google_places_id')
 
     place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).one()
+    #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
     place_to_delete.place_active = False
-    db.session.commit()
-
-    print(place_to_delete)
-    
+    db.session.commit() 
+    #get map and active places on map
     user_map = Map.query.filter(Map.map_id == map_id).one()
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
 
@@ -273,30 +271,31 @@ def get_places():
 #     return jsonify(place_object_attributes)
 
 
-# @app.route('/get_last_place_added/')
-# def get_last_place_added():
-#     """JSON information about last place saved to map"""
+@app.route('/get_last_place_added/')
+def get_last_place_added():
+    """JSON information about last place saved to map"""
     
-#     map_id = request.args.get("map_id")
-    
-#     all_places_on_map = Place.query.filter(Place.map_id == map_id).all()
-#     if all_places_on_map != []:
-#         last_place_added = all_places_on_map[-1]
+    map_id = request.args.get("map_id")
+    #get all active places on the map
+    all_places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    #get last place added
+    if all_places_on_map != []:
+        last_place_added = all_places_on_map[-1]
 
-#         print("HERE ARE PLACES ON MAP")
-#         print(all_places_on_map)
-#         print("HERE is last place added!")
-#         print(last_place_added)
+        print("HERE ARE ALL ACTIVE PLACES ON THE MAP")
+        print(all_places_on_map)
+        print("HERE is last place added!")
+        print(last_place_added)
 
-#         last_place_added_dict = {}
-#         last_place_added_dict['latitude'] = float(last_place_added.latitude)
-#         last_place_added_dict['longitude'] = float(last_place_added.longitude)
-#         print(last_place_added_dict)
-#         print("last_place_added_dict")
-#     else:
-#         last_place_added_dict = []
+        last_place_added_dict = {}
+        last_place_added_dict['latitude'] = float(last_place_added.latitude)
+        last_place_added_dict['longitude'] = float(last_place_added.longitude)
+        print(last_place_added_dict)
+        print("last_place_added_dict")
+    else:
+        last_place_added_dict = []
 
-#     return jsonify(last_place_added_dict)
+    return jsonify(last_place_added_dict)
 
 
 if __name__ == "__main__":

@@ -10,36 +10,29 @@
 
 function initAutocomplete() {
 
-  // // find coords of last place added, center map on those coords
-  // // WORK IN PROGRESS
-  // function centerMap(response) {
-  //   if (response == []) { //if there are no places added to the map yet
-  //       var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
-  //       console.log("center coords", center_coords);
-  //   } else {
-  //     var center_coords = {lat: response.latitude, lng: response.longitude};
-  //     console.log("center coords", center_coords);
-  //   } 
-  //   return center_coords; //doesnt work
-  // }
 
-  // function getCenterCoords() {
-  //   $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
-  // }
-
-  // const my_center_coords = getCenterCoords();
-  // console.log("my center coords:", my_center_coords) //returns undefined because AJAX is asynchronous
-  
-
-  //instantiate map
-  const center_coords = {lat: 37.7749295, lng: -122.41941550000001};
+  //INSTANTIATE MAP
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: center_coords,
     zoom: 13,
     mapTypeId: 'roadmap'
   });
+
+  // CENTER MAP
+  //find coordinates of last active place added, center map on those coordinates
+  function centerMap(response) {
+    if (response == []) { //if there are no places added to the map yet, center on SF
+        var center_coords = {lat: 37.7749295, lng: -122.41941550000001};
+        map.setCenter(center_coords)
+    } else { //otherwise, center on last place added to the places table
+      var center_coords = {lat: response.latitude, lng: response.longitude};
+      map.setCenter(center_coords)
+      console.log("center coords", center_coords);
+    } 
+  }
+ 
+  $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
   
-  //LOAD SAVED MARKERS
+  //LOAD AND RENDER SAVED MARKERS
   //Array to save usermarkers
   var userMarkers = [];
 
@@ -48,7 +41,6 @@ function initAutocomplete() {
 
   function makeMarkers(response) {
     for (const place of response) {
-      console.log(response)
       userMarkers.push(new google.maps.Marker({
         position: {
           lat: place.latitude,
@@ -134,7 +126,7 @@ function initAutocomplete() {
       marker.setMap(null);
     });
 
-    // For each place, get the icon, name and location.
+    // Push a marker to the map fo each place
     var bounds = new google.maps.LatLngBounds();
     places.forEach(function(place) {
       if (!place.geometry) {
@@ -158,7 +150,7 @@ function initAutocomplete() {
         title: place.name,
         website: place.website,
         opening_hours: place.opening_hours,
-        place_id: place.place_id, //added code to get the place_id, address, and types to store in db later
+        place_id: place.place_id,
         address: place.formatted_address,
         types: place.types,
         position: place.geometry.location
@@ -180,12 +172,12 @@ function initAutocomplete() {
       } else {
         var markerWebsite = marker.website
       }
-
-      if (marker.opening_hours == undefined) {
-        var markerOpeningHours = 'opening hours not available'
-      } else {
-        var markerOpeningHours = marker.opening_hours.weekday_text
-      }
+      // Code to use if opening hours are added back into the info window
+      // if (marker.opening_hours == undefined) {
+      //   var markerOpeningHours = 'opening hours not available'
+      // } else {
+      //   var markerOpeningHours = marker.opening_hours.weekday_text
+      // }
 
       const markerInfo = (`
         <div id="infowindow-content">
@@ -212,8 +204,6 @@ function initAutocomplete() {
           </form> 
         </div>
       `);
-
-      console.log(markerOpeningHours)
 
       const infoWindow = new google.maps.InfoWindow({
         content: markerInfo,
