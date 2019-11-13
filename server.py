@@ -178,8 +178,7 @@ def save_location(map_id):
                             google_places_id=google_places_id,
                             latitude=latitude, 
                             longitude=longitude, 
-                            user_notes=user_notes
-                            )
+                            user_notes=user_notes)
         db.session.add(new_place)
         db.session.commit()
         places_on_map = Place.query.filter(Place.map_id == map_id).all()
@@ -192,17 +191,27 @@ def save_location(map_id):
 def save_location_json():
     """Save marker to database places table from AJAX request using current map_id,
     return jsonified place"""
-
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    title = request.args.get('title')
+    print("Made it to the save_location_json function")
     map_id = request.args.get('map_id')
+    title = request.form.get('title')
+    address = request.form.get('address')
+    website = request.form.get('website')
+    place_types = request.form.get('types')
+    google_places_id = request.form.get('google_places_id')
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+    user_notes = request.form.get('user_notes')
 
     #add place to places table in db
     new_place = Place(map_id=map_id, 
-                        latitude=latitude, 
-                        longitude=longitude, 
-                        google_place_name=title)
+                            google_place_name=title,
+                            address=address,
+                            website=website,
+                            place_types=place_types,
+                            google_places_id=google_places_id,
+                            latitude=latitude, 
+                            longitude=longitude, 
+                            user_notes=user_notes)
     db.session.add(new_place)
     db.session.commit()
     print("Added place!")
@@ -234,7 +243,7 @@ def get_places():
     places_list = []
     for place in places_on_map:
         temp_dict = {}
-        temp_dict['place_id'] = place.google_places_id
+        temp_dict['google_places_id'] = place.google_places_id
         temp_dict['map_id'] = place.map_id
         temp_dict['latitude'] = float(place.latitude)
         temp_dict['longitude'] = float(place.longitude)
