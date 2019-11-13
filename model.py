@@ -63,12 +63,13 @@ class Place(db.Model):
     latitude = db.Column(db.String(50), nullable=False)
     longitude = db.Column(db.String(50), nullable=False)
     user_notes = db.Column(db.String(300), nullable=False)
+    place_active = db.Column(db.Boolean, default=True, nullable=False)
     
 
     def __repr__(self):
         """Return a human-readable representation of a place"""
 
-        return f"<Place place_id={self.place_id} map_id={self.map_id} google_place_name={self.google_place_name} address={self.address} website={self.website} place_types={self.place_types} google_place_id={self.google_place_id} latitude={self.latitude} longitude={self.longitude} user_notes={self.user_notes}>"
+        return f"<Place place_id={self.place_id} map_id={self.map_id} google_place_name={self.google_place_name} address={self.address} website={self.website} place_types={self.place_types} google_places_id={self.google_places_id} latitude={self.latitude} longitude={self.longitude} user_notes={self.user_notes} place_active={self.place_active}>"
 
 
 def connect_to_db(app):

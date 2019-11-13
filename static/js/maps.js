@@ -75,6 +75,7 @@ function initAutocomplete() {
     //nb. need to add more columns to the db for address, types, website, opening hours, etc. 
     for (const marker of userMarkers) {
       const markerInfo = (`
+        <div id="infowindow-content">
           <p id="marker_heading" class="title">${marker.title}</p>
           <p>
             Address: ${marker.address}<br>
@@ -84,7 +85,12 @@ function initAutocomplete() {
             Latitude: ${marker.position.lat()} <br>
             Longitude: ${marker.position.lng()}<br>
             User Notes: ${marker.user_notes}
-          </p>
+            
+            <form action="/map/${map_id}/delete" method="POST">
+            <input id="google-places-id" type="hidden" name="google_places_id" value="${marker.place_id}">
+            <input id="delete-button "type="submit" value="Delete location from map">
+          </form> 
+        </div>
       `);
 
       const infoWindow = new google.maps.InfoWindow({

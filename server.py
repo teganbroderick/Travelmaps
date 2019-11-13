@@ -148,8 +148,6 @@ def render_map(map_id):
 @app.route('/map/<int:map_id>/save', methods=["POST"]) 
 def save_location(map_id):
     """Save marker to database places table, using current map_id"""
-    
-    user_map = Map.query.filter(Map.map_id == map_id).one()
 
     title = request.form.get('title')
     address = request.form.get('address')
@@ -163,80 +161,40 @@ def save_location(map_id):
     print(title, address, website, place_types, 
         google_places_id, latitude, longitude, user_notes)
     
-    place_to_verify = Place.query.filter_by(map_id=map_id, 
-                                            latitude=latitude, 
-                                            longitude=longitude, 
-                                            google_place_name=title).first()
-
-    if place_to_verify == None: #if place isn't in database for that particular map
-        #add place to places table in db
-        new_place = Place(map_id=map_id, 
-                            google_place_name=title,
-                            address=address,
-                            website=website,
-                            place_types=place_types,
-                            google_places_id=google_places_id,
-                            latitude=latitude, 
-                            longitude=longitude, 
-                            user_notes=user_notes)
-        db.session.add(new_place)
-        db.session.commit()
-        places_on_map = Place.query.filter(Place.map_id == map_id).all()
-        return render_template("map.html", map=user_map, places=places_on_map)
-    else:
-        flash("You already saved that location to your map")
-        return render_template("map.html", map=user_map, places=places_on_map)
-
-@app.route('/save_location.json')
-def save_location_json():
-    """Save marker to database places table from AJAX request using current map_id,
-    return jsonified place"""
-    print("Made it to the save_location_json function")
-    map_id = request.args.get('map_id')
-    title = request.form.get('title')
-    address = request.form.get('address')
-    website = request.form.get('website')
-    place_types = request.form.get('types')
-    google_places_id = request.form.get('google_places_id')
-    latitude = request.form.get('latitude')
-    longitude = request.form.get('longitude')
-    user_notes = request.form.get('user_notes')
-
-    #add place to places table in db
     new_place = Place(map_id=map_id, 
-                            google_place_name=title,
-                            address=address,
-                            website=website,
-                            place_types=place_types,
-                            google_places_id=google_places_id,
-                            latitude=latitude, 
-                            longitude=longitude, 
-                            user_notes=user_notes)
+                        google_place_name=title,
+                        address=address,
+                        website=website,
+                        place_types=place_types,
+                        google_places_id=google_places_id,
+                        latitude=latitude, 
+                        longitude=longitude, 
+                        user_notes=user_notes)
     db.session.add(new_place)
     db.session.commit()
-    print("Added place!")
-    print(new_place)
 
-    #get new place as an object
-    new_place_object = Place.query.filter(Place.map_id == map_id, 
-                                Place.latitude == latitude, 
-                                Place.longitude == longitude).first()
+    user_map = Map.query.filter(Map.map_id == map_id).one()
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+
+    return render_template("map.html", map=user_map, places=places_on_map)
+
+
+@app.route('/map/<int:map_id>/delete', methods=["POST"]) 
+def delete_location(map_id):
+    """Delete marker from database places table, using current map_id"""
+
+    place_to_delete_id = request.form.get('google_places_id')
+
+    place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).one()
+    place_to_delete.place_active = False
+    db.session.commit()
+
+    print(place_to_delete)
     
-    #make places list with nested dict
-    place_object_attributes = []
-    temp_dict = {}
-    temp_dict['google_places_id'] = place.google_places_id
-    temp_dict['map_id'] = place.map_id
-    temp_dict['latitude'] = float(place.latitude)
-    temp_dict['longitude'] = float(place.longitude)
-    temp_dict['title'] = place.google_place_name
-    temp_dict['address'] = place.address
-    temp_dict['website'] = place.website
-    temp_dict['place_types'] = place.place_types
-    temp_dict['user_notes']=  place.user_notes
-    place_object_attributes.append(temp_dict)
+    user_map = Map.query.filter(Map.map_id == map_id).one()
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
 
-    return jsonify(place_object_attributes)
+    return render_template("map.html", map=user_map, places=places_on_map)
 
 
 @app.route('/get_places/')
@@ -245,7 +203,7 @@ def get_places():
     
     map_id = request.args.get("map_id")
     
-    places_on_map = Place.query.filter(Place.map_id == map_id).all()
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
     places_list = []
     for place in places_on_map:
         temp_dict = {}
@@ -262,30 +220,83 @@ def get_places():
 
     return jsonify(places_list)
 
-@app.route('/get_last_place_added/')
-def get_last_place_added():
-    """JSON information about last place saved to map"""
+
+# @app.route('/save_location.json')
+# def save_location_json():
+#     """Save marker to database places table from AJAX request using current map_id,
+#     return jsonified place"""
+#     print("Made it to the save_location_json function")
+#     map_id = request.args.get('map_id')
+#     title = request.form.get('title')
+#     address = request.form.get('address')
+#     website = request.form.get('website')
+#     place_types = request.form.get('types')
+#     google_places_id = request.form.get('google_places_id')
+#     latitude = request.form.get('latitude')
+#     longitude = request.form.get('longitude')
+#     user_notes = request.form.get('user_notes')
+
+#     #add place to places table in db
+#     new_place = Place(map_id=map_id, 
+#                             google_place_name=title,
+#                             address=address,
+#                             website=website,
+#                             place_types=place_types,
+#                             google_places_id=google_places_id,
+#                             latitude=latitude, 
+#                             longitude=longitude, 
+#                             user_notes=user_notes)
+#     db.session.add(new_place)
+#     db.session.commit()
+#     print("Added place!")
+#     print(new_place)
+
+#     #get new place as an object
+#     new_place_object = Place.query.filter(Place.map_id == map_id, 
+#                                 Place.latitude == latitude, 
+#                                 Place.longitude == longitude).first()
     
-    map_id = request.args.get("map_id")
+#     #make places list with nested dict
+#     place_object_attributes = []
+#     temp_dict = {}
+#     temp_dict['google_places_id'] = place.google_places_id
+#     temp_dict['map_id'] = place.map_id
+#     temp_dict['latitude'] = float(place.latitude)
+#     temp_dict['longitude'] = float(place.longitude)
+#     temp_dict['title'] = place.google_place_name
+#     temp_dict['address'] = place.address
+#     temp_dict['website'] = place.website
+#     temp_dict['place_types'] = place.place_types
+#     temp_dict['user_notes']=  place.user_notes
+#     place_object_attributes.append(temp_dict)
+
+#     return jsonify(place_object_attributes)
+
+
+# @app.route('/get_last_place_added/')
+# def get_last_place_added():
+#     """JSON information about last place saved to map"""
     
-    all_places_on_map = Place.query.filter(Place.map_id == map_id).all()
-    if all_places_on_map != []:
-        last_place_added = all_places_on_map[-1]
+#     map_id = request.args.get("map_id")
+    
+#     all_places_on_map = Place.query.filter(Place.map_id == map_id).all()
+#     if all_places_on_map != []:
+#         last_place_added = all_places_on_map[-1]
 
-        print("HERE ARE PLACES ON MAP")
-        print(all_places_on_map)
-        print("HERE is last place added!")
-        print(last_place_added)
+#         print("HERE ARE PLACES ON MAP")
+#         print(all_places_on_map)
+#         print("HERE is last place added!")
+#         print(last_place_added)
 
-        last_place_added_dict = {}
-        last_place_added_dict['latitude'] = float(last_place_added.latitude)
-        last_place_added_dict['longitude'] = float(last_place_added.longitude)
-        print(last_place_added_dict)
-        print("last_place_added_dict")
-    else:
-        last_place_added_dict = []
+#         last_place_added_dict = {}
+#         last_place_added_dict['latitude'] = float(last_place_added.latitude)
+#         last_place_added_dict['longitude'] = float(last_place_added.longitude)
+#         print(last_place_added_dict)
+#         print("last_place_added_dict")
+#     else:
+#         last_place_added_dict = []
 
-    return jsonify(last_place_added_dict)
+#     return jsonify(last_place_added_dict)
 
 
 if __name__ == "__main__":
