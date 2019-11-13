@@ -21,7 +21,6 @@ function initAutocomplete() {
   //find coordinates of last active place added, center map on those coordinates
   //If there are no places added yet, center map on SF
   function centerMap(response) {
-    console.log(response)
       var center_coords = {lat: response.latitude, lng: response.longitude};
       map.setCenter(center_coords)
   }
