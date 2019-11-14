@@ -5,6 +5,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Map, Place, connect_to_db, db
 
+import uuid
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -117,11 +119,13 @@ def makemap_process():
                                         map_name=map_name, 
                                         map_description=map_description).first()
     
-    if map_to_verify == None: #if new map is not in the maps table
-        #Add new map to maps table in db
+    if map_to_verify == None: #if new map is not in the maps table, add new map to maps table in db
+        url_hash = uuid.uuid4() #generate random uuid for map
+        map_hex = url_hash.hex
         map_info = Map(user_id=session['user_id'], 
                         map_name=map_name, 
-                        map_description=map_description)
+                        map_description=map_description, 
+                        map_url_hash=map_hex)
         db.session.add(map_info)
         db.session.commit()
         #get map object
@@ -142,8 +146,6 @@ def render_map(map_id):
     #To do: handle error if user types a wrong number into the address bar
     
     user_id_for_map = user_map.user_id
-    print("SESSION ID", session["user_id"])
-    print("USER ID FOR MAP", user_id_for_map)
     
     #If someone tries to access a map that isn't theirs, redirect to index page/profile
     if session["user_id"] != user_id_for_map:
