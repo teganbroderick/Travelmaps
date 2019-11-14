@@ -213,6 +213,18 @@ def delete_location(map_id):
     return render_template("map.html", map=user_map, places=places_on_map)
 
 
+@app.route('/share_map')
+def share_map():
+    """create shareable version of current map"""
+
+    map_id = request.args.get("map_id")
+
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    user_map = Map.query.filter(Map.map_id == map_id).one()
+
+    return render_template("shared_map.html", map=user_map, places=places_on_map)
+
+
 @app.route('/get_places/')
 def get_places():
     """JSON information about places saved to map"""
@@ -235,6 +247,27 @@ def get_places():
         places_list.append(temp_dict)
 
     return jsonify(places_list)
+
+
+@app.route('/get_last_place_added/')
+def get_last_place_added():
+    """JSON information about last place saved to map"""
+    
+    map_id = request.args.get("map_id")
+    #get all active places on the map
+    all_places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    #get last place added
+    if all_places_on_map != []: #if there are places saved to the map
+        last_place_added = all_places_on_map[-1]
+        last_place_added_dict = {}
+        last_place_added_dict['latitude'] = float(last_place_added.latitude)
+        last_place_added_dict['longitude'] = float(last_place_added.longitude)
+    else:
+        last_place_added_dict = {} #set center to SF
+        last_place_added_dict['latitude'] = float(37.7749295) 
+        last_place_added_dict['longitude'] = float(-122.41941550000001)
+
+    return jsonify(last_place_added_dict)
 
 
 # @app.route('/save_location.json')
@@ -287,27 +320,6 @@ def get_places():
 #     place_object_attributes.append(temp_dict)
 
 #     return jsonify(place_object_attributes)
-
-
-@app.route('/get_last_place_added/')
-def get_last_place_added():
-    """JSON information about last place saved to map"""
-    
-    map_id = request.args.get("map_id")
-    #get all active places on the map
-    all_places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
-    #get last place added
-    if all_places_on_map != []: #if there are places saved to the map
-        last_place_added = all_places_on_map[-1]
-        last_place_added_dict = {}
-        last_place_added_dict['latitude'] = float(last_place_added.latitude)
-        last_place_added_dict['longitude'] = float(last_place_added.longitude)
-    else:
-        last_place_added_dict = {} #set center to SF
-        last_place_added_dict['latitude'] = float(37.7749295) 
-        last_place_added_dict['longitude'] = float(-122.41941550000001)
-
-    return jsonify(last_place_added_dict)
 
 
 if __name__ == "__main__":

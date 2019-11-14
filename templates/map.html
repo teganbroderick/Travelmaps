@@ -18,9 +18,8 @@
   <div class="row">
     <div class="col-4">
       <div id="map_details">
-        <h2>Map Page</h2>
-        <h3>Map Name: {{ map.map_name }} </h3>
-        <h3>Map Description: {{ map.map_description }} </h3><br>
+        <h3>Map Name:</h3> <p>{{ map.map_name }}</p>
+        <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
         <!-- if there are places in the map, print them -->
         <h3>Places on this map:</h3>
         {%for place in places %}
@@ -43,10 +42,18 @@
     </div>
   </div>
   <div class="row" style="height: 30px">
-    <div class="col-2">
+    <div class="col-4">
       <div id="logout">
         <form action="/logout">
             <input type="submit" value="Log Out">
+        </form>
+      </div>
+    </div>
+    <div class="col-8">
+      <div id="share_map">
+        <form action="/share_map">
+            <input type="hidden" name="map_id" value="map_id">
+            <input type="submit" value="Share Map">
         </form>
       </div>
     </div>

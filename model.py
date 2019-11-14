@@ -56,8 +56,8 @@ class Place(db.Model):
     map_id = db.Column(db.Integer, 
                         db.ForeignKey('maps.map_id'))
     google_place_name = db.Column(db.String(100), nullable=False)
-    address = db.Column(db.String(100), nullable=False)
-    website = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    website = db.Column(db.String(200), nullable=False)
     place_types = db.Column(db.String(100), nullable=False)
     google_places_id = db.Column(db.String(100), nullable=False)
     latitude = db.Column(db.String(50), nullable=False)
