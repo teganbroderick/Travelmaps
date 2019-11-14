@@ -2,7 +2,7 @@
 
 {% block head %}
   <link rel="stylesheet" href="/static/css/maps.css"/>
-  <script src="/static/js/maps.js"></script>
+  <script src="/static/js/shared_map.js"></script>
     <!-- load google places library before initializing map -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete">
   </script>
@@ -36,26 +36,8 @@
     
     <div class="col-8">
       <!-- Google maps code -->
-      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
       <div id="map"></div>
       <!-- end google maps code -->
-    </div>
-  </div>
-  <div class="row" style="height: 30px">
-    <div class="col-4">
-      <div id="logout">
-        <form action="/logout">
-            <input type="submit" value="Log Out">
-        </form>
-      </div>
-    </div>
-    <div class="col-8">
-      <div id="share_map">
-        <form action="/share_map">
-            <input type="hidden" name="map_id" value="{{ map.map_id }}">
-            <input type="submit" value="Share Map">
-        </form>
-      </div>
     </div>
   </div>
 </div>

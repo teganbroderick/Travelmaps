@@ -120,7 +120,7 @@ def makemap_process():
                                         map_description=map_description).first()
     
     if map_to_verify == None: #if new map is not in the maps table, add new map to maps table in db
-        url_hash = uuid.uuid4() #generate random uuid for map
+        url_hash = uuid.uuid4() #generate random uuid (universal unique identifier) for map
         map_hex = url_hash.hex
         map_info = Map(user_id=session['user_id'], 
                         map_name=map_name, 
@@ -224,7 +224,7 @@ def share_map():
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
     user_map = Map.query.filter(Map.map_id == map_id).one()
 
-    return render_template("shared_map.html", map=user_map, places=places_on_map)
+    return render_template("share_map.html", map=user_map, places=places_on_map)
 
 
 @app.route('/get_places/')
