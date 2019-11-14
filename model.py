@@ -33,6 +33,7 @@ class Map(db.Model):
                         db.ForeignKey('users.user_id'))
     map_name = db.Column(db.String(50), nullable=False)
     map_description = db.Column(db.String(100), nullable=True)
+    map_url_hash = db.Column(db.String(32), nullable=False)
 
     #***********
     user = db.relationship("User", backref="maps")
