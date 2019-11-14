@@ -215,14 +215,11 @@ def delete_location(map_id):
     return render_template("map.html", map=user_map, places=places_on_map)
 
 
-@app.route('/share_map')
+@app.route('/share_map<map_url_hash>')
 def share_map():
-    """create shareable version of current map"""
-
-    map_id = request.args.get("map_id")
-
+    """create shareable version of current map usng crypotgraphic hash at end of address"""
+    user_map = Map.query.filter(Map.map_url_hash == map_url_hash).one()
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
-    user_map = Map.query.filter(Map.map_id == map_id).one()
 
     return render_template("share_map.html", map=user_map, places=places_on_map)
 

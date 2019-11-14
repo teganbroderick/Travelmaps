@@ -30,7 +30,7 @@
             <li>User Notes: {{ place.user_notes }}</li>
           </ul>
         {% endfor %}
-        <!-- if there are no places in the map, print a message to get started... -->
+        <!-- to do: if there are no places in the map, print a message to get started... -->
       </div>
     </div>
     
@@ -51,8 +51,7 @@
     </div>
     <div class="col-8">
       <div id="share_map">
-        <form action="/share_map">
-            <input type="hidden" name="map_id" value="{{ map.map_id }}">
+        <form action="/share_map/{{ map.map_url_hash }}">
             <input type="submit" value="Share Map">
         </form>
       </div>
