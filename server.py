@@ -142,7 +142,7 @@ def render_map(map_id):
     """Render map.html for a map_id passed into the route"""
 
     user_map = Map.query.filter(Map.map_id == map_id).one()
-    places_on_map = Place.query.filter(Place.map_id == map_id).all()
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
     #To do: handle error if user types a wrong number into the address bar
     
     user_id_for_map = user_map.user_id
