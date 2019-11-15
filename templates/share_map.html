@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="/static/css/maps.css"/>
   <script src="/static/js/shared_map.js"></script>
     <!-- load google places library before initializing map -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=places&callback=initAutocomplete">
   </script>
   <script> window.map_id = {{ map.map_id }} </script>
   <script type="text/javascript"></script>
@@ -12,6 +12,35 @@
 {% endblock %}
 
 {% block body %}
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- Load Twitter widgets.js script JavaScript -->
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  <!-- Bootstrap div layout -->
   <div class="container-fluid">
   <div class="row" style="height: 20px">
   </div>
@@ -31,13 +60,42 @@
         {% endfor %}
       </div>
     </div>
-    
     <div class="col-8">
       <!-- Google maps code -->
       <div id="map"></div>
       <!-- end google maps code -->
     </div>
   </div>
+  <div class="row">
+    <div class="col-4">
+      <div id="empty-div-for-formatting">
+      </div>
+    </div>
+    <div class="col-2">
+      <div id="share-with-link">
+        <form id="get-shareable-link">
+          <input type="submit" value="Get Shareable Link">
+        </form>
+      </div>
+    </div> 
+    <div class="col-1">
+      <div id="share-on-fb">
+        <!-- FB share button code -->
+        <div class="fb-share-button" 
+          data-href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}" 
+          data-layout="button_count">
+        </div>
+      </div>
+    </div>
+    <div class="col-1">
+      <div id="share-on-twitter">
+        <!-- Twitter share button code -->
+          <a class="twitter-share-button"
+            href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}">
+          Tweet</a>
+      </div>
+    </div>
+  </div>  
 </div>
 {% endblock %}
 
