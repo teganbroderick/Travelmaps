@@ -26,7 +26,8 @@
         <h3>Places on this map:</h3>
         {%for place in places %}
           <ul>
-            <h3 id="place-name-header">{{ place.google_place_name }}</h3>
+            <a id="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
+            <h3 id="place-name">{{ place.google_place_name }}</h3>
             <li>Address: {{ place.address }}</li>
             <li>Website: {{ place.website }}</li>
             <li>Notes: {{ place.user_notes }}</li>

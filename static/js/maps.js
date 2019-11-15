@@ -89,8 +89,31 @@ function initAutocomplete() {
     }
   }
 
+  //Event listener for clicking on a place name in the list, opening corresponding marker info window
+  $('#place-name').on('click', function(evt) {
+    evt.preventDefault();
+    console.log(userMarkers);
+    console.log("in the place name area");
+
+    // get link data-name
+    var placeToFind = $(this).data('name');
+    console.log(placeToFind);
+    // find map marker in markers array with the same title
+    var markerToClick;
+
+    for(var i = 0; i < userMarkers.length; i++) {
+        if(userMarkers[i].title === placeToFind) {
+          markerToClick = userMarkers[i];
+        }
+    }
+    new google.maps.event.trigger( markerToClick, 'click' );
+
+  });
+
+
+
   //START NEW PLACES SEARCH
- //Array to save markers created from search box searches
+  //Array to save markers created from search box searches
   var markers = [];
 
   // Create the search box and link it to the UI element.
