@@ -52,10 +52,14 @@
         <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
         <h3>Places on this map:</h3>
         {%for place in places %}
+          <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
           <ul>
-            <h3 id="place-name-header">{{ place.google_place_name }}</h3>
             <li>Address: {{ place.address }}</li>
-            <li>Website: {{ place.website }}</li>
+            {% if place.website != 'website not available' %}
+              Website: <a class="place-address" href="{{ place.website }}">{{ place.website }}</a><br>
+            {% else %}
+              <li>Website: {{ place.website }}</li>
+            {% endif %}
             <li>Notes: {{ place.user_notes }}</li>
           </ul>
         {% endfor %}
