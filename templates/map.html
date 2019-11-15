@@ -29,7 +29,7 @@
             <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
             <li>Address: {{ place.address }}</li>
             {% if place.website != 'website not available' %}
-              Website: <a class="place-address" href="{{ place.website }}">{{ place.website }}</a><br>
+              Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
             {% else %}
               <li>Website: {{ place.website }}</li>
             {% endif %}

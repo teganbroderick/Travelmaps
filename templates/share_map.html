@@ -2,7 +2,7 @@
 
 {% block head %}
   <link rel="stylesheet" href="/static/css/maps.css"/>
-  <script src="/static/js/shared_map.js"></script>
+  <script src="/static/js/share_map.js"></script>
     <!-- load google places library before initializing map -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=places&callback=initAutocomplete">
   </script>
@@ -56,7 +56,7 @@
           <ul>
             <li>Address: {{ place.address }}</li>
             {% if place.website != 'website not available' %}
-              Website: <a class="place-address" href="{{ place.website }}">{{ place.website }}</a><br>
+              Website: <a class="place-address" href="{{ place.website }}" target="_blank">{{ place.website }}</a><br>
             {% else %}
               <li>Website: {{ place.website }}</li>
             {% endif %}
