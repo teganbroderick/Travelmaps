@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-<a href="/login">Login/Sign Up</a>
+    <form action="/login">
+        <input type="submit" value="Login/Sign Up">
+    </form>
+    <div class="bg"></div>
 
 {% endblock %}
