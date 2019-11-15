@@ -19,8 +19,8 @@ function initAutocomplete() {
   //find coordinates of last active place added, center map on those coordinates
   //If there are no places added yet, center map on SF
   function centerMap(response) {
-      var center_coords = {lat: response.latitude, lng: response.longitude};
-      map.setCenter(center_coords)
+      var centerCoords = {lat: response.latitude, lng: response.longitude};
+      map.setCenter(centerCoords)
   }
  
   $.get('/get_last_place_added/', {map_id : map_id}, centerMap);
@@ -143,7 +143,7 @@ function initAutocomplete() {
       return;
     }
 
-    // Clear out the old markers. NB MIGHT WANT TO TURN THIS OFF
+    // Clear out the old markers
     markers.forEach(function(marker) {
       marker.setMap(null);
     });
@@ -194,12 +194,6 @@ function initAutocomplete() {
       } else {
         var markerWebsite = marker.website
       }
-      // Code to use if opening hours are added back into the info window
-      // if (marker.opening_hours == undefined) {
-      //   var markerOpeningHours = 'opening hours not available'
-      // } else {
-      //   var markerOpeningHours = marker.opening_hours.weekday_text
-      // }
 
       const markerInfo = (`
         <div id="infowindow-content">
