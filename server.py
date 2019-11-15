@@ -104,7 +104,7 @@ def logout():
 def makemap():
     """redirect to new_map.html"""
 
-    return render_template("newmap.html")
+    return render_template("make_map.html")
 
 
 @app.route('/make_map_process')
