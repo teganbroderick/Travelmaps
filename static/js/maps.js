@@ -67,10 +67,6 @@ function initAutocomplete() {
           <p>
             Address: ${marker.address}<br>
             Website: ${marker.website} <br>
-            Types: ${marker.place_types}<br>
-            Google Places ID: ${marker.place_id}<br>
-            Latitude: ${marker.position.lat()} <br>
-            Longitude: ${marker.position.lng()}<br>
             User Notes: ${marker.user_notes}
             
             <form action="/map/${map_id}/delete" method="POST">
@@ -180,10 +176,6 @@ function initAutocomplete() {
           <p>
             Address: ${marker.address}<br>
             Website: ${markerWebsite} <br>
-            Types: ${marker.types}<br>
-            Google Places ID: ${marker.place_id}<br>
-            Latitude: ${marker.position.lat()} <br>
-            Longitude: ${marker.position.lng()}
           </p>
           <form action="/map/${map_id}/save" method="POST">
             <input id="title-field" type="hidden" name="title" value="${marker.title}">
@@ -194,7 +186,7 @@ function initAutocomplete() {
             <input id="latitude-field" type="hidden" name="latitude" value="${marker.position.lat()}">
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="map-id-field" type="hidden" name="map_id" value="${map_id}">
-            Notes: <textarea id="user-notes" name="user_notes" cols="50" rows="4" maxlength="300"></textarea> <br>
+            Notes: <br><textarea id="user-notes" name="user_notes" cols="50" rows="4" maxlength="300"></textarea> <br>
             <input id="submit-button "type="submit" value="Add location to map">
           </form> 
         </div>
