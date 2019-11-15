@@ -58,10 +58,9 @@ function initAutocomplete() {
       }));
     }
 
-    //make info windows for saved markers
-    //nb. need to add more columns to the db for address, types, website, opening hours, etc. 
+    //INITIATE INFO WINDOWS FOR SAVED MARKERS
     for (const marker of userMarkers) {
-      const markerInfo = (`
+      const UserMarkerInfo = (`
         <div id="infowindow-content">
           <p id="marker_heading" class="title">${marker.title}</p>
           <p>
@@ -77,7 +76,7 @@ function initAutocomplete() {
       `);
 
       const infoWindow = new google.maps.InfoWindow({
-        content: markerInfo,
+        content: UserMarkerInfo,
         height: 100,
         width: 200
       });
@@ -89,8 +88,7 @@ function initAutocomplete() {
     }
   }
 
-  //Event listener for clicking on a place name in the list, opening corresponding marker info window
-  //Code altered from tutorial here: https://css-tricks.com/forums/topic/clickable-page-links-to-open-markers-on-google-map/
+  //EVENT LISTENER for clicking on a place name in the list, opening corresponding marker info window
   $('a.place-name').on('click', function(evt) {
     evt.preventDefault();
     
@@ -212,7 +210,7 @@ function initAutocomplete() {
             <input id="longitude-field" type="hidden" name="longitude" value="${marker.position.lng()}">
             <input id="map-id-field" type="hidden" name="map_id" value="${map_id}">
             Notes: <br><textarea id="user-notes" name="user_notes" cols="50" rows="4" maxlength="300"></textarea> <br>
-            <input id="submit-button "type="submit" value="Add location to map">
+            <input class="submit-button "type="submit" value="Add location to map">
           </form> 
         </div>
       `);
@@ -229,25 +227,28 @@ function initAutocomplete() {
       });
     }
   });
+  
+  // _______________________________________________________________________
+    //ajax call to save places to the database without reloading the window
+    //WORK IN PROGRESS
+    function handleSavePlaceRequest(evt) {
+      evt.preventDefault();
+      console.log('You are in the handle save place request function')
+      const formData = {
+        title: $('#title-field').val(),
+        address: $('#address-field').val(),
+        website: $('#website-field').val(),
+        types: $('#types').val(),
+        google_places_id: $('google_places_id').val(),
+        latitiude: $('#latitude-field').val(),
+        longitude: $('#longitude-field').val(),
+        map_id: $('#map-id-field').val(),
+        user_notes: $('#user-notes').val()
+      };
 
-    // //ajax call to save places to the database without reloading the window
-    // //NOT WORKING
-    // function handleSavePlaceRequest(evt) {
-    //   evt.preventDefault();
-      
-      // const formData = {
-      //   latitiude: $('#latitude-field').val(),
-      //   longitude: $('#longitude-field').val(),
-      //   title: $('#title-field').val(),
-      //   map_id: $('#map-id-field').val()
-      //   website: $('#website-id-field').val()
-      //   opening_hours: $('#opening-hours').val()
-      //   user_notes: $('#user-notes').val()
-    //   };
+      $.get('/save_location.json', formData, makeMarkers);
+    }
 
-    //   $.get('/save_location.json', formData, makeMarkers);
-    // }
-
-    // $('#submit-button').on('submit', handleSavePlaceRequest);
+    $('form.submit-button').on('submit', handleSavePlaceRequest);
 
 }
