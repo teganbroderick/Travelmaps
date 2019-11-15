@@ -9,8 +9,6 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 function initAutocomplete() {
-
-
   //INSTANTIATE MAP
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 13,
@@ -41,6 +39,8 @@ function initAutocomplete() {
           lat: place.latitude,
           lng: place.longitude
         },
+        latitude: place.latitude,
+        longitude: place.longitude,
         title: place.title,
         address: place.address,
         website: place.website,
@@ -90,26 +90,34 @@ function initAutocomplete() {
   }
 
   //Event listener for clicking on a place name in the list, opening corresponding marker info window
-  $('#place-name').on('click', function(evt) {
+  //Code altered from tutorial here: https://css-tricks.com/forums/topic/clickable-page-links-to-open-markers-on-google-map/
+  $('a.place-name').on('click', function(evt) {
     evt.preventDefault();
-    console.log(userMarkers);
-    console.log("in the place name area");
+    
+    //print test strings
+    console.log("User makers:", userMarkers);
+    console.log("You are in the place name area");
 
     // get link data-name
     var placeToFind = $(this).data('name');
-    console.log(placeToFind);
+    console.log("Place to find: ", placeToFind);
+
     // find map marker in markers array with the same title
     var markerToClick;
-
-    for(var i = 0; i < userMarkers.length; i++) {
-        if(userMarkers[i].title === placeToFind) {
-          markerToClick = userMarkers[i];
-        }
+    var markerCenterCoords;
+    for (var i in userMarkers) {
+      if(userMarkers[i].title === placeToFind) {
+        console.log(userMarkers[i]);
+        markerToClick = userMarkers[i];
+        markerCenterCoords = {lat: userMarkers[i].latitude, lng: userMarkers[i].longitude};
+      }
     }
-    new google.maps.event.trigger( markerToClick, 'click' );
-
+    console.log(markerCenterCoords)
+    //center map on coords of markerToClick
+    map.setCenter(markerCenterCoords)
+    //trigger click event on the markerToClick
+    new google.maps.event.trigger(markerToClick, 'click');
   });
-
 
 
   //START NEW PLACES SEARCH
