@@ -8,6 +8,12 @@ h3 {
   font-style: bold;
 }
 
+a.place-name {
+  font-size: 18px;
+  font-style: bold;
+  color: black;
+}
+
 #place-name-header {
   font-size: 14px;
   font-style: bold;
