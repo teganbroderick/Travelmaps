@@ -28,7 +28,11 @@
           <ul>
             <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
             <li>Address: {{ place.address }}</li>
-            <li>Website: {{ place.website }}</li>
+            {% if place.website != 'website not available' %}
+              Website: <a class="place-address" href="{{ place.website }}">{{ place.website }}</a><br>
+            {% else %}
+              <li>Website: {{ place.website }}</li>
+            {% endif %}
             <li>Notes: {{ place.user_notes }}</li>
           </ul>
         {% endfor %}
