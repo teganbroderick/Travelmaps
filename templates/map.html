@@ -25,8 +25,8 @@
         <!-- if there are places in the map, print them -->
         <h3>Places on this map:</h3>
         {%for place in places %}
+          <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>         
           <ul>
-            <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
             <li>Address: {{ place.address }}</li>
             {% if place.website != 'website not available' %}
               Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
