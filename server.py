@@ -221,8 +221,9 @@ def share_map(map_url_hash):
     user_map = Map.query.filter(Map.map_url_hash == map_url_hash).one()
     map_id = user_map.map_id
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    map_url = "http://0.0.0.0:5000/share_map/" + user_map.map_url_hash
 
-    return render_template("share_map.html", map=user_map, places=places_on_map)
+    return render_template("share_map.html", map=user_map, places=places_on_map, map_url=map_url)
 
 
 @app.route('/get_places/')

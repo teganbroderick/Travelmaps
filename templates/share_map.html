@@ -41,66 +41,82 @@
   }(document, "script", "twitter-wjs"));</script>
 
   <!-- Bootstrap div layout -->
+  <!-- Div for container layout -->
   <div class="container-fluid">
-  <div class="row" style="height: 20px">
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <div id="map_details">
-        <h2>Shareable Map</h2>
-        <h3>Map Name:</h3> <p>{{ map.map_name }}</p>
-        <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
-        <h3>Places on this map:</h3>
-        {%for place in places %}
-          <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
-          <ul>
-            <li>Address: {{ place.address }}</li>
-            {% if place.website != 'website not available' %}
-              Website: <a class="place-address" href="{{ place.website }}" target="_blank">{{ place.website }}</a><br>
-            {% else %}
-              <li>Website: {{ place.website }}</li>
-            {% endif %}
-            <li>Notes: {{ place.user_notes }}</li>
-          </ul>
-        {% endfor %}
-      </div>
+    <div class="row" style="height: 20px">
     </div>
-    <div class="col-8">
-      <!-- Google maps code -->
-      <div id="map"></div>
-      <!-- end google maps code -->
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <div id="empty-div-for-formatting">
-      </div>
-    </div>
-    <div class="col-2">
-      <div id="share-with-link">
-        <form id="get-shareable-link">
-          <input type="submit" value="Get Shareable Link">
-        </form>
-      </div>
-    </div> 
-    <div class="col-1">
-      <div id="share-on-fb">
-        <!-- FB share button code -->
-        <div class="fb-share-button" 
-          data-href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}" 
-          data-layout="button_count">
+    <div class="row">
+      <div class="col-4">
+        <div id="map_details">
+          <h2>Shareable Map</h2>
+          <h3>Map Name:</h3> <p>{{ map.map_name }}</p>
+          <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
+          <h3>Places on this map:</h3>
+          {%for place in places %}
+            <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>
+            <ul>
+              <li>Address: {{ place.address }}</li>
+              {% if place.website != 'website not available' %}
+                Website: <a class="place-address" href="{{ place.website }}" target="_blank">{{ place.website }}</a><br>
+              {% else %}
+                <li>Website: {{ place.website }}</li>
+              {% endif %}
+              <li>Notes: {{ place.user_notes }}</li>
+            </ul>
+          {% endfor %}
         </div>
       </div>
-    </div>
-    <div class="col-1">
-      <div id="share-on-twitter">
-        <!-- Twitter share button code -->
-          <a class="twitter-share-button"
-            href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}">
-          Tweet</a>
+      <div class="col-8">
+        <!-- Google maps code -->
+        <div id="map"></div>
+        <!-- end google maps code -->
       </div>
     </div>
-  </div>  
+    <div class="row">
+      <div class="col-4">
+        <div id="empty-div-for-formatting">
+        </div>
+      </div>
+      <div class="col-2">
+        <div id="share-with-link">
+          <button type="button" class="get-shareable-link" data-toggle="modal" data-target="#share-link-modal">Get Shareable Link
+          </button>
+        </div>
+      </div> 
+      <div class="col-1">
+        <div id="share-on-fb">
+          <!-- FB share button code -->
+          <div class="fb-share-button" 
+            data-href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}" 
+            data-layout="button_count">
+          </div>
+        </div>
+      </div>
+      <div class="col-1">
+        <div id="share-on-twitter">
+          <!-- Twitter share button code -->
+            <a class="twitter-share-button"
+              href="http://0.0.0.0:5000/share_map/{{ map.map_url_hash }}">
+            Tweet</a>
+        </div>
+      </div>
+    </div>  
+  </div>
+  <!-- Div for modal -->
+  <div class="modal fade" id="share-link-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Shareable Link</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p> {{ map_url }} </p>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 

@@ -107,10 +107,5 @@ function initAutocomplete() {
     new google.maps.event.trigger(markerToClick, 'click');
   });
 
-  //Add event listener for clicking on 'get sharable link' button
-  $('#get-shareable-link').on('submit', () => {
-    alert(window.location.href);
-  })
-
   }
 }
