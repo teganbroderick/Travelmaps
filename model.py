@@ -43,7 +43,7 @@ class Map(db.Model):
     def __repr__(self):
         """Return a human-readable representation of a map"""
 
-        return f"<Map map_id={self.user_id} user_id={self.user_id} map_name={self.map_name}>"
+        return f"<Map map_id={self.map_id} user_id={self.user_id} map_name={self.map_name}>"
 
 
 class Place(db.Model):

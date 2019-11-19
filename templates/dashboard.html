@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <!-- Load chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+{% endblock %}
+
+{% block body %}
+  <!-- Bootstrap div layout -->
+  <div class="container-fluid">
+    <div class="row" style="height: 20px">
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div id="map_details">
+          <h2>User Stats Page</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div class="place_types_chart">
+          <canvas id="donutChart"></canvas>
+          <div id="donutLegend" class="chart-legend"></div>
+        </div>
+  </div>
+  <!-- Javascript code -->
+  <script>
+    const options = {
+      responsive: true
+    };
+
+    // Make Donut Chart of percent of different types of Melons
+    let ctx_donut = $("#donutChart").get(0).getContext("2d");
+
+    $.get("/place_statistics.json", function (data) {
+      let myDonutChart = new Chart(ctx_donut, {
+                                              type: 'doughnut',
+                                              data: data,
+                                              options: options
+                                            });
+      $('#donutLegend').html(myDonutChart.generateLegend());
+    });
+
+  </script>
+{% endblock %}

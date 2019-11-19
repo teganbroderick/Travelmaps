@@ -202,7 +202,7 @@ def save_location(map_id):
 def delete_location(map_id):
     """Delete marker from database places table, using current map_id"""
 
-    place_to_delete_id = request.form.get('google_places_id')
+    place_to_delete_id = request.form.get("google_places_id")
 
     place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).first()
     #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
@@ -224,6 +224,58 @@ def share_map(map_url_hash):
     map_url = "http://0.0.0.0:5000/share_map/" + user_map.map_url_hash
 
     return render_template("share_map.html", map=user_map, places=places_on_map, map_url=map_url)
+
+
+@app.route('/dashboard')
+def dashboard():
+    """get user statistics from the database, render internal dashboard"""
+
+
+    return render_template("dashboard.html")
+
+
+@app.route('/place_statistics.json')
+def get_place_statistics():
+    """JSON information about quantity of each place type saved to all maps"""
+
+    all_places = db.session.query(Place.place_types).all() #returns list of tuples
+    place_type_dictionary = {}
+    for place in all_places:
+        types = place[0].split(",") #split string in tuple into individual place types
+        #get first place type tag from each place, make dictionary with place types and count
+        if place_type_dictionary.get(types[0]) == None:
+            place_type_dictionary[types[0]] = 1
+        else:
+            place_type_dictionary[types[0]] += 1
+    print(place_type_dictionary)
+
+    #To do: get info from place_type_dict into data_dict
+    labels = []
+    data = []
+
+    data_dict = {
+                "labels": [
+                    "Label 1",
+                    "Label 2",
+                    "Label 3"
+                ],
+                "datasets": [
+                    {
+                        "data": [300, 50, 100],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ],
+                        "hoverBackgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56"
+                        ]
+                    }]
+            }
+
+    return jsonify(data_dict)
 
 
 @app.route('/get_places/')
