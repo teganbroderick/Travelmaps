@@ -237,28 +237,20 @@ def dashboard():
 def get_place_type_statistics():
     """JSON information about top 5 place types saved to all maps"""
 
-    all_places = db.session.query(Place.place_types).all() #returns list of tuples
-    place_type_dictionary = {}
+    all_places = db.session.query(Place.place_types).all() #get all places, returns list of tuples
+    
+    place_type_dictionary = {} #make dictionary with key: place type, value: number of times place type has been added to a map
     for place in all_places:
-        types = place[0].split(",") #split string in tuple into individual place types
+        #split string in tuple into individual place types
+        types = place[0].split(",") 
         #get first place type tag from each place, make dictionary with place types and count
         if place_type_dictionary.get(types[0]) == None:
             place_type_dictionary[types[0]] = 1
         else:
             place_type_dictionary[types[0]] += 1
-    # print(place_type_dictionary)   
-    place_type_values_sorted = sorted(place_type_dictionary.values(), reverse=True)
-    # print(place_type_values_sorted)
-
-    labels = []
-    data = []
-    for val in place_type_values_sorted[0:5]:
-        for key in place_type_dictionary.keys():
-            if place_type_dictionary[key] == val and place_type_dictionary[key] not in labels:
-                labels.append(key)
-                data.append(val)
-    # print(labels)
-    # print(data)
+    
+    data = sorted(place_type_dictionary.values(), reverse=True) #sort dict on values
+    labels = sorted(place_type_dictionary, key=place_type_dictionary.__getitem__, reverse=True) #get key associated with sorted values
 
     data_dict = {
                 "labels": labels[0:5],
@@ -284,23 +276,18 @@ def get_place_type_statistics():
 def get_place_statistics():
     """JSON information about top 5 places saved to all maps"""
     
-    #work in progress
-    all_places = db.session.query(Place.google_place_name, Place.address).all() #returns list of tuples
-    print(all_places)
+    all_places = db.session.query(Place.google_place_name, Place.address).all() #get all places, returns list of tuples
 
-    place_dictionary = {}
+    place_dictionary = {} #make dictionary with key: place names/address, value: number of times place has been added to a map
     for place in all_places:
         if place_dictionary.get(place) == None:
             place_dictionary[place] = 1
         else:
-            place_dictionary[place] += 1
-    print(place_dictionary)   
-    data = sorted(place_dictionary.values(), reverse=True) #data
-    labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #labels
-
-    print(data)
-    print(labels)
+            place_dictionary[place] += 1 
     
+    data = sorted(place_dictionary.values(), reverse=True) #sort dict on values
+    labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #get key associated with sorted values
+
     data_dict = {
                 "labels": labels[0:5],
                 "datasets": [
