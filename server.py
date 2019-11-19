@@ -285,10 +285,39 @@ def get_place_statistics():
     """JSON information about top 5 places saved to all maps"""
     
     #work in progress
-    all_places = db.session.query(Place.google_places_id, Place.google_place_name).all() #returns list of tuples
+    all_places = db.session.query(Place.google_place_name, Place.address).all() #returns list of tuples
     print(all_places)
 
-    return jsonify(all_places)
+    place_dictionary = {}
+    for place in all_places:
+        if place_dictionary.get(place) == None:
+            place_dictionary[place] = 1
+        else:
+            place_dictionary[place] += 1
+    print(place_dictionary)   
+    data = sorted(place_dictionary.values(), reverse=True) #data
+    labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #labels
+
+    print(data)
+    print(labels)
+    
+    data_dict = {
+                "labels": labels[0:5],
+                "datasets": [
+                    {
+                        "data": data[0:5],
+                        "backgroundColor": [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56",
+                            "#74D3AE",
+                            "#f29559",
+                        ],
+                        "hoverBackgroundColor": [
+                        ]
+                    }]
+            }
+    return jsonify(data_dict)
 
 
 @app.route('/get_places/')
