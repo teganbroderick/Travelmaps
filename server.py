@@ -253,24 +253,27 @@ def get_place_statistics():
     labels = []
     data = []
 
+    for key, value in place_type_dictionary.items():
+        labels.append(key)
+        data.append(value)
+    print(labels)
+    print(data)
+
+
+
     data_dict = {
-                "labels": [
-                    "Label 1",
-                    "Label 2",
-                    "Label 3"
-                ],
+                "labels": labels[0:5],
                 "datasets": [
                     {
-                        "data": [300, 50, 100],
+                        "data": data[0:5],
                         "backgroundColor": [
                             "#FF6384",
                             "#36A2EB",
-                            "#FFCE56"
+                            "#FFCE56",
+                            "#74D3AE",
+                            "#f29559",
                         ],
                         "hoverBackgroundColor": [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56"
                         ]
                     }]
             }
