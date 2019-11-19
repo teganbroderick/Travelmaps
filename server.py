@@ -247,19 +247,21 @@ def get_place_statistics():
             place_type_dictionary[types[0]] = 1
         else:
             place_type_dictionary[types[0]] += 1
-    print(place_type_dictionary)
+    print(place_type_dictionary)   
+    place_type_values_sorted = sorted(place_type_dictionary.values(), reverse=True)
+    print(place_type_values_sorted)
 
-    #To do: get info from place_type_dict into data_dict
     labels = []
     data = []
+    for val in place_type_values_sorted[0:5]:
+        for key in place_type_dictionary.keys():
+            if place_type_dictionary[key] == val and place_type_dictionary[key] not in labels:
+                labels.append(key)
+                data.append(val)
 
-    for key, value in place_type_dictionary.items():
-        labels.append(key)
-        data.append(value)
+
     print(labels)
     print(data)
-
-
 
     data_dict = {
                 "labels": labels[0:5],
