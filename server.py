@@ -228,15 +228,14 @@ def share_map(map_url_hash):
 
 @app.route('/dashboard')
 def dashboard():
-    """get user statistics from the database, render internal dashboard"""
-
+    """render internal dashboard html page"""
 
     return render_template("dashboard.html")
 
 
-@app.route('/place_statistics.json')
-def get_place_statistics():
-    """JSON information about quantity of each place type saved to all maps"""
+@app.route('/place_type_statistics.json')
+def get_place_type_statistics():
+    """JSON information about top 5 place types saved to all maps"""
 
     all_places = db.session.query(Place.place_types).all() #returns list of tuples
     place_type_dictionary = {}
@@ -247,9 +246,9 @@ def get_place_statistics():
             place_type_dictionary[types[0]] = 1
         else:
             place_type_dictionary[types[0]] += 1
-    print(place_type_dictionary)   
+    # print(place_type_dictionary)   
     place_type_values_sorted = sorted(place_type_dictionary.values(), reverse=True)
-    print(place_type_values_sorted)
+    # print(place_type_values_sorted)
 
     labels = []
     data = []
@@ -258,10 +257,8 @@ def get_place_statistics():
             if place_type_dictionary[key] == val and place_type_dictionary[key] not in labels:
                 labels.append(key)
                 data.append(val)
-
-
-    print(labels)
-    print(data)
+    # print(labels)
+    # print(data)
 
     data_dict = {
                 "labels": labels[0:5],
@@ -281,6 +278,17 @@ def get_place_statistics():
             }
 
     return jsonify(data_dict)
+
+
+@app.route('/place_statistics.json')
+def get_place_statistics():
+    """JSON information about top 5 places saved to all maps"""
+    
+    #work in progress
+    all_places = db.session.query(Place.google_places_id, Place.google_place_name).all() #returns list of tuples
+    print(all_places)
+
+    return jsonify(all_places)
 
 
 @app.route('/get_places/')

@@ -21,9 +21,18 @@
       <div class="col-6">
         <div class="place_types_chart">
           <h2 id="dashboard-header">Top 5 Place Types</h2>
-          <canvas id="donutChart"></canvas>
-          <div id="donutLegend" class="chart-legend"></div>
+          <canvas id="donutChart-place-types"></canvas>
+          <div id="donutLegend-place-types" class="chart-legend"></div>
         </div>
+      </div>
+      <div class="col-6">
+        <div class="place_chart">
+          <h2 id="dashboard-header">Top 5 Places</h2>
+          <canvas id="donutChart-places"></canvas>
+          <div id="donutLegend-places" class="chart-legend"></div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Javascript code -->
   <script>
@@ -31,16 +40,29 @@
       responsive: true
     };
 
-    // Make Donut Chart of percent of different types of Melons
-    let ctx_donut = $("#donutChart").get(0).getContext("2d");
+    // Make Donut Chart of top 5 place types
+    let ctx_donut = $("#donutChart-place-types").get(0).getContext("2d");
 
-    $.get("/place_statistics.json", function (data) {
+    $.get("/place_type_statistics.json", function (data) {
       let myDonutChart = new Chart(ctx_donut, {
                                               type: 'doughnut',
                                               data: data,
                                               options: options
                                             });
-      $('#donutLegend').html(myDonutChart.generateLegend());
+      $('#donutLegend-place-types').html(myDonutChart.generateLegend());
+    });
+
+
+    // Make Donut Chart of top 5 place types
+    let ctx_donut_2 = $("#donutChart-places").get(0).getContext("2d");
+
+    $.get("/place_statistics.json", function (data) {
+      let myDonutChart = new Chart(ctx_donut_2, {
+                                              type: 'doughnut',
+                                              data: data,
+                                              options: options
+                                            });
+      $('#donutLegend-places').html(myDonutChart.generateLegend());
     });
 
   </script>
