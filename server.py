@@ -276,7 +276,7 @@ def get_place_type_statistics():
 def get_place_statistics():
     """JSON information about top 5 places saved to all maps"""
     
-    all_places = db.session.query(Place.google_place_name, Place.address).all() #get all places, returns list of tuples
+    all_places = db.session.query(Place.google_place_name).all() #get all places, returns list of tuples
 
     place_dictionary = {} #make dictionary with key: place names/address, value: number of times place has been added to a map
     for place in all_places:
@@ -289,21 +289,20 @@ def get_place_statistics():
     labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #get key associated with sorted values
 
     data_dict = {
-                "labels": labels[0:5],
-                "datasets": [
-                    {
-                        "data": data[0:5],
-                        "backgroundColor": [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#74D3AE",
-                            "#f29559",
-                        ],
-                        "hoverBackgroundColor": [
-                        ]
-                    }]
-            }
+            "labels": labels[0:10],
+            "datasets": [{
+                "data": data[0:10],
+                "backgroundColor": [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+            }]
+        }
+
     return jsonify(data_dict)
 
 

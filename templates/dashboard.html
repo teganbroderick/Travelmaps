@@ -18,18 +18,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-7">
+        <div class="place_chart">
+          <h2 id="dashboard-header">Top 5 Places</h2>
+          <canvas id="barChart-places"></canvas>
+        </div>
+      </div>      
+      <div class="col-5">
         <div class="place_types_chart">
           <h2 id="dashboard-header">Top 5 Place Types</h2>
           <canvas id="donutChart-place-types"></canvas>
           <div id="donutLegend-place-types" class="chart-legend"></div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="place_chart">
-          <h2 id="dashboard-header">Top 5 Places</h2>
-          <canvas id="donutChart-places"></canvas>
-          <div id="donutLegend-places" class="chart-legend"></div>
         </div>
       </div>
     </div>
@@ -40,11 +39,35 @@
       responsive: true
     };
 
+    // Make Donut Chart of top 5 places
+    let ctx_bar = $("#barChart-places").get(0).getContext("2d");
+
+    $.get("/place_statistics.json", function (data) {
+      var myBarChart = new Chart(ctx_bar, {
+                                            type: 'bar',
+                                            data: data,
+                                            options: {
+                                                      legend: { display: false },
+                                                      title: {
+                                                        display: false,
+                                                        text: 'Popular mapped places'
+                                                        },
+                                                      scales: {
+                                                        yAxes: [{
+                                                          ticks: {
+                                                            beginAtZero: true
+                                                            }
+                                                        }]
+                                                      }
+                                                  }
+                                            }); 
+      }); 
+    
     // Make Donut Chart of top 5 place types
     let ctx_donut = $("#donutChart-place-types").get(0).getContext("2d");
 
     $.get("/place_type_statistics.json", function (data) {
-      let myDonutChart = new Chart(ctx_donut, {
+       myDonutChart = new Chart(ctx_donut, {
                                               type: 'doughnut',
                                               data: data,
                                               options: options
@@ -53,17 +76,7 @@
     });
 
 
-    // Make Donut Chart of top 5 place types
-    let ctx_donut_2 = $("#donutChart-places").get(0).getContext("2d");
 
-    $.get("/place_statistics.json", function (data) {
-      let myDonutChart = new Chart(ctx_donut_2, {
-                                              type: 'doughnut',
-                                              data: data,
-                                              options: options
-                                            });
-      $('#donutLegend-places').html(myDonutChart.generateLegend());
-    });
 
   </script>
 {% endblock %}
