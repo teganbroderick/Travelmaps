@@ -228,9 +228,22 @@ def share_map(map_url_hash):
 
 @app.route('/dashboard')
 def dashboard():
-    """render internal dashboard html page"""
+    """get user statistics, render internal dashboard html page"""
+    total_users = len(User.query.filter().all())
+    print("total users", total_users)
+    total_maps = len(db.session.query(Map.map_id).all())
+    print("total maps", total_maps)
+    total_places_mapped = len(Place.query.filter().all())
+    print("total places mapped", total_places_mapped)
+    avg_places_mapped = round(total_places_mapped / total_maps, 2)
+    avg_maps_per_user = round(total_maps / total_users, 2)
 
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", 
+                            total_users=total_users, 
+                            total_maps=total_maps, 
+                            total_places_mapped=total_places_mapped,
+                            avg_places_mapped=avg_places_mapped,
+                            avg_maps_per_user=avg_maps_per_user)
 
 
 @app.route('/place_type_statistics.json')

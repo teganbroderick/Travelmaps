@@ -31,6 +31,11 @@ a.place-name {
   font-style: bold;
 }
 
+#dashboard-par-header {
+  font-size: 14px;
+  font-style: bold;
+}
+
 .bg {
   /* The image used */
   background-image: url("https://images.unsplash.com/photo-1494679431452-d4f4a03d0004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80");
