@@ -248,7 +248,7 @@ def dashboard():
 
 @app.route('/place_type_statistics.json')
 def get_place_type_statistics():
-    """JSON information about top 5 place types saved to all maps"""
+    """Get JSON object with top 5 place types saved to all maps"""
 
     all_places = db.session.query(Place.place_types).all() #get all places, returns list of tuples
     
@@ -287,7 +287,7 @@ def get_place_type_statistics():
 
 @app.route('/place_statistics.json')
 def get_place_statistics():
-    """JSON information about top 5 places saved to all maps"""
+    """Get JSON object with top 5 places saved to all maps"""
     
     all_places = db.session.query(Place.google_place_name).all() #get all places, returns list of tuples
 
@@ -318,10 +318,24 @@ def get_place_statistics():
 
     return jsonify(data_dict)
 
+@app.route("/all_places.json")
+def get_all_places():
+    """Get JSON object with latitude and logitude of all places saved to all maps"""
+
+    all_places = Place.query.filter().all()
+    places_list = []
+    for place in all_places:
+        temp_dict = {}
+        temp_dict['latitude'] = float(place.latitude)
+        temp_dict['longitude'] = float(place.longitude)
+        places_list.append(temp_dict)
+
+    return jsonify(places_list)
+
 
 @app.route('/get_places/')
 def get_places():
-    """JSON information about places saved to map"""
+    """Get JSON object with information about places saved to a single map"""
     
     map_id = request.args.get("map_id")
     
@@ -345,7 +359,7 @@ def get_places():
 
 @app.route('/get_last_place_added/')
 def get_last_place_added():
-    """JSON information about last place saved to map"""
+    """Get JSON object with information about last place saved to map"""
     
     map_id = request.args.get("map_id")
     #get all active places on the map

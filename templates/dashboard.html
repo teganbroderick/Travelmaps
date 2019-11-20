@@ -46,7 +46,7 @@
         <h3 id="dashboard-par-header"> Total Places Mapped: {{ total_places_mapped }}</h3>
         <h3 id="dashboard-par-header"> Average Maps / User: {{ avg_maps_per_user }}</h3>
         <h3 id="dashboard-par-header"> Average Places / Map: {{ avg_places_mapped }}</h3>
-        <br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
       <div class="col-9">
         <h2 id="dashboard-header">Heat Map - All Places Saved to Maps</h2>
@@ -98,11 +98,11 @@
       $('#donutLegend-place-types').html(myDonutChart.generateLegend());
     });
 
-  //Map code
+  //Heat map code
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 1.75,
-      center: {lat: 17, lng: 21.017532},
+      zoom: 1.75, // display whole world
+      center: {lat: 17, lng: 21.017532}, //center on Poland, make sure far north and south are visible
       mapTypeId: 'roadmap'
     });
 
@@ -112,6 +112,7 @@
     });
   }
 
+  //Get latitude and longitude from all places saved to db, render points on heatmap
   function getPoints() {
     return [
       new google.maps.LatLng(37.782551, -122.445368),
@@ -123,6 +124,10 @@
       new google.maps.LatLng(37.783206, -122.440829),
       new google.maps.LatLng(37.783273, -122.440324)]
   }
+
+  $.get("/all_places.json", function (data) {
+    console.log(data)
+  });
 
   </script>
 {% endblock %}
