@@ -3,6 +3,10 @@
 {% block head %}
   <!-- Load chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+  <!-- Load google map with visualization library -->
+  <script async defer 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=visualization&callback=initMap"></script>
+
 {% endblock %}
 
 {% block body %}
@@ -42,14 +46,18 @@
         <h3 id="dashboard-par-header"> Total Places Mapped: {{ total_places_mapped }}</h3>
         <h3 id="dashboard-par-header"> Average Maps / User: {{ avg_maps_per_user }}</h3>
         <h3 id="dashboard-par-header"> Average Places / Map: {{ avg_places_mapped }}</h3>
+        <br><br><br><br><br><br><br><br><br><br><br>
       </div>
-      <div class="col-7">
+      <div class="col-9">
+        <h2 id="dashboard-header">Heat Map - All Places Saved to Maps</h2>
+        <div id="map"></div>
       </div>
     </div>
 
   </div>
   <!-- Javascript code -->
   <script>
+    //Chart code
     const options = {
       responsive: true
     };
@@ -90,7 +98,31 @@
       $('#donutLegend-place-types').html(myDonutChart.generateLegend());
     });
 
+  //Map code
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 1.75,
+      center: {lat: 17, lng: 21.017532},
+      mapTypeId: 'roadmap'
+    });
 
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+      data: getPoints(),
+      map: map
+    });
+  }
+
+  function getPoints() {
+    return [
+      new google.maps.LatLng(37.782551, -122.445368),
+      new google.maps.LatLng(37.782745, -122.444586),
+      new google.maps.LatLng(37.782842, -122.443688),
+      new google.maps.LatLng(37.782919, -122.442815),
+      new google.maps.LatLng(37.782992, -122.442112),
+      new google.maps.LatLng(37.783100, -122.441461),
+      new google.maps.LatLng(37.783206, -122.440829),
+      new google.maps.LatLng(37.783273, -122.440324)]
+  }
 
   </script>
 {% endblock %}
