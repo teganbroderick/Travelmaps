@@ -40,18 +40,23 @@
     </div>
     <div class="row">
       <div class="col-3">
-        <h2 id="dashboard-header">User Statistics</h2>
-        <h3 id="dashboard-par-header"> Total Users: {{ total_users }}</h3>
-        <h3 id="dashboard-par-header"> Total Maps: {{ total_maps }}</h3>
-        <h3 id="dashboard-par-header"> Total Places Mapped: {{ total_places_mapped }}</h3>
-        <h3 id="dashboard-par-header"> Average Maps / User: {{ avg_maps_per_user }}</h3>
-        <h3 id="dashboard-par-header"> Average Places / Map: {{ avg_places_mapped }}</h3>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="user_statistics">
+          <h2 id="dashboard-header">User Statistics</h2>
+          <br>
+          <h3 id="dashboard-par-header"> Total Users: {{ total_users }}</h3>
+          <h3 id="dashboard-par-header"> Total Maps: {{ total_maps }}</h3>
+          <h3 id="dashboard-par-header"> Total Places Mapped: {{ total_places_mapped }}</h3>
+          <h3 id="dashboard-par-header"> Average Maps per User: {{ avg_maps_per_user }}</h3>
+          <h3 id="dashboard-par-header"> Average Places per Map: {{ avg_places_mapped }}</h3>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
       </div>
       <div class="col-9">
         <h2 id="dashboard-header">Heat Map - All Places Saved to Maps</h2>
         <div id="map"></div>
       </div>
+    </div>
+    <div class="row" style="height: 30px">
     </div>
 
   </div>
