@@ -15,6 +15,7 @@ class User(db.Model):
     lname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(25), nullable=False)
+    staff_user = db.Column(db.Boolean, default=False, nullable=False)
 
     def __repr__(self):
         """Return a human-readable representation of a user"""
