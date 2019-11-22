@@ -20,7 +20,7 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """Index page"""
+    """Verify whether session exists, render index page"""
     if 'user_id' in session: #if session exists
         user = User.query.filter_by(user_id=session['user_id']).first()
         maps = Map.query.filter_by(user_id=session['user_id']).all()
@@ -30,14 +30,14 @@ def index():
 
 @app.route('/about')
 def about():
-    """about page"""
+    """Render about page"""
 
     return render_template("about.html")
 
 
 @app.route('/login')
 def login():
-    """redirect to login.html"""
+    """Redirect to login.html"""
 
     return render_template("login.html")
 
@@ -217,7 +217,7 @@ def delete_location(map_id):
 
 @app.route('/share_map/<map_url_hash>')
 def share_map(map_url_hash):
-    """create shareable version of current map usng crypotgraphic hash at end of address"""
+    """Create shareable version of current map usng crypotgraphic hash at end of address"""
     user_map = Map.query.filter(Map.map_url_hash == map_url_hash).one()
     map_id = user_map.map_id
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
@@ -228,7 +228,7 @@ def share_map(map_url_hash):
 
 @app.route('/dashboard')
 def dashboard():
-    """get user statistics and list of top 10 place objects, render internal dashboard html page"""
+    """Get user statistics, render internal dashboard html page"""
 
     total_users = len(User.query.filter().all())
     print("total users", total_users)
@@ -238,8 +238,6 @@ def dashboard():
     print("total places mapped", total_places_mapped)
     avg_places_mapped = round(total_places_mapped / total_maps, 2)
     avg_maps_per_user = round(total_maps / total_users, 2)
-
-    # top_10 = 
 
     return render_template("dashboard.html", 
                             total_users=total_users, 
