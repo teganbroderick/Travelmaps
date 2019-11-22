@@ -228,7 +228,8 @@ def share_map(map_url_hash):
 
 @app.route('/dashboard')
 def dashboard():
-    """get user statistics, render internal dashboard html page"""
+    """get user statistics and list of top 10 place objects, render internal dashboard html page"""
+
     total_users = len(User.query.filter().all())
     print("total users", total_users)
     total_maps = len(db.session.query(Map.map_id).all())
@@ -237,6 +238,8 @@ def dashboard():
     print("total places mapped", total_places_mapped)
     avg_places_mapped = round(total_places_mapped / total_maps, 2)
     avg_maps_per_user = round(total_maps / total_users, 2)
+
+    # top_10 = 
 
     return render_template("dashboard.html", 
                             total_users=total_users, 
@@ -287,11 +290,11 @@ def get_place_type_statistics():
 
 @app.route('/place_statistics.json')
 def get_place_statistics():
-    """Get JSON object with top 5 places saved to all maps"""
+    """Get JSON object with top 10 places saved to all maps"""
     
-    all_places = db.session.query(Place.google_place_name).all() #get all places, returns list of tuples
+    all_places = db.session.query(Place.google_place_name, Place.google_places_id).all() #get all places, returns list of tuples
 
-    place_dictionary = {} #make dictionary with key: place names/address, value: number of times place has been added to a map
+    place_dictionary = {} #make dictionary with key: (place name,google_places_id), value: number of times place has been added to a map
     for place in all_places:
         if place_dictionary.get(place) == None:
             place_dictionary[place] = 1
@@ -300,9 +303,15 @@ def get_place_statistics():
     
     data = sorted(place_dictionary.values(), reverse=True) #sort dict on values
     labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #get key associated with sorted values
-
+    
+    #Get place names out of place tuples
+    name_labels = []
+    for i in range(0,10):
+        name_only = labels[i][0]
+        name_labels.append(name_only)
+    
     data_dict = {
-            "labels": labels[0:10],
+            "labels": name_labels,
             "datasets": [{
                 "data": data[0:10],
                 "backgroundColor": [
