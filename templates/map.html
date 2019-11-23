@@ -24,18 +24,23 @@
         <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
         <!-- if there are places in the map, print them -->
         <h3>Places on this map:</h3>
-        {%for place in places %}
-          <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>         
-          <ul>
-            <li>Address: {{ place.address }}</li>
-            {% if place.website != 'website not available' %}
-              Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
-            {% else %}
-              <li>Website: {{ place.website }}</li>
-            {% endif %}
-            <li>Notes: {{ place.user_notes }}</li>
-          </ul>
-        {% endfor %}
+        {% if places == [] %}
+          <p> There are currently no places on your map. To add a place, enter a search term in the search box, and click on a marker to add it. </p>
+        {% else %} 
+          {%for place in places %}
+            <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>         
+            <ul>
+              <li>Address: {{ place.address }}</li>
+              {% if place.website != 'website not available' %}
+                Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
+              {% else %}
+                <li>Website: {{ place.website }}</li>
+              {% endif %}
+              <li>Notes: {{ place.user_notes }}</li>
+            </ul>
+          {% endfor %}
+        {% endif %}
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
         <!-- to do: if there are no places in the map, print a message to get started... -->
       </div>
     </div>
