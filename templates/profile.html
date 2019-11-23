@@ -2,26 +2,29 @@
 
 {% block body %}
 
-    <h2>Profile</h2>
+  <h2>Profile</h2>
 
-    <p>Hello, {{user.fname}} {{user.lname}} !</p>
-
-    <div id=maplist>
-        <h2>Your Maps</h2>
-        
+  <p>Hello, {{user.fname}} {{user.lname}} !</p>
+  
+  <div id=maplist>
+      <h2>Your Maps</h2>
+      {% if maps == [] %}
+        <p>You don't have any maps yet. Click the "Make New Map" button to get started</p>
+      {% else %}
         {% for map in maps %}
             <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
         {% endfor %}
-        <br>
-    </div>
+      {% endif %}
+  </div>
 
-    <div id="make_new_map">
-        <form action="/make_map">
-            <input type="submit" value="Make New Map">
-        </form>
-    </div>
+  <div id="make_new_map">
+    <form action="/make_map">
+      <input type="submit" value="Make New Map">
+    </form>
+  </div>
+  <br>
 
-    <br>
+  <br>
 
   <div id="dashboard">
   <form action="/dashboard">
