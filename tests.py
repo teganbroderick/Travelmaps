@@ -41,6 +41,12 @@ class FlaskTests(TestCase):
             follow_redirects="True")
         self.assertIn(b"Hello, Karl Knight !", result.data)
 
+    def test_signup_process(self):
+        result = self.client.post("/signup_process", 
+        data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password"},
+        follow_redirects="True")
+        self.assertIn(b"Hello, John Citizen !", result.data)            
+
 if __name__ == '__main__':
     import unittest
     unittest.main()
