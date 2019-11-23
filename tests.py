@@ -52,6 +52,13 @@ class FlaskTests(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>Make New Map</h2>', result.data)
 
+    def test_make_map_process(self):
+        #Work in progress - needs session info
+        result = self.client.post("/make_map_process",
+            data={"map_name":"Seattle", "map_description":"Seattle winter activities"},
+            follow_redirects="True")
+        self.assertIn(b"<h3>Map Name:</h3> <p> Seattle </p>", result.data)
+
 if __name__ == '__main__':
     import unittest
     unittest.main()
