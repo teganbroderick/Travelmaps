@@ -43,9 +43,14 @@ class FlaskTests(TestCase):
 
     def test_signup_process(self):
         result = self.client.post("/signup_process", 
-        data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password"},
+        data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
         follow_redirects="True")
-        self.assertIn(b"Hello, John Citizen !", result.data)            
+        self.assertIn(b"Hello, John Citizen !", result.data)     
+
+    def test_make_map(self):
+        result = self.client.get("/make_map")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<h2>Make New Map</h2>', result.data)
 
 if __name__ == '__main__':
     import unittest
