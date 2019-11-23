@@ -52,21 +52,16 @@
       <!-- end google maps code -->
     </div>
   </div>
-  <div class="row" style="height: 30px">
+  <div class="row">
     <div class="col-4">
-      <div id="logout">
-        <form action="/logout">
-            <input type="submit" value="Log Out">
+      </div>
+    <div class="col-2">
+      <div id="view_shareable_map">
+        <form action="/share_map/{{ map.map_url_hash }}">
+            <input type="submit" value="View Shareable Map">
         </form>
       </div>
-    </div>
-      <div class="col-2">
-        <div id="view_shareable_map">
-          <form action="/share_map/{{ map.map_url_hash }}">
-              <input type="submit" value="View Shareable Map">
-          </form>
-        </div>
-      </div>          
+    </div>          
   </div>
 </div>
 {% endblock %}
