@@ -216,20 +216,15 @@ def get_place_statistics():
     all_places = db.session.query(Place.google_place_name, Place.google_places_id).all() #get all places, returns list of tuples
 
     place_dictionary = helpers.make_place_dictionary(all_places)
-    
-    data = sorted(place_dictionary.values(), reverse=True) #sort dict on values
-    labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #get key associated with sorted values
-    
-    #Get place names out of place tuples
-    name_labels = []
-    for i in range(0,10):
-        name_only = labels[i][0]
-        name_labels.append(name_only)
+    data_labels_list = helpers.get_data_and_labels_for_chart(place_dictionary)
+    place_names_list = helpers.get_place_names(data_labels_list)
+    print(place_names_list)
+    print(data_labels_list[0][0:10])
     
     data_dict = {
-            "labels": name_labels,
+            "labels": place_names_list,
             "datasets": [{
-                "data": data[0:10],
+                "data": data_labels_list[0][0:10],
                 "backgroundColor": [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

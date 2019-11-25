@@ -92,6 +92,7 @@ def get_data_and_labels_for_chart(place_type_dictionary):
 
     return [data, labels]
 
+
 def make_data_dict_for_chart(data_labels_list):
     """Make a data_dictionary to pass through into chart.js donut chart"""
 
@@ -128,6 +129,19 @@ def make_place_dictionary(all_places):
             place_dictionary[place] += 1 
     
     return place_dictionary
+
+
+def get_place_names(data_labels_list):
+    """Create list of place name labels from labels tuple in data_labels_list"""
+
+    labels = data_labels_list[1]
+    name_labels = []
+    for i in range(0,10):
+        name_only = labels[i][0]
+        name_labels.append(name_only)
+    return name_labels
+
+
 
 
 
