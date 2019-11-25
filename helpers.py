@@ -92,6 +92,28 @@ def get_data_and_labels_for_chart(place_type_dictionary):
 
     return [data, labels]
 
+def make_data_dict_for_chart(data_labels_list):
+    """Make a data_dictionary to pass through into chart.js donut chart"""
+
+    data_dict = {
+            "labels": data_labels_list[1][0:5], #getting top 5 place types, so slicing from 0 - 5
+            "datasets": [
+                {
+                    "data": data_labels_list[0][0:5],
+                    "backgroundColor": [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56",
+                        "#74D3AE",
+                        "#f29559",
+                    ],
+                    "hoverBackgroundColor": [
+                    ]
+                }]
+        }
+
+    return data_dict
+
 
 def make_place_name_dictionary(all_places):
     """ Make dictionary from list of place names/ places id tuples. 

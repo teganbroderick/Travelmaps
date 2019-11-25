@@ -204,24 +204,7 @@ def get_place_type_statistics():
     all_place_types = db.session.query(Place.place_types).all() #get all places, returns list of tuples
     place_type_dictionary = helpers.make_place_type_dictionary(all_place_types)
     data_labels_list = helpers.get_data_and_labels_for_chart(place_type_dictionary)
-
-
-    data_dict = {
-                "labels": data_labels_list[1][0:5],
-                "datasets": [
-                    {
-                        "data": data_labels_list[0][0:5],
-                        "backgroundColor": [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#74D3AE",
-                            "#f29559",
-                        ],
-                        "hoverBackgroundColor": [
-                        ]
-                    }]
-            }
+    data_dict = helpers.make_data_dict_for_chart(data_labels_list)
 
     return jsonify(data_dict)
 
