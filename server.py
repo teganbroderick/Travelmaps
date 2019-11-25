@@ -127,8 +127,7 @@ def render_map(map_id):
     #To do: handle error if user types a wrong number into the address bar
     user_id_for_map = user_map.user_id
     
-    #If someone tries to access a map that isn't theirs, redirect to index page/profile
-    if session["user_id"] != user_id_for_map:
+    if session["user_id"] != user_id_for_map: #If user doesn't own the map
         flash("You don't have permission to view that page!")
         return redirect("/")
     else:
@@ -156,20 +155,9 @@ def save_location(map_id):
                                             google_place_name=title, 
                                             place_active=True).first()
 
-    if place_to_verify == None: #if place isn't in database for that particular map
-        #add place to places table in db
-        new_place = Place(map_id=map_id, 
-                            google_place_name=title,
-                            address=address,
-                            website=website,
-                            place_types=place_types,
-                            google_places_id=google_places_id,
-                            latitude=latitude, 
-                            longitude=longitude, 
-                            user_notes=user_notes)
-        db.session.add(new_place)
-        db.session.commit()
-        places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    if place_to_verify == None: #if place isn't in db for that particular map, add place to db
+        helpers.add_place_to_database(map_id, title, address, website, place_types, google_places_id, latitude, longitude, user_notes)
+        places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all() #get active places on map
         return render_template("map.html", map=user_map, places=places_on_map)  
 
     else:
