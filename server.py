@@ -204,7 +204,7 @@ def get_place_type_statistics():
     all_place_types = db.session.query(Place.place_types).all() #get all places, returns list of tuples
     place_type_dictionary = helpers.make_place_type_dictionary(all_place_types)
     data_labels_list = helpers.get_data_and_labels_for_chart(place_type_dictionary)
-    data_dict = helpers.make_data_dict_for_chart(data_labels_list)
+    data_dict = helpers.make_data_dict_for_donut_chart(data_labels_list)
 
     return jsonify(data_dict)
 
@@ -218,27 +218,7 @@ def get_place_statistics():
     place_dictionary = helpers.make_place_dictionary(all_places)
     data_labels_list = helpers.get_data_and_labels_for_chart(place_dictionary)
     place_names_list = helpers.get_place_names(data_labels_list)
-    print(place_names_list)
-    print(data_labels_list[0][0:10])
-    
-    data_dict = {
-            "labels": place_names_list,
-            "datasets": [{
-                "data": data_labels_list[0][0:10],
-                "backgroundColor": [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(168, 244, 205, 0.5)',
-                    'rgba(170, 145, 145, 0.3)',
-                    'rgba(170, 61, 61, 0.3)',
-                    'rgba(58, 87, 99, 0.3)'
-                ],
-            }]
-        }
+    data_dict = helpers.make_data_dict_for_bar_chart(data_labels_list, place_names_list)
 
     return jsonify(data_dict)
 

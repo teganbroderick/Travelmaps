@@ -93,7 +93,7 @@ def get_data_and_labels_for_chart(place_type_dictionary):
     return [data, labels]
 
 
-def make_data_dict_for_chart(data_labels_list):
+def make_data_dict_for_donut_chart(data_labels_list):
     """Make a data_dictionary to pass through into chart.js donut chart"""
 
     data_dict = {
@@ -140,6 +140,31 @@ def get_place_names(data_labels_list):
         name_only = labels[i][0]
         name_labels.append(name_only)
     return name_labels
+
+
+def make_data_dict_for_bar_chart(data_labels_list, place_names_list):
+    """Make a data_dictionary to pass through into chart.js bar chart"""
+
+    data_dict = {
+        "labels": place_names_list,
+        "datasets": [{
+            "data": data_labels_list[0][0:10],
+            "backgroundColor": [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(168, 244, 205, 0.5)',
+                'rgba(170, 145, 145, 0.3)',
+                'rgba(170, 61, 61, 0.3)',
+                'rgba(58, 87, 99, 0.3)'
+            ],
+        }]
+    }
+
+    return data_dict
 
 
 
