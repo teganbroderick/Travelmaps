@@ -171,8 +171,7 @@ def delete_location(map_id):
     place_to_delete_id = request.form.get("google_places_id")
 
     helpers.delete_place_from_map(map_id, place_to_delete_id)
-
-    user_map = Map.query.filter(Map.map_id == map_id).one() #get map
+    user_map = Map.query.filter(Map.map_id == map_id).one() #get map object
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all() #get active places on map
 
     return render_template("map.html", map=user_map, places=places_on_map)
@@ -180,7 +179,7 @@ def delete_location(map_id):
 
 @app.route('/share_map/<map_url_hash>')
 def share_map(map_url_hash):
-    """Create shareable version of current map usng crypotgraphic hash at end of address"""
+    """Create shareable version of current map using crypotgraphic hash at end of address"""
     user_map = Map.query.filter(Map.map_url_hash == map_url_hash).one()
     map_id = user_map.map_id
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
@@ -193,21 +192,9 @@ def share_map(map_url_hash):
 def dashboard():
     """Get user statistics, render internal dashboard html page"""
 
-    total_users = len(User.query.filter().all())
-    print("total users", total_users)
-    total_maps = len(db.session.query(Map.map_id).all())
-    print("total maps", total_maps)
-    total_places_mapped = len(Place.query.filter().all())
-    print("total places mapped", total_places_mapped)
-    avg_places_mapped = round(total_places_mapped / total_maps, 2)
-    avg_maps_per_user = round(total_maps / total_users, 2)
-
-    return render_template("dashboard.html", 
-                            total_users=total_users, 
-                            total_maps=total_maps, 
-                            total_places_mapped=total_places_mapped,
-                            avg_places_mapped=avg_places_mapped,
-                            avg_maps_per_user=avg_maps_per_user)
+    stats_dictionary = helpers.user_stats()
+    print(stats_dictionary)
+    return render_template("dashboard.html", stats_dictionary=stats_dictionary)
 
 
 @app.route('/place_type_statistics.json')

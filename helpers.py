@@ -46,3 +46,16 @@ def delete_place_from_map(map_id, place_to_delete_id):
     #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
     place_to_delete.place_active = False
     db.session.commit() 
+
+def user_stats():
+    """Get user statistics for display on internal dashboard page"""
+
+    stats_dictionary = {}
+    stats_dictionary['total_users'] = len(User.query.filter().all())
+    stats_dictionary['total_maps']= len(db.session.query(Map.map_id).all())
+    stats_dictionary['total_places_mapped'] = len(Place.query.filter().all())
+    stats_dictionary['avg_places_mapped'] = round(stats_dictionary['total_places_mapped'] / stats_dictionary['total_maps'], 2)
+    stats_dictionary['avg_maps_per_user'] = round(stats_dictionary['total_maps'] / stats_dictionary['total_users'], 2)
+    
+    return stats_dictionary
+
