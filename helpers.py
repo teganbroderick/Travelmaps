@@ -38,3 +38,11 @@ def add_place_to_database(map_id, google_place_name, address, website, place_typ
                     user_notes=user_notes)
     db.session.add(new_place)
     db.session.commit()
+
+def delete_place_from_map(map_id, place_to_delete_id):
+    """Change place from place_active=True to place_active=False in places table"""
+    
+    place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).first()
+    #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
+    place_to_delete.place_active = False
+    db.session.commit() 

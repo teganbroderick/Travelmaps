@@ -71,8 +71,8 @@ def signup_process():
     user = User.query.filter_by(email=email).first() #get user using entered email address
 
     if user == None: #if user is not in the users table
-        helpers.add_user_to_database(fname, lname, email, password)
-        user = helpers.log_in(email)
+        helpers.add_user_to_database(fname, lname, email, password) #Add user to db
+        user = helpers.log_in(email) #Add user to session
         return render_template("profile.html", user=user, maps=user.maps)
     else: 
         flash("A user with that email address already exists.")
@@ -170,13 +170,10 @@ def delete_location(map_id):
 
     place_to_delete_id = request.form.get("google_places_id")
 
-    place_to_delete = Place.query.filter(Place.google_places_id == place_to_delete_id, Place.map_id == map_id).first()
-    #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
-    place_to_delete.place_active = False
-    db.session.commit() 
-    #get map and active places on map
-    user_map = Map.query.filter(Map.map_id == map_id).one()
-    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
+    helpers.delete_place_from_map(map_id, place_to_delete_id)
+
+    user_map = Map.query.filter(Map.map_id == map_id).one() #get map
+    places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all() #get active places on map
 
     return render_template("map.html", map=user_map, places=places_on_map)
 
