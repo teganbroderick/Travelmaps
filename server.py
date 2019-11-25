@@ -111,7 +111,7 @@ def makemap_process():
     
     if map_to_verify == None: #if new map is not in maps table, add to db
         helpers.add_map_to_database(session['user_id'], map_name, map_description)
-        new_map = Map.query.filter_by(map_name=map_name, map_description=map_description).first() #get map object
+        new_map = Map.query.filter_by(user_id = session['user_id'], map_name=map_name, map_description=map_description).first() #get map object
         return redirect(f'/map/{new_map.map_id}')
     else:
         flash("A map with that name and description already exists.") #to do: make more specific to user, use name
