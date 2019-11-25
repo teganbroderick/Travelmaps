@@ -60,9 +60,9 @@ def user_stats():
     return stats_dictionary
 
 def make_place_dictionary(all_place_types):
-    """Make dictionary from list of all places 
-    with keys = place types, values = number of times place type 
-    has been added to maps"""
+    """Make dictionary from list of all place types. 
+    Dictionary keys = place types, values = number of times place type 
+    has been added to all maps"""
 
     place_type_dictionary = {} 
     for place in all_place_types:
@@ -73,6 +73,6 @@ def make_place_dictionary(all_place_types):
             place_type_dictionary[types[0]] = 1
         else:
             place_type_dictionary[types[0]] += 1
-            
+
     return place_type_dictionary
 
