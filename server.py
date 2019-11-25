@@ -68,7 +68,7 @@ def signup_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    user = User.query.filter_by(email=email).first() #get user using entered email address
+    user = User.query.filter_by(email=email).first() #get user via entered email address
 
     if user == None: #if user is not in the users table
         helpers.add_user_to_database(fname, lname, email, password) #Add user to db
@@ -201,18 +201,9 @@ def dashboard():
 def get_place_type_statistics():
     """Get JSON object with top 5 place types saved to all maps"""
 
-    all_places = db.session.query(Place.place_types).all() #get all places, returns list of tuples
+    all_place_types = db.session.query(Place.place_types).all() #get all places, returns list of tuples
     
-    place_type_dictionary = {} #make dictionary with key: place type, value: number of times place type has been added to a map
-    for place in all_places:
-        #split string in tuple into individual place types
-        types = place[0].split(",") 
-        #get first place type tag from each place, make dictionary with place types and count
-        if place_type_dictionary.get(types[0]) == None:
-            place_type_dictionary[types[0]] = 1
-        else:
-            place_type_dictionary[types[0]] += 1
-    
+    place_type_dictionary = helpers.make_place_dictionary(all_place_types)
     data = sorted(place_type_dictionary.values(), reverse=True) #sort dict on values
     labels = sorted(place_type_dictionary, key=place_type_dictionary.__getitem__, reverse=True) #get key associated with sorted values
 

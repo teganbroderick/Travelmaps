@@ -59,3 +59,20 @@ def user_stats():
     
     return stats_dictionary
 
+def make_place_dictionary(all_place_types):
+    """Make dictionary from list of all places 
+    with keys = place types, values = number of times place type 
+    has been added to maps"""
+
+    place_type_dictionary = {} 
+    for place in all_place_types:
+        #split string in tuple into individual place types
+        types = place[0].split(",") 
+        #get first place type tag from each place, make dictionary with place types and count
+        if place_type_dictionary.get(types[0]) == None:
+            place_type_dictionary[types[0]] = 1
+        else:
+            place_type_dictionary[types[0]] += 1
+            
+    return place_type_dictionary
+
