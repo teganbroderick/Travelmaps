@@ -7,7 +7,15 @@ def add_user_to_database(fname, lname, email, password):
     db.session.add(user_info)
     db.session.commit()
 
+def user_login(email):
+    """Add user to session, return user object"""
+    user = User.query.filter_by(email=email).first() #get user object
+    session['user_id'] = user.user_id #add user to session  
+    flash("Logged in!")
+    return user
+
 def add_map_to_database(user_id, map_name, map_description):
+    """Add map to database"""
     url_hash = uuid.uuid4() #generate random uuid (universal unique identifier) for map
     map_hex = url_hash.hex
     new_map = Map(user_id=user_id, 
@@ -18,6 +26,7 @@ def add_map_to_database(user_id, map_name, map_description):
     db.session.commit()
 
 def add_place_to_database(map_id, google_place_name, address, website, place_types, google_places_id, latitude, longitude, user_notes):
+    """Add place to database"""
     new_place = Place(map_id=map_id, 
                     google_place_name=google_place_name,
                     address=address,

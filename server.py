@@ -72,9 +72,7 @@ def signup_process():
 
     if user == None: #if user is not in the users table
         helpers.add_user_to_database(fname, lname, email, password)
-        user = User.query.filter_by(email=email).first() #get user object just added to database
-        session['user_id'] = user.user_id #add user to session  
-        flash("Logged in!")
+        user = helpers.log_in(email)
         return render_template("profile.html", user=user, maps=user.maps)
     else: 
         flash("A user with that email address already exists.")
