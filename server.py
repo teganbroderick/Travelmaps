@@ -1,11 +1,8 @@
 from jinja2 import StrictUndefined
-
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-
 from model import User, Map, Place, connect_to_db, db
-
-import uuid
+import helpers
 
 app = Flask(__name__)
 
@@ -71,21 +68,14 @@ def signup_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    #check to see if email address is in the user table
-    user_email = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first() #get user using entered email address
 
-    if user_email == None: #if user email is not in the users table
-        #add user to database
-        user_info = User(fname=fname, lname=lname, email=email, password=password)
-        db.session.add(user_info)
-        db.session.commit()
-        #get user object from database
-        user = User.query.filter_by(email=email).first()       
-        #add user to session
-        session['user_id'] = user.user_id        
+    if user == None: #if user is not in the users table
+        helpers.add_user_to_database(fname, lname, email, password)
+        user = User.query.filter_by(email=email).first() #get user object just added to database
+        session['user_id'] = user.user_id #add user to session  
         flash("Logged in!")
         return render_template("profile.html", user=user, maps=user.maps)
-    
     else: 
         flash("A user with that email address already exists.")
         return redirect("/login")
@@ -119,21 +109,12 @@ def makemap_process():
                                         map_name=map_name, 
                                         map_description=map_description).first()
     
-    if map_to_verify == None: #if new map is not in the maps table, add new map to maps table in db
-        url_hash = uuid.uuid4() #generate random uuid (universal unique identifier) for map
-        map_hex = url_hash.hex
-        map_info = Map(user_id=session['user_id'], 
-                        map_name=map_name, 
-                        map_description=map_description, 
-                        map_url_hash=map_hex)
-        db.session.add(map_info)
-        db.session.commit()
-        #get map object
-        new_map = Map.query.filter_by(map_name=map_name, map_description=map_description).first()
-        # redirect_route = "/map/" + str(new_map.map_id)
+    if map_to_verify == None: #if new map is not in maps table, add to db
+        helpers.add_map_to_database(session['user_id'], map_name, map_description)
+        new_map = Map.query.filter_by(map_name=map_name, map_description=map_description).first() #get map object
         return redirect(f'/map/{new_map.map_id}')
     else:
-        flash("A map with that name and description already exists.") #make more specific to user, use name
+        flash("A map with that name and description already exists.") #to do: make more specific to user, use name
         return redirect("/make_map")
 
 
