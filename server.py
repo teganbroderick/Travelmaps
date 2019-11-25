@@ -202,16 +202,15 @@ def get_place_type_statistics():
     """Get JSON object with top 5 place types saved to all maps"""
 
     all_place_types = db.session.query(Place.place_types).all() #get all places, returns list of tuples
-    
-    place_type_dictionary = helpers.make_place_dictionary(all_place_types)
-    data = sorted(place_type_dictionary.values(), reverse=True) #sort dict on values
-    labels = sorted(place_type_dictionary, key=place_type_dictionary.__getitem__, reverse=True) #get key associated with sorted values
+    place_type_dictionary = helpers.make_place_type_dictionary(all_place_types)
+    data_labels_list = helpers.get_data_and_labels_for_chart(place_type_dictionary)
+
 
     data_dict = {
-                "labels": labels[0:5],
+                "labels": data_labels_list[1][0:5],
                 "datasets": [
                     {
-                        "data": data[0:5],
+                        "data": data_labels_list[0][0:5],
                         "backgroundColor": [
                             "#FF6384",
                             "#36A2EB",
@@ -232,6 +231,8 @@ def get_place_statistics():
     """Get JSON object with top 10 places saved to all maps"""
     
     all_places = db.session.query(Place.google_place_name, Place.google_places_id).all() #get all places, returns list of tuples
+
+    helpers.make_place_name_dictionary(all_places)
 
     place_dictionary = {} #make dictionary with key: (place name,google_places_id), value: number of times place has been added to a map
     for place in all_places:

@@ -7,12 +7,14 @@ def add_user_to_database(fname, lname, email, password):
     db.session.add(user_info)
     db.session.commit()
 
+
 def user_login(email):
     """Add user to session, return user object"""
     user = User.query.filter_by(email=email).first() #get user object
     session['user_id'] = user.user_id #add user to session  
     flash("Logged in!")
     return user
+
 
 def add_map_to_database(user_id, map_name, map_description):
     """Add map to database"""
@@ -24,6 +26,7 @@ def add_map_to_database(user_id, map_name, map_description):
                     map_url_hash=map_hex)
     db.session.add(new_map)
     db.session.commit()
+
 
 def add_place_to_database(map_id, google_place_name, address, website, place_types, google_places_id, latitude, longitude, user_notes):
     """Add place to database"""
@@ -39,6 +42,7 @@ def add_place_to_database(map_id, google_place_name, address, website, place_typ
     db.session.add(new_place)
     db.session.commit()
 
+
 def delete_place_from_map(map_id, place_to_delete_id):
     """Change place from place_active=True to place_active=False in places table"""
     
@@ -46,6 +50,7 @@ def delete_place_from_map(map_id, place_to_delete_id):
     #change place_active to false for place_to_delete. Place will no longer be rendered on the map.
     place_to_delete.place_active = False
     db.session.commit() 
+
 
 def user_stats():
     """Get user statistics for display on internal dashboard page"""
@@ -59,10 +64,12 @@ def user_stats():
     
     return stats_dictionary
 
-def make_place_dictionary(all_place_types):
-    """Make dictionary from list of all place types. 
-    Dictionary keys = place types, values = number of times place type 
-    has been added to all maps"""
+
+def make_place_type_dictionary(all_place_types):
+    """ Make dictionary from list of all place types. 
+        Dictionary keys = place types, values = number of times place type 
+        has been added to all maps
+    """
 
     place_type_dictionary = {} 
     for place in all_place_types:
@@ -75,4 +82,24 @@ def make_place_dictionary(all_place_types):
             place_type_dictionary[types[0]] += 1
 
     return place_type_dictionary
+
+
+def get_data_and_labels_for_chart(place_type_dictionary):
+    """get sorted lists of values and keys from input dictionary"""
+
+    data = sorted(place_type_dictionary.values(), reverse=True) #sort dict on values
+    labels = sorted(place_type_dictionary, key=place_type_dictionary.__getitem__, reverse=True) #get key associated with sorted values
+
+    return [data, labels]
+
+
+def make_place_name_dictionary(all_places):
+    """ Make dictionary from list of place names/ places id tuples. 
+        Dictionary keys = place names, values = number of times place 
+        has been added to all maps
+    """
+    return None
+
+
+
 
