@@ -115,12 +115,19 @@ def make_data_dict_for_chart(data_labels_list):
     return data_dict
 
 
-def make_place_name_dictionary(all_places):
+def make_place_dictionary(all_places):
     """ Make dictionary from list of place names/ places id tuples. 
         Dictionary keys = place names, values = number of times place 
         has been added to all maps
     """
-    return None
+    place_dictionary = {} 
+    for place in all_places:
+        if place_dictionary.get(place) == None:
+            place_dictionary[place] = 1
+        else:
+            place_dictionary[place] += 1 
+    
+    return place_dictionary
 
 
 

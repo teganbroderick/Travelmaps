@@ -215,14 +215,7 @@ def get_place_statistics():
     
     all_places = db.session.query(Place.google_place_name, Place.google_places_id).all() #get all places, returns list of tuples
 
-    helpers.make_place_name_dictionary(all_places)
-
-    place_dictionary = {} #make dictionary with key: (place name,google_places_id), value: number of times place has been added to a map
-    for place in all_places:
-        if place_dictionary.get(place) == None:
-            place_dictionary[place] = 1
-        else:
-            place_dictionary[place] += 1 
+    place_dictionary = helpers.make_place_dictionary(all_places)
     
     data = sorted(place_dictionary.values(), reverse=True) #sort dict on values
     labels = sorted(place_dictionary, key=place_dictionary.__getitem__, reverse=True) #get key associated with sorted values
