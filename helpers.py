@@ -1,5 +1,6 @@
 from model import User, Map, Place, connect_to_db, db
 import uuid
+from flask import session, flash
 
 def add_user_to_database(fname, lname, email, password):
     """Add user to database"""

@@ -67,33 +67,31 @@ class FlaskTestsLoggedIn(TestCase):
         example_data()
 
         with self.client as c:
-            with c.session_transaction() as sess:
-                sess['user_id'] = 1
+            with c.session_transaction() as session:
+                session['user_id'] = 1
 
-    def test_homepage_redirect(self):
-        result = self.client.get("/",
-            data={"user_id":1, "fname":"Frances", "lname":"Harris", "email":"fharris@example.com", "password":"password"},
+    def test_login_process(self):
+        result = self.client.post("/login_process", 
+            data={"email":"kknight@example.com", "password":"pinnacle"},
             follow_redirects="True")
-        self.assertIn(b"Hello, Frances Harris !", result.data)
+        self.assertIn(b"Hello, Karl Knight !", result.data)
 
-    # def test_login_process(self):
-    #     result = self.client.post("/login_process", 
-    #         data={"email":"kknight@example.com", "password":"pinnacle"},
-    #         follow_redirects="True")
-    #     self.assertIn(b"Hello, Karl Knight !", result.data)
-
-    # def test_signup_process(self):
-    #     result = self.client.post("/signup_process", 
-    #     data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
-    #     follow_redirects="True")
-    #     self.assertIn(b"Hello, John Citizen !", result.data)     
+    def test_signup_process(self):
+        result = self.client.post("/signup_process", 
+        data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
+        follow_redirects="True")
+        self.assertIn(b"Hello, John Citizen !", result.data)     
 
     # def test_make_map_process(self):
     #     #Work in progress - needs session info
     #     result = self.client.post("/make_map_process",
-    #         data={"map_name":"Seattle", "map_description":"Seattle winter activities"},
+    #         data={session['user_id']:4, "map_name":"Seattle", "map_description":"Seattle winter activities"},
     #         follow_redirects="True")
     #     self.assertIn(b"<h3>Map Name:</h3> <p> Seattle </p>", result.data)
+
+    def test_homepage_redirect(self):
+        result = self.client.post("/")
+        self.assertIn(b"<h2>Profile</h2>", result.data)
 
 if __name__ == '__main__':
     import unittest
