@@ -218,5 +218,17 @@ def last_place_added_dict(all_places_on_map):
     return last_place_added_dict
 
 
+def get_all_places_on_one_users_maps(all_maps):
+    """Return list of place objects for all palces saved to all of one user's maps"""
+
+    places_object_list = []
+
+    for map1 in all_maps:
+        places = Place.query.filter(Place.map_id == map1.map_id).all()
+        for place in places:
+            places_object_list.append(place)
+
+    return places_object_list
+
 
 
