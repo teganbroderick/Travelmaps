@@ -95,6 +95,7 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get("/")
         self.assertIn(b"<h2>Profile</h2>", result.data)  
 
+
     def test_render_map(self):
         """test user viewing one of their maps"""
 
@@ -103,7 +104,7 @@ class FlaskTestsLoggedIn(TestCase):
 
 
     def test_logout(self):
-        result = self.client.post('/logout',
+        result = self.client.get('/logout',
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
