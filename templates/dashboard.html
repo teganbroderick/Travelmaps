@@ -112,7 +112,7 @@
     });
 
     //Get latitude and longitude from all places saved to db, render points on heatmap
-    $.get("/all_places.json", function (data) {
+    $.get("/get_latitude_and_longitude.json", function (data) {
       points = []
       for (place of data) {
         console.log(place.latitude)

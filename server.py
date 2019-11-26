@@ -222,8 +222,8 @@ def get_place_statistics():
 
     return jsonify(data_dict)
 
-@app.route("/all_places.json")
-def get_all_places():
+@app.route("/get_latitude_and_longitude.json")
+def get_latitude_and_longitude(): 
     """Return latitude and logitude of all places saved to all maps as JSON"""
 
     all_places = Place.query.filter().all()
