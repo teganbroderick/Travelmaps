@@ -44,14 +44,7 @@ class FlaskTests(TestCase):
         result = self.client.get("/about")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>About Travel Maps</h2>', result.data) 
-
-
-    def test_make_map(self):
-        """Test make_map route"""
-
-        result = self.client.get("/make_map")
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h2>Make New Map</h2>', result.data)
+    
 
     def test_login_process(self):
         """Test login process page"""
@@ -67,6 +60,14 @@ class FlaskTests(TestCase):
         data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
         follow_redirects="True")
         self.assertIn(b"Hello, John Citizen !", result.data)   
+
+
+    def test_make_map(self):
+        """Test make_map route"""
+
+        result = self.client.get("/make_map")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<h2>Make New Map</h2>', result.data)
 
 
 class FlaskTestsLoggedIn(TestCase):
@@ -89,18 +90,15 @@ class FlaskTestsLoggedIn(TestCase):
                 session['user_id'] = 1
 
 
-
-
-
     def test_homepage_redirect(self):
         """Test homepage redirect for when a session is active"""
         result = self.client.get("/")
         self.assertIn(b"<h2>Profile</h2>", result.data)  
 
-    # def test_logout(self):
-    #     result = self.client.get('/logout')
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b'<div class="bg"></div>', result.data)
+    def test_logout(self):
+        result = self.client.get('/logout')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<div class="bg"></div>', result.data)
 
     # def test_make_map_process(self):
     #     #Work in progress - needs session info
