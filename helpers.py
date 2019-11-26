@@ -167,7 +167,7 @@ def make_data_dict_for_bar_chart(data_labels_list, place_names_list):
     return data_dict
 
 
-def get_latitude_and_logitude(all_places):
+def get_latitude_and_longitude(all_places):
     """Return list of dictionaries containing latitude and longitude of all places"""
 
     places_list = []
@@ -175,6 +175,26 @@ def get_latitude_and_logitude(all_places):
         temp_dict = {}
         temp_dict['latitude'] = float(place.latitude)
         temp_dict['longitude'] = float(place.longitude)
+        places_list.append(temp_dict)
+
+    return places_list
+
+
+def list_of_places_on_map(places_on_map):
+    """Return list of dictionaries containing attributes about all places saved to a map"""
+    
+    places_list = []
+    for place in places_on_map:
+        temp_dict = {}
+        temp_dict['google_places_id'] = place.google_places_id
+        temp_dict['map_id'] = place.map_id
+        temp_dict['latitude'] = float(place.latitude)
+        temp_dict['longitude'] = float(place.longitude)
+        temp_dict['title'] = place.google_place_name
+        temp_dict['address'] = place.address
+        temp_dict['website'] = place.website
+        temp_dict['place_types'] = place.place_types
+        temp_dict['user_notes']=  place.user_notes
         places_list.append(temp_dict)
 
     return places_list

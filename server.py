@@ -227,7 +227,7 @@ def get_all_places():
     """Return latitude and logitude of all places saved to all maps as JSON"""
 
     all_places = Place.query.filter().all()
-    places_list = helpers.get_latitude_and_logitude(all_places)
+    places_list = helpers.get_latitude_and_longitude(all_places)
 
     return jsonify(places_list)
 
@@ -239,20 +239,8 @@ def get_places():
     map_id = request.args.get("map_id")
     
     places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
-    places_list = []
-    for place in places_on_map:
-        temp_dict = {}
-        temp_dict['google_places_id'] = place.google_places_id
-        temp_dict['map_id'] = place.map_id
-        temp_dict['latitude'] = float(place.latitude)
-        temp_dict['longitude'] = float(place.longitude)
-        temp_dict['title'] = place.google_place_name
-        temp_dict['address'] = place.address
-        temp_dict['website'] = place.website
-        temp_dict['place_types'] = place.place_types
-        temp_dict['user_notes']=  place.user_notes
-        places_list.append(temp_dict)
-
+    places_list = helpers.list_of_places_on_map(places_on_map)
+    
     return jsonify(places_list)
 
 
