@@ -193,7 +193,7 @@ def dashboard():
     """Get user statistics, render internal dashboard html page"""
 
     stats_dictionary = helpers.user_stats()
-    print(stats_dictionary)
+
     return render_template("dashboard.html", stats_dictionary=stats_dictionary)
 
 
@@ -227,12 +227,7 @@ def get_all_places():
     """Return latitude and logitude of all places saved to all maps as JSON"""
 
     all_places = Place.query.filter().all()
-    places_list = []
-    for place in all_places:
-        temp_dict = {}
-        temp_dict['latitude'] = float(place.latitude)
-        temp_dict['longitude'] = float(place.longitude)
-        places_list.append(temp_dict)
+    places_list = helpers.get_latitude_and_logitude(all_places)
 
     return jsonify(places_list)
 

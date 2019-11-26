@@ -167,7 +167,17 @@ def make_data_dict_for_bar_chart(data_labels_list, place_names_list):
     return data_dict
 
 
+def get_latitude_and_logitude(all_places):
+    """Return list of dictionaries containing latitude and longitude of all places"""
 
+    places_list = []
+    for place in all_places:
+        temp_dict = {}
+        temp_dict['latitude'] = float(place.latitude)
+        temp_dict['longitude'] = float(place.longitude)
+        places_list.append(temp_dict)
+
+    return places_list
 
 
 
