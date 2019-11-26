@@ -266,58 +266,6 @@ def get_last_place_added():
     return jsonify(last_place_added_dict)
 
 
-# @app.route('/save_location.json')
-# def save_location_json():
-#     """Save marker to database places table from AJAX request using current map_id,
-#     return jsonified place"""
-#     print("Made it to the save_location_json function")
-#     map_id = request.args.get('map_id')
-#     title = request.form.get('title')
-#     address = request.form.get('address')
-#     website = request.form.get('website')
-#     place_types = request.form.get('types')
-#     google_places_id = request.form.get('google_places_id')
-#     latitude = request.form.get('latitude')
-#     longitude = request.form.get('longitude')
-#     user_notes = request.form.get('user_notes')
-
-#     #add place to places table in db
-#     new_place = Place(map_id=map_id, 
-#                             google_place_name=title,
-#                             address=address,
-#                             website=website,
-#                             place_types=place_types,
-#                             google_places_id=google_places_id,
-#                             latitude=latitude, 
-#                             longitude=longitude, 
-#                             user_notes=user_notes)
-#     db.session.add(new_place)
-#     db.session.commit()
-#     print("Added place!")
-#     print(new_place)
-
-#     #get new place as an object
-#     new_place_object = Place.query.filter(Place.map_id == map_id, 
-#                                 Place.latitude == latitude, 
-#                                 Place.longitude == longitude).first()
-    
-#     #make places list with nested dict
-#     place_object_attributes = []
-#     temp_dict = {}
-#     temp_dict['google_places_id'] = place.google_places_id
-#     temp_dict['map_id'] = place.map_id
-#     temp_dict['latitude'] = float(place.latitude)
-#     temp_dict['longitude'] = float(place.longitude)
-#     temp_dict['title'] = place.google_place_name
-#     temp_dict['address'] = place.address
-#     temp_dict['website'] = place.website
-#     temp_dict['place_types'] = place.place_types
-#     temp_dict['user_notes']=  place.user_notes
-#     place_object_attributes.append(temp_dict)
-
-#     return jsonify(place_object_attributes)
-
-
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
