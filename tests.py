@@ -69,14 +69,12 @@ class FlaskTestsLoggedIn(TestCase):
         with self.client as c:
             with c.session_transaction() as sess:
                 sess['user_id'] = 1
-    
-    def test_profile_page(self):
-        """Test profile page"""
 
-        result = self.client.get("/")
-        self.assertIn(b'<h2>Profile</h2>', result.data)
-
-
+    def test_homepage_redirect(self):
+        result = self.client.get("/",
+            data={"user_id":1, "fname":"Frances", "lname":"Harris", "email":"fharris@example.com", "password":"password"},
+            follow_redirects="True")
+        self.assertIn(b"Hello, Frances Harris !", result.data)
 
     # def test_login_process(self):
     #     result = self.client.post("/login_process", 
@@ -89,8 +87,6 @@ class FlaskTestsLoggedIn(TestCase):
     #     data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
     #     follow_redirects="True")
     #     self.assertIn(b"Hello, John Citizen !", result.data)     
-
-
 
     # def test_make_map_process(self):
     #     #Work in progress - needs session info
