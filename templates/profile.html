@@ -1,38 +1,74 @@
 {% extends 'base.html' %}
 
+{% block head %}
+  <!-- Load google map with visualization library -->
+  <script async defer 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=visualization&callback=initMap"></script>
+  {% endblock %}
+
 {% block body %}
-
   <h2>Profile</h2>
-
   <p>Hello, {{user.fname}} {{user.lname}} !</p>
-  
-  <div id=maplist>
-      <h2>Your Maps</h2>
-      {% if maps == [] %}
-        <p>You don't have any maps yet. Click the "Make New Map" button to get started</p>
-      {% else %}
-        {% for map in maps %}
-            <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
-        {% endfor %}
-      {% endif %}
+
+  <div class="container-fluid">
+  <div class="row" style="height: 20px">
   </div>
-
-  <div id="make_new_map">
-    <form action="/make_map">
-      <input type="submit" value="Make New Map">
-    </form>
+  <div class="row">
+    <div class="col-3">
+      <div id=maplist>
+        <h2>Your Maps</h2>
+        {% if maps == [] %}
+          <p>You don't have any maps yet. Click the "Make New Map" button to get started</p>
+        {% else %}
+          {% for map in maps %}
+              <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div id="make_new_map">
+        <form action="/make_map">
+          <input type="submit" value="Make New Map">
+        </form>
+      </div>
+      <br>
+      <br>
+      <div id="dashboard">
+        <form action="/dashboard">
+            <input type="submit" value="View Dashboard">
+        </form>
+      </div>
+    </div>
+    <div class="col-9">
+      <h2 id="dashboard-header">Heat Map - All The Places You Have Saved to Maps</h2>
+      <div id="map"></div>
+    </div>
   </div>
-  <br>
+ </div> 
 
-  <br>
+ <script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 1.75, // display whole world
+      center: {lat: 17, lng: 21.017532}, //center on Poland, make sure far north and south are visible
+      mapTypeId: 'roadmap'
+    });
 
-  <div id="dashboard">
-  <form action="/dashboard">
-      <input type="submit" value="View Dashboard">
-  </form>
-  </div>
+    //Get latitude and longitude from all places saved to db, render points on heatmap
+    $.get("/get_latitude_and_longitude_for_one_user.json", function (data) {
+      points = []
+      for (place of data) {
+        console.log(place.latitude)
+        console.log(place.longitude)
+        points.push(new google.maps.LatLng(place.latitude, place.longitude));
+      }
 
+      var heatmap = new google.maps.visualization.HeatmapLayer({
+        data: points,
+        map: map
+      });
+    });
+  };
 
-
+ </script>
 
 {% endblock %}

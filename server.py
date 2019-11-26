@@ -231,6 +231,16 @@ def get_latitude_and_longitude():
 
     return jsonify(places_list)
 
+@app.route("/get_latitude_and_longitude_for_one_user.json")
+def get_latitude_and_longitude_for_one_user(): 
+    """Return latitude and logitude of places saved to maps for one user as JSON"""
+    print(session['user_id'])
+    all_places = Place.query.filter(Place.user_id == session['user_id']).all()
+    print(all_places)
+    places_list = helpers.get_latitude_and_longitude_list(all_places)
+
+    return jsonify(places_list)
+
 
 @app.route('/get_places/')
 def get_places():
