@@ -102,10 +102,11 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertIn(b"<h3>Map Name:</h3> <p>San Francisco</p>", result.data) 
 
 
-    # def test_logout(self):
-    #     result = self.client.get('/logout')
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
+    def test_logout(self):
+        result = self.client.post('/logout',
+            follow_redirects="True")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
 
     # def test_make_map_process(self):
     #     #Work in progress - needs session info
