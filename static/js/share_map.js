@@ -35,8 +35,6 @@ function initAutocomplete() {
         title: place.title,
         address: place.address,
         website: place.website,
-        place_types: place.place_types,
-        place_id: place.google_places_id,
         user_notes: place.user_notes,
         icon: {
         url: '/static/img/map_icon_black.png', 
