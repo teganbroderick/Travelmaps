@@ -32,11 +32,13 @@
       </div>
       <br>
       <br>
-      <div id="dashboard">
-        <form action="/dashboard">
-            <input type="submit" value="View Dashboard">
-        </form>
-      </div>
+      {% if user.staff_user == True %}
+        <div id="dashboard">
+          <form action="/dashboard">
+              <input type="submit" value="View Internal Dashboard">
+          </form>
+        </div>
+      {% endif %}
     </div>
     <div class="col-9">
       <h2 id="dashboard-header">Heat Map - All The Places You Have Saved to Maps</h2>
