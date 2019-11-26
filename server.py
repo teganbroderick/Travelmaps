@@ -227,7 +227,7 @@ def get_latitude_and_longitude():
     """Return latitude and logitude of all places saved to all maps as JSON"""
 
     all_places = Place.query.filter().all()
-    places_list = helpers.get_latitude_and_longitude(all_places)
+    places_list = helpers.get_latitude_and_longitude_list(all_places)
 
     return jsonify(places_list)
 
@@ -249,18 +249,9 @@ def get_last_place_added():
     """Return information about the last place saved to map as JSON"""
     
     map_id = request.args.get("map_id")
-    #get all active places on the map
+
     all_places_on_map = Place.query.filter(Place.map_id == map_id, Place.place_active == True).all()
-    #get last place added
-    if all_places_on_map != []: #if there are places saved to the map
-        last_place_added = all_places_on_map[-1]
-        last_place_added_dict = {}
-        last_place_added_dict['latitude'] = float(last_place_added.latitude)
-        last_place_added_dict['longitude'] = float(last_place_added.longitude)
-    else:
-        last_place_added_dict = {} #set center to SF
-        last_place_added_dict['latitude'] = float(37.7749295) 
-        last_place_added_dict['longitude'] = float(-122.41941550000001)
+    last_place_added_dict = helpers.last_place_added_dict(all_places_on_map)
 
     return jsonify(last_place_added_dict)
 

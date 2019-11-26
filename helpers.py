@@ -167,7 +167,7 @@ def make_data_dict_for_bar_chart(data_labels_list, place_names_list):
     return data_dict
 
 
-def get_latitude_and_longitude(all_places):
+def get_latitude_and_longitude_list(all_places):
     """Return list of dictionaries containing latitude and longitude of all places"""
 
     places_list = []
@@ -198,6 +198,24 @@ def list_of_places_on_map(places_on_map):
         places_list.append(temp_dict)
 
     return places_list
+
+def last_place_added_dict(all_places_on_map):
+    """Return  dictionary containing latitude and longitude of last place saved to a map
+        If no place has been added to map, use latitude and longitude of San Francisco.
+    """
+
+    last_place_added_dict = {}
+
+    if all_places_on_map != []: #if there are places saved to the map
+        last_place_added = all_places_on_map[-1]
+        last_place_added_dict['latitude'] = float(last_place_added.latitude)
+        last_place_added_dict['longitude'] = float(last_place_added.longitude)
+    else:
+        last_place_added_dict['latitude'] = float(37.7749295) 
+        last_place_added_dict['longitude'] = float(-122.41941550000001)
+
+    return last_place_added_dict
+
 
 
 
