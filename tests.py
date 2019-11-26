@@ -20,6 +20,11 @@ class FlaskTests(TestCase):
         db.create_all()
         example_data()
 
+    def tearDown(self):
+        """Things to do after each test"""
+
+
+
 
     def test_index_route(self):
         """Test index page"""
@@ -59,6 +64,7 @@ class FlaskTestsLoggedIn(TestCase):
         #get flask test client
         self.client = app.test_client()
         app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = "key"
 
         #connect to test database
         connect_to_db(app, "postgresql:///testdb")
@@ -82,16 +88,27 @@ class FlaskTestsLoggedIn(TestCase):
         follow_redirects="True")
         self.assertIn(b"Hello, John Citizen !", result.data)     
 
-    # def test_make_map_process(self):
-    #     #Work in progress - needs session info
-    #     result = self.client.post("/make_map_process",
-    #         data={session['user_id']:4, "map_name":"Seattle", "map_description":"Seattle winter activities"},
-    #         follow_redirects="True")
-    #     self.assertIn(b"<h3>Map Name:</h3> <p> Seattle </p>", result.data)
+    # def test_logout(self):
+    #     result = self.client.get('/logout')
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertIn(b'<div class="bg"></div>', result.data)
 
-    def test_homepage_redirect(self):
-        result = self.client.post("/")
-        self.assertIn(b"<h2>Profile</h2>", result.data)
+    def test_make_map_process(self):
+        #Work in progress - needs session info
+        result = self.client.post("/make_map_process",
+            data={"user_id":4, "map_name":"Seattle", "map_description":"Seattle winter activities"},
+            follow_redirects="True")
+        self.assertIn(b"<h3>Map Name:</h3> <p> Seattle </p>", result.data)
+
+    # def test_homepage_redirect(self):
+    #     result = self.client.get("/")
+    #     self.assertIn(b"<h2>Profile</h2>", result.data)
+
+    # def test_homepage_redirect(self):
+    #     result = self.client.post("/"
+    #         data={"fname":"John", "lname":"Citizen"},
+    #         follow_redirects="True")
+    #     self.assertIn(b"<h2>Profile</h2>", result.data)
 
 if __name__ == '__main__':
     import unittest
