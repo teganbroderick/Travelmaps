@@ -159,9 +159,12 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertNotIn(b'<a class="place-name" href="/" data-name="Sutro Baths">Sutro Baths</a>', result.data)
 
 
-    # def test_share_map(self):
-    #     """Test share map route"""
-    #     result = self.client.get('/share_map/0c38abd239da4782b1510e57d0eb49d')
+    def test_share_map(self):
+        """Test share map route"""
+
+        result = self.client.get('/share_map/0c38abd239da4782b1510e57d0eb49d')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<button type="button" class="get-shareable-link" data-toggle="modal" data-target="#share-link-modal">', result.data)
 
 
 
