@@ -111,7 +111,7 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
 
-    #______________________________________________________________
+
     def test_make_map_process(self):
         """test make map process route"""
 
@@ -121,6 +121,7 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"<h3>Map Name:</h3> <p>Seattle</p>", result.data)
 
+
     def test_make_map_process_already_exists(self):
         """test make map process route for trying to save a map that already exists"""
 
@@ -129,6 +130,7 @@ class FlaskTestsLoggedIn(TestCase):
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>Make New Map</h2>', result.data)
+
 
     def test_save_location(self):
         """test saving a place to a map"""
@@ -145,6 +147,15 @@ class FlaskTestsLoggedIn(TestCase):
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<a class="place-name" href="/" data-name="Fleamarket at Mauerpark">Fleamarket at Mauerpark</a>', result.data)
+
+
+    def test_delete_location(self):
+        """Test deleting a place from a map"""
+
+        result = self.client.get('/map/1/delete',
+            query_string={"google_places_id":"ChIJszBPbLWHhYARfrlLxEb3GuA"},
+            follow_redirects="True")
+        self.assertNotIn(b'<a class="place-name" href="/" data-name="Sutro Baths">Sutro Baths</a>', result.data)
 
 
 if __name__ == '__main__':
