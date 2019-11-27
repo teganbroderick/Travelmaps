@@ -192,9 +192,13 @@ def share_map(map_url_hash):
 def dashboard():
     """Get user statistics, render internal dashboard html page"""
 
-    stats_dictionary = helpers.user_stats()
-
-    return render_template("dashboard.html", stats_dictionary=stats_dictionary)
+    user = User.query.filter(User.user_id == session['user_id']).one()
+    if user.staff_user == True:
+        stats_dictionary = helpers.user_stats()
+        return render_template("dashboard.html", stats_dictionary=stats_dictionary)
+    else:
+        flash("You don't have permission to view that page!")
+        return redirect("/")
 
 
 @app.route('/place_type_statistics.json')
