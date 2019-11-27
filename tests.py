@@ -100,22 +100,50 @@ class FlaskTestsLoggedIn(TestCase):
         """test user viewing one of their maps"""
 
         result = self.client.get("/map/1")
+        self.assertEqual(result.status_code, 200)
         self.assertIn(b"<h3>Map Name:</h3> <p>San Francisco</p>", result.data) 
 
 
     def test_logout(self):
+        """test logout"""
         result = self.client.get('/logout',
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
 
-    # def test_make_map_process(self):
-    #     #Work in progress - needs session info
+    #______________________________________________________________
+    def test_make_map_process(self):
+        """test make map process route"""
+
+        result = self.client.get("/make_map_process",
+            query_string={"map_name":"Seattle", "map_description":"Seattle winter activities"},
+            follow_redirects="True")
+        # self.assertEqual(result.status_code, 200)
+        self.assertIn(b"<h3>Map Name:</h3> <p>Seattle</p>", result.data)
+
+    # def test_make_map_process_already_exists(self):
+    #     """test make map process route"""
+
     #     result = self.client.post("/make_map_process",
-    #         data={"map_name":"Seattle", "map_description":"Seattle winter activities"},
+    #         data={"map_name":"San Francisco", "map_description":"SF activities"},
     #         follow_redirects="True")
     #     # self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b"<h3>Map Name:</h3> <p> Seattle </p>", result.data)
+    #     self.assertIn(b"<h3>Map Name:</h3> <p>San Francisco</p>", result.data)
+
+    # def test_save_location(self):
+    #     """test saving a place to a map"""
+    #     result = self.client.post("/map/1/save",
+    #         data={"title":"Fleamarket at Mauerpark", 
+    #                 "address":"Bernauer Str. 63-64, 13355 Berlin, Germany",
+    #                 "website":"http://www.flohmarktimmauerpark.de/",
+    #                 "place_types":"tourist_attraction,point_of_interest,establishment",
+    #                 "google_places_id":"ChIJCydkxPlRqEcRAVlBoABIR_0",
+    #                 "latitude":"52.54123999999999",
+    #                 "longitude":"13.402435100000048",
+    #                 "user_notes":"Good place to buy old stuff"},
+    #         follow_redirects="True")
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertIn(b'<a class="place-name" href="/" data-name="{{ place.google_place_name }}">Fleamarket at Mauerpark</a>', result.data)
 
 
 if __name__ == '__main__':
