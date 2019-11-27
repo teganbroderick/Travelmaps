@@ -152,10 +152,19 @@ class FlaskTestsLoggedIn(TestCase):
     def test_delete_location(self):
         """Test deleting a place from a map"""
 
-        result = self.client.get('/map/1/delete',
-            query_string={"google_places_id":"ChIJszBPbLWHhYARfrlLxEb3GuA"},
+        result = self.client.post('/map/1/delete',
+            data={"google_places_id":"ChIJszBPbLWHhYARfrlLxEb3GuA"},
             follow_redirects="True")
+        self.assertEqual(result.status_code, 200)
         self.assertNotIn(b'<a class="place-name" href="/" data-name="Sutro Baths">Sutro Baths</a>', result.data)
+
+
+    # def test_share_map(self):
+    #     """Test share map route"""
+    #     result = self.client.get('/share_map/0c38abd239da4782b1510e57d0eb49d')
+
+
+
 
 
 if __name__ == '__main__':
