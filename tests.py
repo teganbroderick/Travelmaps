@@ -170,12 +170,35 @@ class FlaskTestsLoggedIn(TestCase):
     def test_dashboard(self):
         """test dashboard rendering for staff_user"""
 
-        result = self.client.get('dashboard')
+        result = self.client.get('/dashboard')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>Dashboard</h2>', result.data)
 
 
+class FlaskTestsJSON(TestCase):
+    """Flask tests for JSON routes"""
+    
+    def setUp(self):
+        """Things to do before every test"""
+        
+        #get flask test client
+        self.client = app.test_client()
+        app.config['TESTING'] = True
 
+        #connect to test database
+        connect_to_db(app, "postgresql:///testdb")
+        
+        db.drop_all()
+        db.create_all()
+        example_data()
+
+
+    def test_get_place_type_statistics(self):
+        """test get_place_type_statistics route"""
+        
+        result = self.client.get('/place_statistics.json')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'"data":[1,1,1,1,1,1,1,1,1,1]}]', result.data)
 
 
 if __name__ == '__main__':

@@ -145,8 +145,48 @@ def example_data():
                     longitude="-99.18627859999998", 
                     user_notes="Great collection, beautiful building", 
                     place_active=True)
+    place7 = Place(maps=map3, 
+                    google_place_name="Orinoco", 
+                    address="Av. Insurgentes Sur 253, Roma Nte., 06700 Ciudad de México, CDMX, Mexico", 
+                    website="website not available", 
+                    place_types="bar,point_of_interest,establishment", 
+                    google_places_id="ChIJQ11IrDn_0YURx17mDNOe5bY", 
+                    latitude="19.4176674", 
+                    longitude="-99.16490470000002", 
+                    user_notes="Great tacos", 
+                    place_active=True)
+    place8 = Place(maps=map3, 
+                    google_place_name="Milford Sound", 
+                    address="Milford Sound, New Zealand", 
+                    website="website not available", 
+                    place_types="natural_feature,establishment", 
+                    google_places_id="ChIJ4UlLuk3g1akRAN5kq4bvACo", 
+                    latitude="-44.6414024", 
+                    longitude="167.89738009999996", 
+                    user_notes="The drive to Milford sound is incredible. Try to get out on the water if the weather is good.", 
+                    place_active=True)   
+    place9 = Place(maps=map3, 
+                    google_place_name="La Sagrada Familia", 
+                    address="Carrer de Mallorca, 401, 08013 Barcelona, Spain", 
+                    website="http://www.sagradafamilia.org/", 
+                    place_types="tourist_attraction,church,place_of_worship,point_of_interest,establishment", 
+                    google_places_id="ChIJk_s92NyipBIRUMnDG8Kq2Js", 
+                    latitude="41.4036299", 
+                    longitude="2.1743558000000576", 
+                    user_notes="", 
+                    place_active=True) 
+    place10 = Place(maps=map3, 
+                    google_place_name="Zona Arqueológica de Monte Albán", 
+                    address="Unnamed Road, Monte Albán, Oax., Mexico", 
+                    website="http://www.inah.gob.mx/es/zonas/94-zona-arqueologica-de-monte-alban", 
+                    place_types="tourist_attraction,establishment", 
+                    google_places_id="ChIJNW18WIwYx4URKyiIFeOiU-o", 
+                    latitude="17.0438035", 
+                    longitude="-96.76811040000001", 
+                    user_notes="", 
+                    place_active=True)
 
-    db.session.add_all([gwen, jesse, karl, map1, map2, map3, place1, place2, place3, place4, place5, place6])
+    db.session.add_all([gwen, jesse, karl, map1, map2, map3, place1, place2, place3, place4, place5, place6, place7, place8, place9, place10])
     db.session.commit()
     
 
