@@ -193,12 +193,20 @@ class FlaskTestsJSON(TestCase):
         example_data()
 
 
-    def test_get_place_type_statistics(self):
-        """test get_place_type_statistics route"""
+    def test_get_place_statistics(self):
+        """test get_place_statistics route"""
         
         result = self.client.get('/place_statistics.json')
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'"data":[1,1,1,1,1,1,1,1,1,1]}]', result.data)
+        self.assertIn(b'"data":[1,1,1,1,1,1,1,1,1,1]', result.data)
+
+
+    def test_get_place_type_statistics(self):
+        """test get_place_type_statistics route"""
+
+        result = self.client.get('/place_type_statistics.json')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'"data":[3,2,1,1,1]', result.data)
 
 
 if __name__ == '__main__':
