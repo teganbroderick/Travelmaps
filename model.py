@@ -78,7 +78,7 @@ def example_data():
     """Create some example data"""
     
     #Example users
-    gwen = User(fname="Gwendolyn", lname="Murray", email="gwendolyn.murray@example.com", password="kikimora")
+    gwen = User(fname="Gwendolyn", lname="Murray", email="gwendolyn.murray@example.com", password="kikimora", staff_user=True)
     jesse = User(fname="Jesse", lname="Wilson", email="jwilson@example.com", password="lola")
     karl = User(fname="Karl", lname="Knight", email="kknight@example.com", password="pinnacle")
 
