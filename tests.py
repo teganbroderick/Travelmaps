@@ -167,6 +167,14 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertIn(b'<button type="button" class="get-shareable-link" data-toggle="modal" data-target="#share-link-modal">', result.data)
 
 
+    def test_dashboard(self):
+        """test dashboard rendering for staff_user"""
+
+        result = self.client.get('dashboard')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<h2>Dashboard</h2>', result.data)
+
+
 
 
 
