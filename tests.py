@@ -130,20 +130,21 @@ class FlaskTestsLoggedIn(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>Make New Map</h2>', result.data)
 
-    # def test_save_location(self):
-    #     """test saving a place to a map"""
-    #     result = self.client.post("/map/1/save",
-    #         data={"title":"Fleamarket at Mauerpark", 
-    #                 "address":"Bernauer Str. 63-64, 13355 Berlin, Germany",
-    #                 "website":"http://www.flohmarktimmauerpark.de/",
-    #                 "place_types":"tourist_attraction,point_of_interest,establishment",
-    #                 "google_places_id":"ChIJCydkxPlRqEcRAVlBoABIR_0",
-    #                 "latitude":"52.54123999999999",
-    #                 "longitude":"13.402435100000048",
-    #                 "user_notes":"Good place to buy old stuff"},
-    #         follow_redirects="True")
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b'<a class="place-name" href="/" data-name="{{ place.google_place_name }}">Fleamarket at Mauerpark</a>', result.data)
+    def test_save_location(self):
+        """test saving a place to a map"""
+
+        result = self.client.post("/map/1/save",
+            data={"title":"Fleamarket at Mauerpark", 
+                    "address":"Bernauer Str. 63-64, 13355 Berlin, Germany",
+                    "website":"http://www.flohmarktimmauerpark.de/",
+                    "types":"[tourist_attraction,point_of_interest,establishment]",
+                    "google_places_id":"ChIJCydkxPlRqEcRAVlBoABIR_0",
+                    "latitude":"52.54123999999999",
+                    "longitude":"13.402435100000048",
+                    "user_notes":"Good place to buy old stuff"},
+            follow_redirects="True")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<a class="place-name" href="/" data-name="Fleamarket at Mauerpark">Fleamarket at Mauerpark</a>', result.data)
 
 
 if __name__ == '__main__':
