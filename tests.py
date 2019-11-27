@@ -2,7 +2,7 @@ from server import app
 from unittest import TestCase
 from model import connect_to_db, db, example_data
 from flask import session
-import helpers
+import helpers #from helpers import <name functions>
 
 class FlaskTests(TestCase):
     """Test flask routes"""
@@ -118,17 +118,17 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get("/make_map_process",
             query_string={"map_name":"Seattle", "map_description":"Seattle winter activities"},
             follow_redirects="True")
-        # self.assertEqual(result.status_code, 200)
+        self.assertEqual(result.status_code, 200)
         self.assertIn(b"<h3>Map Name:</h3> <p>Seattle</p>", result.data)
 
-    # def test_make_map_process_already_exists(self):
-    #     """test make map process route"""
+    def test_make_map_process_already_exists(self):
+        """test make map process route for trying to save a map that already exists"""
 
-    #     result = self.client.post("/make_map_process",
-    #         data={"map_name":"San Francisco", "map_description":"SF activities"},
-    #         follow_redirects="True")
-    #     # self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b"<h3>Map Name:</h3> <p>San Francisco</p>", result.data)
+        result = self.client.get("/make_map_process",
+            query_string={"map_name":"San Francisco", "map_description":"SF activities"},
+            follow_redirects="True")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<h2>Make New Map</h2>', result.data)
 
     # def test_save_location(self):
     #     """test saving a place to a map"""
