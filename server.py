@@ -260,7 +260,7 @@ def get_places():
 
 @app.route('/get_last_place_added/')
 def get_last_place_added():
-    """Return information about the last place saved to map as JSON"""
+    """Return latitude and longitude of last place saved to map as JSON"""
     
     map_id = request.args.get("map_id")
 
