@@ -235,6 +235,16 @@ class FlaskTestsJSON(TestCase):
         self.assertIn(b'{"address":"283 King St, Newtown NSW 2042, Australia"', result.data)
 
 
+    def test_get_last_place_added(self):
+        """test get_places route"""
+        
+        result = self.client.get('/get_last_place_added/',
+            query_string={"map_id":2},
+            follow_redirects="True")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'"latitude":17.0438035', result.data)
+
+
 if __name__ == '__main__':
     import unittest
     unittest.main()
