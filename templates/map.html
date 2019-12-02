@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+  <link rel="stylesheet" href="/static/css/maps.css"/>
   <script src="/static/js/maps.js"></script>
     <!-- load google places library before initializing map -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=places&callback=initAutocomplete">
@@ -12,56 +13,56 @@
 
 {% block body %}
   <!-- Bootstrap div layout -->
-  <div class="container-fluid">
-  <div class="row" style="height: 20px">
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <div id="map_details">
-        <h2>Map Page</h2>
-        <h3>Map Name:</h3> <p>{{ map.map_name }}</p>
-        <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
-        <!-- if there are places in the map, print them -->
-        <h3>Places on this map:</h3>
-        {% if places == [] %}
-          <p> There are currently no places on your map. To add a place, enter a search term in the search box, and click on a marker to add it. </p>
-        {% else %} 
-          {%for place in places %}
-            <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>         
-            <ul>
-              <li>Address: {{ place.address }}</li>
-              {% if place.website != 'website not available' %}
-                Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
-              {% else %}
-                <li>Website: {{ place.website }}</li>
-              {% endif %}
-              <li>Notes: {{ place.user_notes }}</li>
-            </ul>
-          {% endfor %}
-        {% endif %}
-        <br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <!-- to do: if there are no places in the map, print a message to get started... -->
+<section class="h-100 mx-3 full-columns">
+  <div class="row h-100">
+    <main class="col h-100 overflow-y">
+      <div class="container py-4 content">
+        <div id="map_details">
+          <h2>Map Page</h2>
+          <h3>Map Name:</h3> <p>{{ map.map_name }}</p>
+          <h3>Map Description:</h3> <p> {{ map.map_description }} </p>
+          <!-- if there are places in the map, print them -->
+          <h3>Places on this map:</h3>
+          {% if places == [] %}
+            <p> There are currently no places on your map. To add a place, enter a search term in the search box, and click on a marker to add it. </p>
+          {% else %} 
+            {%for place in places %}
+              <a class="place-name" href="/" data-name="{{ place.google_place_name }}">{{ place.google_place_name }}</a><br>         
+              <ul>
+                <li>Address: {{ place.address }}</li>
+                {% if place.website != 'website not available' %}
+                  Website: <a class="place-address" href="{{ place.website }}"target="_blank">{{ place.website }}</a><br>
+                {% else %}
+                  <li>Website: {{ place.website }}</li>
+                {% endif %}
+                <li>Notes: {{ place.user_notes }}</li>
+              </ul>
+            {% endfor %}
+          {% endif %}
+        </div>
       </div>
+     </main>
+    <aside class="col-8 h-100 bg-light d-flex justify-content-center">
+      <div class="container my-4">
+        <!-- Google maps code -->
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map"></div>
+        <!-- end google maps code -->
+      </div>
+    </aside>
+
     </div>
-    
-    <div class="col-8">
-      <!-- Google maps code -->
-      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-      <div id="map"></div>
-      <!-- end google maps code -->
+    <div class="row">
+      <div class="col-4">
+        </div>
+      <div class="col-2">
+        <div id="view_shareable_map">
+          <form action="/share_map/{{ map.map_url_hash }}">
+              <input type="submit" value="View Shareable Map">
+          </form>
+        </div>
+      </div>          
     </div>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      </div>
-    <div class="col-2">
-      <div id="view_shareable_map">
-        <form action="/share_map/{{ map.map_url_hash }}">
-            <input type="submit" value="View Shareable Map">
-        </form>
-      </div>
-    </div>          
-  </div>
-</div>
+</section>
 {% endblock %}
 

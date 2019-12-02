@@ -49,6 +49,18 @@ a.place-name {
   background-size: cover;
 }
 
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-y {
+  overflow-y: auto !important;
+}
+
+.content {
+  margin-bottom: 25% !important;
+}
+
 /*Google maps search box CSS*/
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
@@ -57,10 +69,11 @@ a.place-name {
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
-  height: 100%;
+  height: 94%;
   margin: 0;
   padding: 0;
 }
+
 
 #description {
   font-family: Roboto;
