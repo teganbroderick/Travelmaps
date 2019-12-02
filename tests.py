@@ -216,6 +216,15 @@ class FlaskTestsJSON(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'{"latitude":37.7803399,"longitude":-122.48564420000002}', result.data)
 
+
+    def test_get_latitude_and_longitude_for_one_user(self):
+        """test get_latitude_and_longitude route"""
+
+        result = self.client.get('/get_latitude_and_longitude_for_one_user.json')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'{"latitude":37.7803399,"longitude":-122.48564420000002}', result.data)
+
+
 if __name__ == '__main__':
     import unittest
     unittest.main()
