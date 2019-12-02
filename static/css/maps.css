@@ -61,6 +61,10 @@ a.place-name {
   margin-bottom: 25% !important;
 }
 
+#share-on-fb {
+  height: 100%;
+}
+
 /*Google maps search box CSS*/
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
