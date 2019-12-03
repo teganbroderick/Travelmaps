@@ -7,45 +7,52 @@
   {% endblock %}
 
 {% block body %}
-  <h2>Profile</h2>
-  <p>Hello, {{user.fname}} {{user.lname}} !</p>
+  <h3>Hello, {{user.fname}} {{user.lname}} !</h3>
 
-  <div class="container-fluid">
-  <div class="row" style="height: 20px">
-  </div>
-  <div class="row">
-    <div class="col-3">
-      <div id=maplist>
-        <h2>Your Maps</h2>
-        {% if maps == [] %}
-          <p>You don't have any maps yet. Click the "Make New Map" button to get started</p>
-        {% else %}
-          {% for map in maps %}
-              <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
-          {% endfor %}
-        {% endif %}
-      </div>
-      <div id="make_new_map">
-        <form action="/make_map">
-          <input type="submit" value="Make New Map">
-        </form>
-      </div>
-      <br>
-      <br>
-      {% if user.staff_user == True %}
-        <div id="dashboard">
-          <form action="/dashboard">
-              <input type="submit" value="View Internal Dashboard">
-          </form>
+  <section class="h-100 mx-3 full-columns">
+    <div class="row h-100">
+      
+      <main class="col h-100 overflow-y">
+        <div class="container py-4 content">
+        
+          <div id="maplist">
+            <h2>Your Maps</h2>
+            {% if maps == [] %}
+              <p>You don't have any maps yet. Click the "Make New Map" button to get started</p>
+            {% else %}
+              {% for map in maps %}
+                  <a href="/map/{{ map.map_id }}">{{ map.map_name }}</a><br>
+              {% endfor %}
+            {% endif %}
+          </div>
+          <div id="make_new_map">
+            <form action="/make_map">
+              <input type="submit" value="Make New Map">
+            </form>
+          </div>
+          <br>
+          <br>
+          {% if user.staff_user == True %}
+            <div id="dashboard">
+              <form action="/dashboard">
+                  <input type="submit" value="View Internal Dashboard">
+              </form>
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
+      </main> 
+
+      <aside class="col-8 h-100 bg-light d-flex justify-content-center">
+        <div class="container my-4">
+          <h2 id="dashboard-header">Heat Map of Your Saved Places</h2>
+          <div id="map-profile-page">
+            <div id="map"></div>
+          </div>
+        </div>
+      </aside>
+
     </div>
-    <div class="col-9">
-      <h2 id="dashboard-header">Heat Map - All The Places You Have Saved to Maps</h2>
-      <div id="map"></div>
-    </div>
-  </div>
- </div> 
+ </section> 
 
  <script>
   function initMap() {
