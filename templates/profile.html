@@ -27,9 +27,12 @@
           </div>
           <br>
           <div id="make_new_map">
-            <form action="/make_map">
+
+          <button type="button" class="get-shareable-link" data-toggle="modal" data-target="#make-map-modal">Make New Map
+          </button>
+<!--             <form action="/make_map">
               <input type="submit" value="Make New Map">
-            </form>
+            </form> -->
           </div>
         </div>
       </main> 
@@ -57,6 +60,27 @@
        </div>
      </div>   
  </section> 
+
+   <!-- Div for modal -->
+  <div class="modal fade" id="make-map-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Make New Map</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/make_map_process">
+            Map Name: <input type="text" name="map_name"><br>
+            Map Description: <input type="text" name="map_description"><br>
+            <input type="submit" value="Make Map">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
  <script>
   function initMap() {
