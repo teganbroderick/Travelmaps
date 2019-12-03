@@ -51,7 +51,7 @@ class FlaskTests(TestCase):
         result = self.client.post("/login_process", 
             data={"email":"kknight@example.com", "password":"pinnacle"},
             follow_redirects="True")
-        self.assertIn(b"Hello, Karl Knight !", result.data)
+        self.assertIn(b"Hello, Karl Knight!", result.data)
 
 
     def test_signup_process(self):
@@ -59,7 +59,7 @@ class FlaskTests(TestCase):
         result = self.client.post("/signup_process", 
         data={"fname":"John", "lname":"Citizen", "email":"johncitizen@example.com", "password":"password!"},
         follow_redirects="True")
-        self.assertIn(b"Hello, John Citizen !", result.data)   
+        self.assertIn(b"Hello, John Citizen!", result.data)   
 
 
 class FlaskTestsLoggedIn(TestCase):
@@ -85,7 +85,7 @@ class FlaskTestsLoggedIn(TestCase):
     def test_homepage_redirect(self):
         """Test homepage redirect for when a session is active"""
         result = self.client.get("/")
-        self.assertIn(b"<h2>Profile</h2>", result.data)  
+        self.assertIn(b"<h2>Your Maps</h2>", result.data)  
 
 
     def test_render_map(self):
@@ -93,7 +93,7 @@ class FlaskTestsLoggedIn(TestCase):
 
         result = self.client.get("/map/1")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b"<h3>Map Name:</h3> <p>San Francisco</p>", result.data) 
+        self.assertIn(b"<h2>San Francisco</h2>", result.data) 
 
 
     def test_logout(self):
@@ -111,7 +111,7 @@ class FlaskTestsLoggedIn(TestCase):
             query_string={"map_name":"Seattle", "map_description":"Seattle winter activities"},
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b"<h3>Map Name:</h3> <p>Seattle</p>", result.data)
+        self.assertIn(b"<h2>Seattle</h2>", result.data)
 
 
     def test_make_map_process_already_exists(self):
