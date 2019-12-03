@@ -74,6 +74,12 @@ a.place-name {
   height: 90%;
 }
 
+#share-on-twitter {
+  width: 100px;
+  float:left;
+  margin-top: 3px;
+}
+
 /*Google maps search box CSS*/
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
