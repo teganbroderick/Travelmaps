@@ -56,10 +56,6 @@ function initAutocomplete() {
           <p>
             Address: ${marker.address}<br>
             Website: ${marker.website} <br>
-            Types: ${marker.place_types}<br>
-            Google Places ID: ${marker.place_id}<br>
-            Latitude: ${marker.position.lat()} <br>
-            Longitude: ${marker.position.lng()}<br>
             User Notes: ${marker.user_notes}
         </div>
       `);
