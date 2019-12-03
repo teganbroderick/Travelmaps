@@ -121,7 +121,7 @@ class FlaskTestsLoggedIn(TestCase):
             query_string={"map_name":"San Francisco", "map_description":"SF activities"},
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h2>Make New Map</h2>', result.data)
+        self.assertIn(b'<h2>Your Maps</h2>', result.data)
 
 
     def test_save_location(self):
