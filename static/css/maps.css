@@ -74,10 +74,19 @@ a.place-name {
   height: 90%;
 }
 
-#share-on-twitter {
+#share-on-twitter{
   width: 100px;
   float:left;
   margin-top: 3px;
+}
+
+#spacer-div {
+  height: 200px;
+  width: 60px;
+}
+
+#login-sign-up-button {
+  
 }
 
 /*Google maps search box CSS*/
