@@ -62,14 +62,6 @@ class FlaskTests(TestCase):
         self.assertIn(b"Hello, John Citizen !", result.data)   
 
 
-    def test_make_map(self):
-        """Test make_map route"""
-
-        result = self.client.get("/make_map")
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h2>Make New Map</h2>', result.data)
-
-
 class FlaskTestsLoggedIn(TestCase):
     """Flask tests with user logged into session"""
 

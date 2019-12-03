@@ -87,14 +87,6 @@ def logout():
     flash("Logged out!")
     return redirect('/')
 
-
-@app.route('/make_map')
-def makemap():
-    """redirect to new_map.html"""
-
-    return render_template("make_map.html")
-
-
 @app.route('/make_map_process')
 def makemap_process():
     """Check to see if map exists, if not, add map to maps table"""
