@@ -7,7 +7,7 @@
   {% endblock %}
 
 {% block body %}
-  <h3>Hello, {{user.fname}} {{user.lname}} !</h3>
+  <h3>Hello, {{user.fname}} {{user.lname}}!</h3>
 
   <section class="h-100 mx-3 full-columns">
     <div class="row h-100">
@@ -25,13 +25,13 @@
               {% endfor %}
             {% endif %}
           </div>
+          <br>
           <div id="make_new_map">
             <form action="/make_map">
               <input type="submit" value="Make New Map">
             </form>
           </div>
-          <br>
-          <br>
+
           {% if user.staff_user == True %}
             <div id="dashboard">
               <form action="/dashboard">
