@@ -31,14 +31,6 @@
               <input type="submit" value="Make New Map">
             </form>
           </div>
-
-          {% if user.staff_user == True %}
-            <div id="dashboard">
-              <form action="/dashboard">
-                  <input type="submit" value="View Internal Dashboard">
-              </form>
-            </div>
-          {% endif %}
         </div>
       </main> 
 
@@ -52,6 +44,18 @@
       </aside>
 
     </div>
+
+    <div class="row">
+      <div class="col-4">
+          {% if user.staff_user == True %}
+            <div id="dashboard">
+              <form action="/dashboard">
+                  <input type="submit" value="View Internal Dashboard">
+              </form>
+            </div>
+          {% endif %}
+       </div>
+     </div>   
  </section> 
 
  <script>
