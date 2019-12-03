@@ -7,11 +7,27 @@
   {% endblock %}
 
 {% block body %}
-  <h3>Hello, {{user.fname}} {{user.lname}}!</h3>
-
   <section class="h-100 mx-3 full-columns">
+    <div class="row" style="height: 10px">
+    </div>
+    <div class="row">
+      <div class="col-4">
+       <h3>Hello, {{user.fname}} {{user.lname}}!</h3> 
+      </div>
+      <div class="col-6">
+      </div>
+      <div class="col-2">
+        {% if user.staff_user == True %}
+          <div id="dashboard">
+            <form action="/dashboard">
+                <input type="submit" value="View Internal Dashboard">
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div> 
+    
     <div class="row h-100">
-      
       <main class="col h-100 overflow-y">
         <div class="container py-4 content">
         
@@ -30,9 +46,6 @@
 
           <button type="button" class="get-shareable-link" data-toggle="modal" data-target="#make-map-modal">Make New Map
           </button>
-<!--             <form action="/make_map">
-              <input type="submit" value="Make New Map">
-            </form> -->
           </div>
         </div>
       </main> 
@@ -46,19 +59,7 @@
         </div>
       </aside>
 
-    </div>
-
-    <div class="row">
-      <div class="col-4">
-          {% if user.staff_user == True %}
-            <div id="dashboard">
-              <form action="/dashboard">
-                  <input type="submit" value="View Internal Dashboard">
-              </form>
-            </div>
-          {% endif %}
-       </div>
-     </div>   
+    </div>    
  </section> 
 
    <!-- Div for modal -->
