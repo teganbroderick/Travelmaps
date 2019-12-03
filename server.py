@@ -105,7 +105,7 @@ def makemap_process():
         return redirect(f'/map/{new_map.map_id}')
     else:
         flash("A map with that name and description already exists.") #to do: make more specific to user, use name
-        return redirect("/make_map")
+        return redirect("/")
 
 
 @app.route('/map/<int:map_id>')
