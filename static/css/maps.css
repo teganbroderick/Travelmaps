@@ -2,14 +2,14 @@ ul {
   font-size: 12px;
 }
 
-h3 {
+h3.map-header {
   font-size: 18px;
   font-style: bold;
   text-decoration: underline;
 }
 
 a.place-name {
-  font-size: 18px;
+  font-size: 15px;
   font-style: bold;
   color: black;
 }
