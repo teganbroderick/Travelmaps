@@ -8,6 +8,10 @@ h3.map-header {
   text-decoration: underline;
 }
 
+h3 {
+  font-size: 18px;
+}
+
 a.place-name {
   font-size: 15px;
   font-style: bold;
