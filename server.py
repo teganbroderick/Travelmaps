@@ -32,13 +32,6 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/login')
-def login():
-    """Redirect to login.html"""
-
-    return render_template("login.html")
-
-
 @app.route('/login_process', methods=["POST"])
 def login_process():
     """Verify email and password credentials, log user in if they are correct"""
