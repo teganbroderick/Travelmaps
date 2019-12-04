@@ -1,102 +1,72 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    <!-- div for bootstrap -->
     <div class="bg">
         <section
             class="demo-1 container-fluid d-flex justify-content-center align-items-center"
           >
             <div class="row">
               <div class="column">
-                <p class="display-4 mx-5 text-light">
-                  Make and share maps of travel recommendations with friends
-                </p>
+                <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s"><strong>TravelMaps </strong></h1>
+                <h3 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s"><strong>Create maps and share travel recommendations with friends </strong></h3>
+
                 <div id="spacer-div"></div>
                 <div id="login-sign-up-button" class="text-center">
-                    <form action="/login">
+<!--                     <form action="/login">
                         <input type="submit" value="Login/Sign Up original">
-                    </form>
-                    <button type="button" class="login-signup" data-toggle="modal" data-target="#modalLoginForm">Login
-                    </button> 
-                    <button type="button" class="login-signup" data-toggle="modal" data-target="#modalRegisterForm">Sign Up
-                    </button> 
+                    </form> -->
+                    <button type="button" class="login-signup btn btn-dark" data-toggle="modal" data-target="#login-modal">Login</button> 
 
+                    <button type="button" class="login-signup btn btn-dark" data-toggle="modal" data-target="#signup-modal">Sign Up</button>
                     </div>
                 </div>
             </div>
         </div>
-            <div class="row">
-                <div class="col-12">
-                </div>
-            </div>
         </section>       
     </div>
-<!-- modal login code -->
-<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="defaultForm-email" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
-        </div>
 
-        <div class="md-form mb-4">
-          <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="defaultForm-pass" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+   <!-- Div for login modal -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-default">Login</button>
+        <div class="modal-body">
+            <form action="/login_process" method="POST">
+                Email: <input type="test" name="email"><br>
+                Password: <input type="password" name="password"><br>
+                <input type="submit" value="Login"><br>
+            </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- end modal login code -->
-<!-- modal signup code -->
-<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-name" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="orangeForm-email" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
-        </div>
 
-        <div class="md-form mb-4">
-          <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+<!-- Div for signup modal -->
+  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-deep-orange">Sign up</button>
+        <div class="modal-body">
+            <form action="/signup_process" method="POST">
+                First Name: <input type="text" name="fname"><br>
+                Last Name: <input type="text" name="lname"><br>
+                Email: <input type="text" name="email"><br>
+                Password: <input type="password" name="password"><br>
+                <input type="submit" value="Sign up">
+            </form>
+        </div>
       </div>
     </div>
   </div>
-<!-- end modal signup code -->
-
 {% endblock %}

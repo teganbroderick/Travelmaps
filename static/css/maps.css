@@ -81,12 +81,38 @@ a.place-name {
 }
 
 #spacer-div {
-  height: 200px;
+  height: 180px;
   width: 60px;
 }
 
 #login-sign-up-button {
-  
+
+}
+
+/*Index css code*/
+html,
+body,
+header,
+.view {
+  height: 100%;
+}
+
+@media (max-width: 740px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 100vh;
+  }
+}
+
+h1.h1-responsive {
+  letter-spacing: 8px;
+}
+
+.hr-light {
+  border-top: 3px solid #fff;
+  width: 80px;
 }
 
 /*Google maps search box CSS*/
