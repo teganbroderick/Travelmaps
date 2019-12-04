@@ -7,6 +7,7 @@
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaVUPKfPPxYsYNJoWTn4nsb8R1pzE-h5Q&libraries=places&callback=initAutocomplete">
   </script>
   <script> window.map_id = {{ map.map_id }} </script>
+
   <script type="text/javascript"></script>
 
 {% endblock %}
@@ -119,14 +120,14 @@
           </button>
         </div>
         <div class="modal-body">
-          <p> {{ map_url }} </p>
+          <p id="map-link"> {{ map_url }} </p>
         </div>
         <div class="modal-footer">
-          <button onclick="myFunction()">Copy Link to Clipboard</button>
-        </div>
-                  
+          <button onclick="copyToClipboard('#map-link')">Copy Link to Clipboard</button>
+        </div>             
       </div>
     </div>
   </div>
+
 {% endblock %}
 
