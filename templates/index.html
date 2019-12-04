@@ -13,9 +13,6 @@
 
                 <div id="spacer-div"></div>
                 <div id="login-sign-up-button" class="text-center">
-<!--                     <form action="/login">
-                        <input type="submit" value="Login/Sign Up original">
-                    </form> -->
                     <button type="button" class="login-signup btn btn-dark" data-toggle="modal" data-target="#login-modal">Login</button> 
 
                     <button type="button" class="login-signup btn btn-dark" data-toggle="modal" data-target="#signup-modal">Sign Up</button>
@@ -59,11 +56,11 @@
         </div>
         <div class="modal-body">
             <form action="/signup_process" method="POST">
-                First Name: <input type="text" name="fname"><br>
-                Last Name: <input type="text" name="lname"><br>
-                Email: <input type="text" name="email"><br>
-                Password: <input type="password" name="password"><br>
-                
+                First Name: <input type="text" class="form-control" name="fname"><br>
+                Last Name: <input type="text" class="form-control" name="lname"><br>
+                Email: <input type="text" class="form-control" name="email"><br>
+                Password: <input type="password" class="form-control" name="password"><br>
+                <br>
                 <div class="modal-footer">
                     <input type="submit" value="Sign up">
                 </div>
