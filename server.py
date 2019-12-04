@@ -51,7 +51,7 @@ def login_process():
 
     if user == None:
         flash("Wrong email or password. Try again!")
-        return redirect('/login')
+        return redirect('/')
     else:
         #add user to session
         session['user_id'] = user.user_id
@@ -76,7 +76,7 @@ def signup_process():
         return render_template("profile.html", user=user, maps=user.maps)
     else: 
         flash("A user with that email address already exists.")
-        return redirect("/login")
+        return redirect("/")
 
 
 @app.route('/logout')
