@@ -27,7 +27,7 @@ class FlaskTests(TestCase):
 
         result = self.client.get("/")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<div class="bg"></div>', result.data)      
+        self.assertIn(b'<div class="bg">', result.data)      
 
 
     def test_about_route(self):
