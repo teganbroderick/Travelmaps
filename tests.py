@@ -93,7 +93,7 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get('/logout',
             follow_redirects="True")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<input type="submit" value="Login/Sign Up">', result.data)
+        self.assertIn(b'<button type="button" class="login-signup btn btn-dark" data-toggle="modal" data-target="#signup-modal">Sign Up</button>', result.data)
 
 
     def test_make_map_process(self):
