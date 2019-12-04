@@ -48,7 +48,7 @@ function initAutocomplete() {
         place_id: place.google_places_id,
         user_notes: place.user_notes,
         icon: {
-        url: '/static/img/map_icon_black.png', 
+        url: '/static/img/map_icon_red_black.png', 
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),

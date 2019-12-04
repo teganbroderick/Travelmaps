@@ -4,7 +4,7 @@ function initAutocomplete() {
 
   //INSTANTIATE MAP
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
+    zoom: 12,
     mapTypeId: 'roadmap'
   });
 
@@ -37,7 +37,7 @@ function initAutocomplete() {
         website: place.website,
         user_notes: place.user_notes,
         icon: {
-        url: '/static/img/map_icon_black.png', 
+        url: '/static/img/map_icon_red_black.png', 
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
