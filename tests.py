@@ -27,15 +27,7 @@ class FlaskTests(TestCase):
 
         result = self.client.get("/")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<div class="bg"></div>', result.data)
-
-
-    def test_login_route(self):
-        """Test login route"""
-
-        result = self.client.get("/login")
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h2>Login</h2>', result.data)        
+        self.assertIn(b'<div class="bg"></div>', result.data)      
 
 
     def test_about_route(self):
