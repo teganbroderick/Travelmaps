@@ -1,15 +1,15 @@
 "use strict";
 
 function initAutocomplete() {
-  //INSTANTIATE MAP
+  // INSTANTIATE MAP
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     mapTypeId: 'roadmap'
   });
 
   // CENTER MAP
-  //find coordinates of last active place added, center map on those coordinates
-  //If there are no places added yet, center map on SF
+  // Find coordinates of last active place added, center map on those coordinates
+  // If there are no places added yet, center map on SF
   function centerMap(response) {
       var centerCoords = {lat: response.latitude, lng: response.longitude};
       map.setCenter(centerCoords)
@@ -21,7 +21,7 @@ function initAutocomplete() {
   //Array to save usermarkers
   var userMarkers = [];
 
-  //ajax call to get place information from server.py db, make markers, add markers to map
+  // Ajax call to get place information from server.py db, make markers, add markers to map
   $.get('/get_places/', {map_id : map_id}, makeMarkers);
 
   function makeMarkers(response) {
