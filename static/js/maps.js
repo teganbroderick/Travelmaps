@@ -1,13 +1,5 @@
 "use strict";
 
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
 function initAutocomplete() {
   //INSTANTIATE MAP
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -29,7 +21,7 @@ function initAutocomplete() {
   //Array to save usermarkers
   var userMarkers = [];
 
-  //ajax call to get place information from server.py db, add saved markers to map
+  //ajax call to get place information from server.py db, make markers, add markers to map
   $.get('/get_places/', {map_id : map_id}, makeMarkers);
 
   function makeMarkers(response) {
@@ -58,7 +50,7 @@ function initAutocomplete() {
       }));
     }
 
-    //INITIATE INFO WINDOWS FOR SAVED MARKERS
+    // Define info windows for saved markers
     for (const marker of userMarkers) {
       const UserMarkerInfo = (`
         <div id="infowindow-content">
@@ -81,26 +73,22 @@ function initAutocomplete() {
         width: 200
       });
       
-      //event listener - click on marker, open infowindow
+      // Event listener - click on marker, open infowindow
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
     }
   }
 
-  //EVENT LISTENER for clicking on a place name in the list, opening corresponding marker info window
+  // CLICK ON PLACE NAME IN LIST - CENTER MAP ON MARKER, OPEN INFO WINDOW
+  // Event listener - click on place name in the printed list, open corresponding marker info window
   $('a.place-name').on('click', function(evt) {
     evt.preventDefault();
-    
-    //print test strings
-    console.log("User makers:", userMarkers);
-    console.log("You are in the place name area");
 
-    // get link data-name
+    // Get name in link
     var placeToFind = $(this).data('name');
-    console.log("Place to find: ", placeToFind);
 
-    // find map marker in markers array with the same title
+    // Find map marker in userMarkers array with the same title
     var markerToClick;
     var markerCenterCoords;
     for (var i in userMarkers) {
@@ -111,15 +99,14 @@ function initAutocomplete() {
       }
     }
     console.log(markerCenterCoords)
-    //center map on coords of markerToClick
+    // Center map on coords of markerToClick
     map.setCenter(markerCenterCoords)
-    //trigger click event on the markerToClick
+    // Trigger click event on the markerToClick
     new google.maps.event.trigger(markerToClick, 'click');
   });
 
-
-  //START NEW PLACES SEARCH
-  //Array to save markers created from search box searches
+  // SEARCH FOR PLACES
+  // Array to save markers created from search box searches
   var markers = [];
 
   // Create the search box and link it to the UI element.
@@ -132,8 +119,7 @@ function initAutocomplete() {
     searchBox.setBounds(map.getBounds());
   });
 
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
+  // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
 
@@ -154,7 +140,7 @@ function initAutocomplete() {
         return;
       }
 
-     //define icon
+     // Define icon
       var icon = {
         url: '/static/img/map_icon.svg', 
         size: new google.maps.Size(71, 71),
@@ -185,7 +171,7 @@ function initAutocomplete() {
     });
     map.fitBounds(bounds);  
 
-    //ADD INFO WINDOWS FOR RENDERED SEARCH MARKERS
+    // Define info windows for search result markers
     for (const marker of markers) {
       if (marker.website == undefined) {
         var markerWebsite = 'website not available'
@@ -221,34 +207,10 @@ function initAutocomplete() {
         width: 200
       });
       
-      //event listener - click on marker, open infowindow
+      // Event listener - click on marker, open infowindow
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
     }
   });
-  
-  // _______________________________________________________________________
-    //ajax call to save places to the database without reloading the window
-    //WORK IN PROGRESS
-    function handleSavePlaceRequest(evt) {
-      evt.preventDefault();
-      console.log('You are in the handle save place request function')
-      const formData = {
-        title: $('#title-field').val(),
-        address: $('#address-field').val(),
-        website: $('#website-field').val(),
-        types: $('#types').val(),
-        google_places_id: $('google_places_id').val(),
-        latitiude: $('#latitude-field').val(),
-        longitude: $('#longitude-field').val(),
-        map_id: $('#map-id-field').val(),
-        user_notes: $('#user-notes').val()
-      };
-
-      $.get('/save_location.json', formData, makeMarkers);
-    }
-
-    $('form.submit-button').on('submit', handleSavePlaceRequest);
-
 }
