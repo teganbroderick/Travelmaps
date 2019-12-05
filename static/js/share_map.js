@@ -90,7 +90,7 @@ function initAutocomplete() {
       }
     }
     // console.log(markerCenterCoords)
-    // // Center map on coords of markerToClick
+    // Center map on coords of markerToClick
     map.setCenter(markerCenterCoords)
     // Trigger click event on the markerToClick
     new google.maps.event.trigger(markerToClick, 'click');
