@@ -115,17 +115,15 @@ h1, h2, h3, h4, h5, p  {
   font-family: "Roboto", sans-serif;
 }
 
-/*Google maps search box CSS*/
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
-#map {
-  height: 100%;
-}
-/* Optional: Makes the sample page fill the window. */
 html, body {
-  height: 94%;
+  height: 100%;
   margin: 0;
   padding: 0;
+}
+
+/*Google maps search box CSS*/
+#map {
+  height: 90%;
 }
 
 #description {
