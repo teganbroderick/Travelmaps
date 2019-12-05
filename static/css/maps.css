@@ -85,10 +85,6 @@ a.place-name {
   width: 60px;
 }
 
-#login-sign-up-button {
-
-}
-
 /*Index css code*/
 html,
 body,
@@ -113,6 +109,10 @@ h1.h1-responsive {
 .hr-light {
   border-top: 3px solid #fff;
   width: 80px;
+}
+
+h1, h2, h3, h4, h5, p  {
+  font-family: "Roboto", sans-serif;
 }
 
 /*Google maps search box CSS*/
@@ -198,3 +198,4 @@ html, body {
 #target {
   width: 345px;
 }
+/*end google maps css*/
