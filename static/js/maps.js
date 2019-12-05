@@ -81,7 +81,7 @@ function initAutocomplete() {
   }
 
   // CLICK ON PLACE NAME IN LIST - CENTER MAP ON MARKER, OPEN INFO WINDOW
-  // Event listener - click on place name in the printed list, open corresponding marker info window
+  // Event listener
   $('a.place-name').on('click', function(evt) {
     evt.preventDefault();
 
@@ -93,12 +93,12 @@ function initAutocomplete() {
     var markerCenterCoords;
     for (var i in userMarkers) {
       if(userMarkers[i].title === placeToFind) {
-        console.log(userMarkers[i]);
+        // console.log(userMarkers[i]);
         markerToClick = userMarkers[i];
         markerCenterCoords = {lat: userMarkers[i].latitude, lng: userMarkers[i].longitude};
       }
     }
-    console.log(markerCenterCoords)
+    // console.log(markerCenterCoords)
     // Center map on coords of markerToClick
     map.setCenter(markerCenterCoords)
     // Trigger click event on the markerToClick
