@@ -50,12 +50,31 @@
         <div id="user_statistics">
           <h2 id="dashboard-header">User Statistics</h2>
           <br>
-          <h3 id="dashboard-par-header"> Total Users: {{ stats_dictionary['total_users'] }}</h3>
-          <h3 id="dashboard-par-header"> Total Maps: {{ stats_dictionary['total_maps'] }}</h3>
-          <h3 id="dashboard-par-header"> Total Places Mapped: {{ stats_dictionary['total_places_mapped'] }}</h3>
-          <h3 id="dashboard-par-header"> Average Maps per User: {{ stats_dictionary['avg_maps_per_user'] }}</h3>
-          <h3 id="dashboard-par-header"> Average Places per Map: {{ stats_dictionary['avg_places_mapped'] }}</h3>
-          <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th scope="row">Total Users</th>
+                <td>{{ stats_dictionary['total_users'] }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Maps</th>
+                <td>{{ stats_dictionary['total_maps'] }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Places mapped</th>
+                <td>{{ stats_dictionary['total_places_mapped'] }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Average Maps per User</th>
+                <td>{{ stats_dictionary['avg_maps_per_user'] }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Average Places per Map</th>
+                <td>{{ stats_dictionary['avg_places_mapped'] }}</td>
+              </tr>              
+            </tbody>
+          </table>
+          <br><br><br><br><br><br><br><br><br><br><br>
         </div>
       </div>
       <div class="col-9">
