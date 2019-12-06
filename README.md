@@ -21,7 +21,11 @@ APIs: Google Maps JavaScript, Google Maps Places
 Login/Sign Up <br>
 ![LoginSignup](http://g.recordit.co/FuYclCOszT.gif)
 <br><br>
-* Make Map
+User Profile
+
+
+Make Maps, Search and Add Markers<br>
+![Makemaps](http://g.recordit.co/OsBy6elYqV.gif)
 * Add marker
 * Navigate between list of places and map
 * Delete marker
