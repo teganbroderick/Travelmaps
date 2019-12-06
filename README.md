@@ -14,9 +14,21 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 ## <a name="techstack"></a>Technologies
 Tech Stack: Python, JavaScript, HTML, CSS, Flask, Jinja, jQuery, AJAX, PostgreSQL, SQLAlchemy, Bootstrap, chart.js, unittest <br>
 APIs: Google Maps JavaScript, Google Maps Places
-## <a name="features"></a>Features
 
-## <a name="futurefeatures"></a>Future Features
+## <a name="features"></a>Features
+* Login/Sign Up
+* Make Map
+* Add marker
+* Navigate between list of places and map
+* Delete marker
+* Share map
+* Internal dashboard
+* Logout
+
+## <a name="futurefeatures"></a>Features for Version 2.0
+* Modify data model and map permissions to allow multiple users to contribute to a single map
+* Export dashboard data to a csv file
+* Add dashboard page with data for each individual user
 
 ## <a name="installation"></a>Installation
 
