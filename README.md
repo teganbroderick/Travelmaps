@@ -7,7 +7,7 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 ## Contents
 * [Technologies](#techstack)
 * [Features](#features)
-* [Future Features](#futurefeatures)
+* [Features fo Version 2.0](#futurefeatures)
 * [Installation](#installation)
 * [About The Developer](#aboutme)
 
@@ -16,6 +16,7 @@ Tech Stack: Python, JavaScript, HTML, CSS, Flask, Jinja, jQuery, AJAX, PostgreSQ
 APIs: Google Maps JavaScript, Google Maps Places
 
 ## <a name="features"></a>Features
+![Homepage](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/homepage.png)
 * Login/Sign Up
 * Make Map
 * Add marker
