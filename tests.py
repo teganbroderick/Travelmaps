@@ -35,7 +35,7 @@ class FlaskTests(TestCase):
 
         result = self.client.get("/about")
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h2>About Travel Maps</h2>', result.data) 
+        self.assertIn(b'<h2>About TravelMaps</h2>', result.data) 
     
 
     def test_login_process(self):
