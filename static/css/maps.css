@@ -121,6 +121,11 @@ html, body {
   padding: 0;
 }
 
+table  {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+}
+
 /*Google maps search box CSS*/
 #map {
   height: 90%;
