@@ -17,7 +17,10 @@ APIs: Google Maps JavaScript, Google Maps Places
 
 ## <a name="features"></a>Features
 ![Homepage](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/homepage.png)
-* Login/Sign Up
+<br><br>
+Login/Sign Up <br>
+![LoginSignup](http://g.recordit.co/FuYclCOszT.gif)
+<br><br>
 * Make Map
 * Add marker
 * Navigate between list of places and map
