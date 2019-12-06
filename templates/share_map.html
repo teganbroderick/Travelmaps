@@ -78,9 +78,10 @@
         <div class="container py-4 content">
           <div id="map_details">
             <h2>{{ map.map_name }}</h2>
-            <h3 class="map-header">Map Description</h3> <p> {{ map.map_description }} </p>
+           <!--  <h3 class="map-header">Map Description</h3> --> 
+            <p> {{ map.map_description }} </p>
             <!-- if there are places in the map, print them -->
-            <h3 class="map-header">Places on this map</h3>
+            <h3 class="map-header">My Recommendations</h3>
             {% if places == [] %}
               <p> There are currently no places on your map. To add a place, enter a search term in the search box, and click on a marker to add it. </p>
             {% else %} 
