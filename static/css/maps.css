@@ -110,6 +110,7 @@ h1.h1-responsive {
   border-top: 3px solid #fff;
   width: 80px;
 }
+/*End index css code*/
 
 h1, h2, h3, h4, h5, p  {
   font-family: "Roboto", sans-serif;
@@ -124,6 +125,10 @@ html, body {
 table  {
   font-size: 12px;
   font-family: "Roboto", sans-serif;
+}
+
+.small-par {
+  font-size: 12px;
 }
 
 /*Google maps search box CSS*/
