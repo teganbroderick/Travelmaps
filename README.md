@@ -26,9 +26,13 @@ User Profile
 
 Make Maps, Search and Add Markers<br>
 ![Makemaps](http://g.recordit.co/OsBy6elYqV.gif)
-* Add marker
-* Navigate between list of places and map
-* Delete marker
+<br><br>
+
+Navigate between list of places and map
+![Navigate](http://g.recordit.co/9KzJRplEOX.gif)
+<br><br>
+Delete marker
+![delete](http://g.recordit.co/eU0KwYCyjT.gif)
 * Share map
 * Internal dashboard
 * Logout
