@@ -17,29 +17,49 @@ APIs: Google Maps JavaScript, Google Maps Places
 
 ## <a name="features"></a>Features
 ![Homepage](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/homepage.png)
-<br><br>
-Login/Sign Up <br>
+<br>
+
+#### Login/Sign Up <br>
 ![LoginSignup](http://g.recordit.co/FuYclCOszT.gif)
-<br><br>
-User Profile
+<br>
+
+#### User Profile
+A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, the user is prompted to get started by clicking the "Make New Map" button. A heat map showing all of the users saved places is shown on the right hand side of the page. <br>
+New User:
+![profilepage](http://g.recordit.co/qAINFJZ0EU.gif)
+<br>
+Established User:
 
 
-Make Maps, Search and Add Markers<br>
-![Makemaps](http://g.recordit.co/OsBy6elYqV.gif)
-<br><br>
 
-Navigate between list of places and map
+#### Make Maps
+![makemap](http://g.recordit.co/qAINFJZ0EU.gif)
+
+#### Search and Add Markers<br>
+![searchadd](http://g.recordit.co/OsBy6elYqV.gif)
+<br>
+
+#### Navigate between list of places and map
 ![Navigate](http://g.recordit.co/9KzJRplEOX.gif)
-<br><br>
-Delete marker
-![delete](http://g.recordit.co/eU0KwYCyjT.gif)
-* Share map
-* Internal dashboard
-* Logout
+<br>
 
+#### Delete marker
+![delete](http://g.recordit.co/eU0KwYCyjT.gif)
+<br>
+
+#### Share map
+![Sharemap](http://g.recordit.co/smsTbVuSLX.gif)
+<br>
+
+#### Internal dashboard
+![dashboard]()
+
+#### Logout
+![logout](http://g.recordit.co/LCD2U9oerM.gif)
+<br>
 ## <a name="futurefeatures"></a>Features for Version 2.0
 * Modify data model and map permissions to allow multiple users to contribute to a single map
-* Export dashboard data to a csv file
+* Export dashboard data to an excel, csv, or jpg file
 * Add dashboard page with data for each individual user
 
 ## <a name="installation"></a>Installation
