@@ -19,7 +19,7 @@ APIs: Google Maps JavaScript, Google Maps Places
 <br>
 
 #### Login/Sign Up <br>
-![LoginSignup](http://g.recordit.co/FuYclCOszT.gif)
+![LoginSignup](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/login_signup.gif)
 <br>
 
 #### User Profile
@@ -35,7 +35,7 @@ Established User:
 ![makemap](http://g.recordit.co/qAINFJZ0EU.gif)
 
 #### Search and Add Markers<br>
-![searchadd](http://g.recordit.co/OsBy6elYqV.gif)
+![searchadd](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/search_add_marker.gif)
 <br>
 
 #### Navigate between list of places and map
@@ -43,18 +43,18 @@ Established User:
 <br>
 
 #### Delete marker
-![delete](http://g.recordit.co/eU0KwYCyjT.gif)
+![delete](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/delete_marker.gif)
 <br>
 
 #### Share map
-![Sharemap](http://g.recordit.co/smsTbVuSLX.gif)
+![Sharemap](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/share_map.gif)
 <br>
 
 #### Internal dashboard
-![dashboard](http://g.recordit.co/94r05mFXjE.gif)
+![dashboard](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/internal_dashboard.gif)
 
 #### Logout
-![logout](http://g.recordit.co/LCD2U9oerM.gif)
+![logout](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/logout.gif)
 <br>
 ## <a name="futurefeatures"></a>Features for Version 2.0
 * Modify data model and map permissions to allow multiple users to contribute to a single map
