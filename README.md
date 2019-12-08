@@ -26,7 +26,7 @@ APIs: Google Maps JavaScript, Google Maps Places
 #### User Profile
 A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, the user is prompted to get started by clicking the "Make New Map" button. A heat map showing all of the users saved places is shown on the right hand side of the page. <br>
 New User:
-![profilepage](http://g.recordit.co/qAINFJZ0EU.gif)
+
 <br>
 Established User:
 
@@ -52,7 +52,7 @@ Established User:
 <br>
 
 #### Internal dashboard
-![dashboard]()
+![dashboard](http://g.recordit.co/94r05mFXjE.gif)
 
 #### Logout
 ![logout](http://g.recordit.co/LCD2U9oerM.gif)
