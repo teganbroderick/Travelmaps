@@ -8,7 +8,6 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 * [Technologies](#techstack)
 * [Features](#features)
 * [Features fo Version 2.0](#futurefeatures)
-* [Installation](#installation)
 * [About The Developer](#aboutme)
 
 ## <a name="techstack"></a>Technologies
@@ -61,8 +60,6 @@ Established User:
 * Modify data model and map permissions to allow multiple users to contribute to a single map
 * Export dashboard data to an excel, csv, or jpg file
 * Add dashboard page with data for each individual user
-
-## <a name="installation"></a>Installation
 
 ## <a name="aboutme"></a>About the Developer
 TravelMaps creator Tegan Broderick is a former objects conservator turned software engineer. This is her first fullstack project. She can be found on linkedIn <a href="https://www.linkedin.com/in/teganbroderick/ ">here</a>
