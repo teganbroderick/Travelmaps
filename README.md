@@ -24,13 +24,13 @@ APIs: Google Maps JavaScript, Google Maps Places
 <br>
 
 #### User Profile
-A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, the user is prompted to get started by clicking the "Make New Map" button. A heat map showing all of the users saved places is shown on the right hand side of the page. <br>
+A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, the user is prompted to get started by clicking the "Make New Map" button. A heat map showing all of the users saved places is shown on the right hand side of the page. <br><br>
 New User:
-
+![new_user](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/profilepage%20new%20user.png)
 <br>
 Established User:
 
-
+![established_user](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/profilepage%20established%20user.png)
 
 #### Make Maps
 ![makemap](http://g.recordit.co/qAINFJZ0EU.gif)
@@ -40,7 +40,7 @@ Established User:
 <br>
 
 #### Navigate between list of places and map
-![Navigate](http://g.recordit.co/9KzJRplEOX.gif)
+![Navigate](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/navigate_map.gif)
 <br>
 
 #### Delete marker
