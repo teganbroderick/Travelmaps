@@ -2,7 +2,7 @@
 
 TravelMaps is a full stack web application that allows users to share travel recommendations and itineraries. A custom web interface allows users to create dynamic maps with pointers to recommended places, and add place-specific notes. Users can share a read-only version of their maps across the web via a map-specific url. An internal dashboard gathers data about trends across all users, such as popular travel destinations and recommended places, and displays the data on two charts and a heat map. The application has 94% test coverage using Python unittest.
 
-This project was made at Hackbright Academy in San Francisco over four weeks in Novermber 2019.
+This project was made at Hackbright Academy in San Francisco over four weeks in November 2019.
 
 ## Contents
 * [Technologies](#techstack)
