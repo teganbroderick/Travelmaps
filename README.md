@@ -7,7 +7,7 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 ## Contents
 * [Technologies](#techstack)
 * [Features](#features)
-* [Features fo Version 2.0](#futurefeatures)
+* [Features for Version 2.0](#futurefeatures)
 * [About The Developer](#aboutme)
 
 ## <a name="techstack"></a>Technologies
