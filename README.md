@@ -31,21 +31,21 @@ Established User:
 ![established_user](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/profilepage%20established%20user.png)
 
 #### Make Maps
-Users can make unlimited individual maps with optional descriptions
+Users can make unlimited individual maps, and add an optional map description
 ![makemap](http://g.recordit.co/qAINFJZ0EU.gif)
 
 #### Search and Save Places to Map
-Users search for places using the Google Maps Places api. A custom marker info-window allows users to view place information, add place-specific notes, and save the marker to the map.
+Users search for places using the Google Maps Places api. A custom marker info-window allows users to view place information, add place-specific notes, and save the place to the map.
 ![searchadd](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/search_add_marker.gif)
 <br>
 
 #### Navigate between list of places and map
-As markers are saved, a list of saved places is displayed on the left hand side of the page. Clicking on a place header in the list centers the map on that place marker, and opens another custom info-window displaying place information and a button to optionally delete the place from the map. Users can also click directly on markers to view the infowindow. Clicking on a website link opens the website in a new browser tab.
+As markers are saved, a list of saved places is displayed on the left hand side of the page. Clicking on a place header in the list centers the map on that place marker, and opens another custom info-window displaying place information and a button to optionally delete the place from the map. Users can also click directly on a marker to view its info-window. Clicking on a website link in the list opens the website in a new browser tab.
 ![Navigate](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/navigate_map.gif)
 <br>
 
 #### Delete marker
-Places can be deleted from a map by clicking on the Delete location from map button in a saved place info-window.
+Places can be deleted from a map by clicking on the "Delete location from map" button in a saved place info-window.
 ![delete](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/delete_marker.gif)
 <br>
 
@@ -55,7 +55,12 @@ A dynamic, read-only version of each map can be shared across the web using a sh
 <br>
 
 #### Internal dashboard
-An internal dashboard is visible only to ‘staff users’ of the site as defined in my data model. The dashboard shows aggregated data about trends across all users, visualized in a table, two chart.js charts, and a google maps heat map.
+An internal dashboard is visible only to 'staff users' of the site, as defined in my data model. The dashboard shows aggregated data about trends across all users, visualized in a table, two chart.js charts, and a google maps heat map. <br>
+* The bar chart shows the top 10 places saved across all maps <br>
+* The donut chart shows the top five types of places (as defined by Google Maps) saved across all maps
+* The heat map shows the concentration of places saved across all Maps <br>
+* The table shows user statistics
+
 ![dashboard](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/internal_dashboard.gif)
 
 #### Logout
