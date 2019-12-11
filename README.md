@@ -8,6 +8,7 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 * [Technologies](#techstack)
 * [Features](#features)
 * [Features for Version 2.0](#futurefeatures)
+* [Installation](#installation)
 * [About The Developer](#aboutme)
 
 ## <a name="techstack"></a>Technologies
@@ -66,10 +67,46 @@ An internal dashboard is visible only to 'staff users' of the site, as defined i
 #### Logout
 ![logout](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/logout.gif)
 <br>
+
+
 ## <a name="futurefeatures"></a>Features for Version 2.0
 * Modify data model and map permissions to allow multiple users to contribute to a single map
 * Export dashboard data to an excel, csv, or jpg file
 * Add dashboard page with aggregated data for each individual user
+
+## <a name="installation"></a>Installation
+#### Requirements:
+
+- PostgreSQL
+- Python 3.6
+- API key for Google Maps JavaScript and Google Maps Places APIs
+
+#### To run TravelMaps on your local computer
+
+Clone or fork repository:
+```
+$ git clone https://github.com/teganbroderick/Travelmaps
+```
+Create and activate a virtual environment inside your travelmaps directory:
+```
+$ virtualenv env
+$ source env/bin/activate
+```
+Install dependencies:
+```
+$ pip install -r requirements.txt
+```
+Add your API key into the header scripts in static/templates/dashboard.html, map.html, profile.html, and share_map.html, eg:
+![api]()
+
+Create database 'travelmaps'
+```
+$ createdb travelmaps
+```
+Run the app from the command line.
+```
+$ python server.py
+```
 
 ## <a name="aboutme"></a>About the Developer
 TravelMaps creator Tegan Broderick is a former objects conservator turned software engineer. This is her first fullstack project. She can be found on LinkedIn <a href="https://www.linkedin.com/in/teganbroderick/ ">here</a>.
