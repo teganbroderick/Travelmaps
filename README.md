@@ -1,6 +1,6 @@
 # TravelMaps
 
-TravelMaps is a full stack web application that allows users to share travel recommendations and itineraries. A custom web interface allows users to create dynamic maps with pointers to recommended places, and add place-specific notes. Users can share a read-only version of their maps across the web via a map-specific url. An internal dashboard gathers data about trends across all users, such as popular travel destinations and recommended places, and displays the data on two charts and a heat map. The application has 94% test coverage using Python unittest.
+TravelMaps is a full stack web application that allows users to share travel recommendations and itineraries. A custom web interface allows users to create dynamic maps with pointers to recommended places, and add place-specific notes. Users can share a dynamic, read-only version their maps across the web using a shareable link containing a unique identifier. An internal dashboard gathers data about trends across all users, such as popular travel destinations and recommended places, and displays the data on two charts and a heat map. The application has 94% test coverage using Python unittest.
 
 This project was made at Hackbright Academy in San Francisco over four weeks in November 2019.
 
@@ -23,7 +23,7 @@ APIs: Google Maps JavaScript, Google Maps Places
 <br>
 
 #### User Profile
-A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, the user is prompted to get started by clicking the "Make New Map" button. A heat map showing the concentration of all of the users saved places is shown on the right hand side of the page. <br><br>
+A list of the user's maps is shown on the left hand side of the page. If the user has not made any maps yet, they prompted to get started by clicking the "Make New Map" button. A heat map visualizing all of the users saved places is shown on the right hand side of the page. <br><br>
 New User:
 ![new_user](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/profilepage%20new%20user.png)
 <br><br>
@@ -31,7 +31,7 @@ Established User:
 ![established_user](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/profilepage%20established%20user.png)
 
 #### Make Maps
-Users can make unlimited individual maps, and add an optional map description
+Users make individual maps and can opt to add a map description.
 ![makemap](http://g.recordit.co/qAINFJZ0EU.gif)
 
 #### Search and Save Places to Map
@@ -40,7 +40,7 @@ Users search for places using the Google Maps Places api. A custom marker info-w
 <br>
 
 #### Navigate between list of places and map
-As markers are saved, a list of saved places is displayed on the left hand side of the page. Clicking on a place header in the list centers the map on that place marker, and opens another custom info-window displaying place information and a button to optionally delete the place from the map. Users can also click directly on a marker to view its info-window. Clicking on a website link in the list opens the website in a new browser tab.
+As markers are saved, a list of saved places is displayed on the left hand side of the page. Clicking on a place header in the list centers the map on that place marker, and opens another custom info-window displaying place information and a button that deletes the place from the map. Users can also click directly on a marker to view its info-window. Clicking on a website link in the list opens the website in a new browser tab.
 ![Navigate](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/navigate_map.gif)
 <br>
 
