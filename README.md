@@ -7,8 +7,8 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 ## Contents
 * [Technologies](#techstack)
 * [Features](#features)
-* [Features for Version 2.0](#futurefeatures)
 * [Installation](#installation)
+* [Features for Version 2.0](#futurefeatures)
 * [About The Developer](#aboutme)
 
 ## <a name="techstack"></a>Technologies
@@ -68,17 +68,11 @@ An internal dashboard is visible only to 'staff users' of the site, as defined i
 ![logout](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/logout.gif)
 <br>
 
-
-## <a name="futurefeatures"></a>Features for Version 2.0
-* Modify data model and map permissions to allow multiple users to contribute to a single map
-* Export dashboard data to an excel, csv, or jpg file
-* Add dashboard page with aggregated data for each individual user
-
 ## <a name="installation"></a>Installation
 #### Requirements:
 
 - PostgreSQL
-- Python 3.6
+- Python 3.x
 - API key for Google Maps JavaScript and Google Maps Places APIs
 
 #### To run TravelMaps on your local computer
@@ -97,16 +91,27 @@ Install dependencies:
 $ pip install -r requirements.txt
 ```
 Add your API key into the header scripts in static/templates/dashboard.html, map.html, profile.html, and share_map.html, eg:
-![api]()
+<br><br>
+![api](https://raw.githubusercontent.com/teganbroderick/Travelmaps/master/static/img/YOUR_API_KEY.png)
 
-Create database 'travelmaps'
+Create database 'travelmaps':
 ```
 $ createdb travelmaps
+```
+Run model.py interactively in the terminal, and create database tables:
+```
+$ python3 -i model.py
+>>> db.create_all()
+>>> quit()
 ```
 Run the app from the command line.
 ```
 $ python server.py
 ```
+## <a name="futurefeatures"></a>Features for Version 2.0
+* Modify data model and map permissions to allow multiple users to contribute to a single map
+* Export dashboard data to an excel, csv, or jpg file
+* Add dashboard page with aggregated data for each individual user
 
 ## <a name="aboutme"></a>About the Developer
 TravelMaps creator Tegan Broderick is a former objects conservator turned software engineer. This is her first fullstack project. She can be found on LinkedIn <a href="https://www.linkedin.com/in/teganbroderick/ ">here</a>.
