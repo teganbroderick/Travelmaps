@@ -9,8 +9,8 @@ This project was made at Hackbright Academy in San Francisco over four weeks in 
 ### Contents
 
 * [Technologies](#techstack)
-* [Features](#features)
 * [Installation](#installation)
+* [Features](#features)
 * [Features for Version 2.0](#futurefeatures)
 * [About The Developer](#aboutme)
 
