@@ -6,12 +6,10 @@ import helpers
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar
+# Secret key required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails
-# silently. This is horrible. Fix this so that, instead, it raises an
-# error.
+# Add 'undefined' so that any undefined Jinja2 variable raises an error instead of failing silently
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -256,15 +254,14 @@ def get_last_place_added():
 
 
 if __name__ == "__main__":
-    # We have to set debug=True here, since it has to be True at the
-    # point that we invoke the DebugToolbarExtension
+    # debug has to be True so that we invoke the DebugToolbarExtension
     app.debug = True
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)
 
-    # Use the DebugToolbar
+    # Uncomment out line below to use the DebugToolbar
     # DebugToolbarExtension(app)
 
     app.run(port=5000, host='0.0.0.0')
